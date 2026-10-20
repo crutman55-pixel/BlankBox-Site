@@ -254,7 +254,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       <p class="mono section-label">${pad(i + 1)} / ${pad(films.length)}${metaLine(f) ? ` — ${esc(metaLine(f))}` : ""}</p>
       <h1 class="film-title display"><span class="line"><span>${esc(f.title)}</span></span></h1>
       <p class="film-by mono">${esc(byline(f))}</p>
-      ${teamLine(f)}
       ${f.tagline ? `<p class="film-tagline display reveal"><em>${esc(f.tagline)}</em></p>` : ""}
     </div>
   </header>
