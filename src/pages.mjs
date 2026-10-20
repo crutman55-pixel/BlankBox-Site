@@ -176,7 +176,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 <section class="page-hero wrap" aria-labelledby="work-title">
   <p class="mono section-label reveal">Our Work</p>
   <h1 class="page-title display" id="work-title"><span class="line"><span>Selected credits.</span></span></h1>
-  <p class="page-lede reveal">Each project is its own world, built from the same conviction: start with an idea that won't leave you alone.</p>
 </section>
 
 <section class="work-index wrap" aria-label="Index of films">
