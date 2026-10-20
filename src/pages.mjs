@@ -455,7 +455,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     return `
 <section class="page-hero wrap" aria-labelledby="brands-title">
   <img class="media-lockup reveal" src="${asset("img/logo-lockup-media.webp")}" alt="BLANKBOX MEDIA" width="1006" height="460" fetchpriority="high">
-  <p class="mono section-label reveal">Commercial Production</p>
   <h1 class="page-title display" id="brands-title"><span class="line"><span>Our work</span></span><span class="line"><span><em>with brands.</em></span></span></h1>
   <p class="page-lede reveal">The same instinct for story we bring to film and television, applied to campaigns, branded content and commercials.</p>
 </section>
