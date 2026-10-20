@@ -207,14 +207,14 @@ a:hover .arrow, a:focus-visible .arrow, button:hover .arrow { transform: transla
 
 /* ------------------------------------------------------------- Hero */
 .hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: calc(var(--header-h) + 40px) 0 clamp(48px, 8vh, 96px); overflow: hidden; }
-.hero-stage { position: absolute; inset: 0; }
+.hero-stage { position: absolute; inset: 0; -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent); mask-image: linear-gradient(180deg, #000 78%, transparent); }
 .hero-stage::before {
   content: ""; position: absolute; inset: 0;
   background: radial-gradient(60% 50% at 70% 35%, rgba(184, 178, 166, 0.13), transparent 70%),
               radial-gradient(40% 40% at 20% 90%, rgba(184, 178, 166, 0.05), transparent 70%);
 }
 /* The portal: an open, lit frame, the blank box the brand is named for. */
-.portal { position: absolute; top: 50%; left: 72%; width: min(37vw, 560px); aspect-ratio: 1.12; transform: translate(-50%, -52%); }
+.portal { position: absolute; top: 47%; left: 72%; width: min(37vw, 560px, 58svh); aspect-ratio: 1.12; transform: translate(-50%, -50%); }
 .portal-frame { position: absolute; inset: 0; }
 .portal-frame i { position: absolute; display: block; }
 .pf-top { left: 0; right: 0; top: 0; height: 5.5%; background: linear-gradient(180deg, #f4f1ea, #cfcac0 70%, #a9a49a); box-shadow: 0 0 40px rgba(255, 248, 235, 0.12); }
@@ -224,8 +224,8 @@ a:hover .arrow, a:focus-visible .arrow, button:hover .arrow { transform: transla
 .pf-in-top { left: 6.5%; right: 6.5%; top: 5.5%; height: 4.5%; background: linear-gradient(180deg, #6f6b64, #2a2926); clip-path: polygon(0 0, 100% 0, 92% 100%, 3% 100%); }
 .pf-in-left { left: 6.5%; top: 5.5%; bottom: 0; width: 2.5%; background: linear-gradient(90deg, #3a3834, #121211); clip-path: polygon(0 0, 100% 8%, 100% 99%, 0 100%); }
 .pf-in-right { right: 6.5%; top: 5.5%; bottom: 0; width: 7%; background: linear-gradient(90deg, rgba(255, 248, 235, 0.05), rgba(255, 248, 235, 0.85)); clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 97%); filter: blur(0.4px); animation: glow 7s var(--ease-in-out) infinite alternate; }
-.portal-spill { position: absolute; left: 20%; right: -35%; bottom: -16%; height: 46%; background: radial-gradient(55% 50% at 66% 42%, rgba(255, 246, 228, 0.45), transparent 72%); filter: blur(18px); animation: glow 7s var(--ease-in-out) infinite alternate; }
-.portal-floor { position: absolute; left: -30%; right: -30%; bottom: -1px; height: 1px; background: linear-gradient(90deg, transparent, rgba(236, 232, 224, 0.18) 30%, rgba(255, 246, 228, 0.45) 72%, transparent); }
+.portal-spill { position: absolute; left: 20%; right: -35%; bottom: -10%; height: 40%; background: radial-gradient(55% 50% at 66% 42%, rgba(255, 246, 228, 0.45), transparent 72%); filter: blur(18px); animation: glow 7s var(--ease-in-out) infinite alternate; }
+.portal-floor { position: absolute; left: -10%; right: -25%; bottom: -1px; height: 1px; background: linear-gradient(90deg, transparent, rgba(236, 232, 224, 0.14) 30%, rgba(255, 246, 228, 0.35) 72%, transparent); }
 @keyframes glow { from { opacity: 0.75; } to { opacity: 1; } }
 .hero-sweep {
   position: absolute; inset: -20% -40%;
@@ -591,3 +591,24 @@ a.channel:hover .channel-v { font-style: italic; transform: translateX(10px); }
 .about-onset figcaption { display: grid; gap: 24px; }
 .about-onset figcaption .display { font-size: clamp(44px, 6vw, 100px); }
 @media (max-width: 860px) { .about-onset { grid-template-columns: minmax(0, 1fr); } }
+
+/* Home: the slate */
+.slate { padding-block: clamp(80px, 11vw, 160px); position: relative; }
+.slate-head, .slate-list a { display: grid; grid-template-columns: 56px minmax(0, 1fr) 200px 150px 64px 32px; align-items: baseline; gap: 24px; }
+.slate-head { color: var(--mute); padding-bottom: 16px; border-bottom: 1px solid var(--line-2); }
+.slate-list li { border-bottom: 1px solid var(--line); }
+.slate-list a { padding: clamp(20px, 2.6vw, 34px) 0; transition: color 0.4s; }
+.slate-list .mono { color: var(--mute); transition: color 0.4s; }
+.s-title { font: 400 clamp(32px, 4.6vw, 72px)/1 var(--serif); letter-spacing: -0.02em; transition: transform 0.6s var(--ease), color 0.4s; }
+.s-yr { text-align: right; }
+.s-go { justify-self: end; font-size: 20px; opacity: 0; transform: translateX(-10px); transition: opacity 0.4s, transform 0.6s var(--ease); }
+.slate-list:hover a:not(:hover) .s-title { color: var(--mute); }
+.slate-list a:hover .s-title, .slate-list a:focus-visible .s-title { transform: translateX(14px); font-style: italic; color: var(--accent); }
+.slate-list a:hover .mono, .slate-list a:focus-visible .mono { color: var(--paper-2); }
+.slate-list a:hover .s-go, .slate-list a:focus-visible .s-go { opacity: 1; transform: none; color: var(--accent); }
+@media (max-width: 860px) {
+  .slate-head, .slate-list a { grid-template-columns: 36px minmax(0, 1fr) auto; gap: 14px; }
+  .slate-head .s-fmt, .slate-head .s-by, .slate-list .s-fmt, .slate-list .s-go, .slate-head > span:last-child { display: none; }
+  .slate-list .s-by { grid-column: 2; grid-row: 2; }
+  .slate-list .s-yr { grid-column: 3; grid-row: 1; }
+}

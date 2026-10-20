@@ -13,19 +13,23 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
 
   /* ---------------------------------------------------------------- HOME */
   function home() {
-    const reel = films
+    const slate = films
       .map(
-        (f, i) => `<li class="reel-item" style="--accent:${f.theme.accent}">
-        <a class="reel-link" href="${filmUrl(f)}">
-          <span class="reel-num mono">${pad(i + 1)}</span>
-          <span class="reel-poster">${poster(f, `reel-${f.slug}`)}</span>
-          <span class="reel-title">${esc(f.title)}</span>
-          <span class="reel-meta mono">${esc(f.filmmaker)}${f.year ? ` · ${f.year}` : ""}</span>
+        (f, i) => `<li style="--accent:${f.theme.accent}">
+        <a href="${filmUrl(f)}" data-preview="${f.slug}">
+          <span class="mono s-no">${pad(i + 1)}</span>
+          <span class="s-title">${esc(f.title)}</span>
+          <span class="mono s-fmt">${esc([...new Set([f.format, f.genres[0]].filter(Boolean))].join(" · "))}</span>
+          <span class="mono s-by">${esc(f.filmmaker)}</span>
+          <span class="mono s-yr">${f.year ?? "TBA"}</span>
+          <span class="s-go" aria-hidden="true">→</span>
         </a>
       </li>`,
       )
       .join("");
-
+    const previews = films
+      .map((f) => `<div class="preview-card" data-preview-card="${f.slug}">${poster(f, `hp-${f.slug}`)}</div>`)
+      .join("");
 
     return `
 <div class="intro" data-intro aria-hidden="true">
@@ -72,25 +76,19 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
 </section>
 
 
-<section class="selected" id="selected" aria-labelledby="selected-title">
-  <div class="wrap section-head">
-    <div>
-      <p class="mono section-label reveal">Scene 01 — Selected work</p>
-      <h2 class="section-title display reveal" id="selected-title">Five films.<br><em>Five worlds.</em></h2>
-    </div>
-    <div class="reel-controls reveal">
-      <button class="icon-btn" type="button" data-reel-prev aria-label="Previous film">←</button>
-      <button class="icon-btn" type="button" data-reel-next aria-label="Next film">→</button>
-    </div>
+<section class="slate wrap" id="selected" aria-label="The slate">
+  <div class="slate-head mono" aria-hidden="true">
+    <span>No.</span><span>Title</span><span class="s-fmt">Format</span><span class="s-by">Filmmaker</span><span class="s-yr">Year</span><span></span>
   </div>
-  <ol class="reel" data-reel tabindex="0" aria-label="Selected films, scroll horizontally">${reel}</ol>
+  <ol class="slate-list">${slate}</ol>
+  <div class="preview" data-preview-wrap aria-hidden="true">${previews}</div>
 </section>
 
 
 <section class="approach wrap" aria-labelledby="approach-title">
   <div class="section-head">
     <div>
-      <p class="mono section-label reveal">Scene 02 — How we develop</p>
+      <p class="mono section-label reveal">Scene 01 — How we develop</p>
       <h2 class="section-title display reveal" id="approach-title">Ideas first.<br><em>Then everything else.</em></h2>
     </div>
   </div>
@@ -104,7 +102,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
 
 <section class="enter" aria-label="Full portfolio">
   <a class="enter-link" href="${href("/work/")}">
-    <span class="mono enter-label">Scene 03 — The full slate</span>
+    <span class="mono enter-label">Scene 02 — The full slate</span>
     <span class="enter-title display"><span>View our slate</span> ${arrow}</span>
   </a>
 </section>`;
