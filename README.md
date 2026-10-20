@@ -7,7 +7,8 @@ just a small Node build script that turns the content in `src/` into plain HTML 
 - `/`: home, with the opening sequence, positioning, selected work, the namesake spotlight and the approach
 - `/work/`: the portfolio index plus a chapter for each film
 - `/work/<slug>/`: a detail page for each film (synopsis, credits, cast, details, stills, trailer, links)
-- `/about/`: Cole Rutman
+- `/brands/`: commercial production: reel and brand credits (edit `src/data/brands.mjs`)
+- `/about/`: Cole Rutman, and the team (Levi Considine)
 - `/contact/`
 - `404.html`
 
@@ -15,6 +16,7 @@ just a small Node build script that turns the content in `src/` into plain HTML 
 | To change | Edit |
 |---|---|
 | Film details, synopsis, credits, links, trailer | `src/data/films.mjs` |
+| Commercial reel and brand credits | `src/data/brands.mjs` (images in `src/assets/brands/`) |
 | Site name, URL, contact email, social links, custom domain | `src/config.mjs` |
 | Posters, stills, portrait | See [ASSETS.md](ASSETS.md) |
 | Page copy and layout | `src/pages.mjs` |

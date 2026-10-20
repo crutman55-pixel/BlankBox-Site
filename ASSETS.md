@@ -14,7 +14,7 @@ those sites don't grant reuse rights.
 | Portrait of Cole Rutman | `src/assets/img/cole-rutman.webp` (supplied), plus `cole-rutman-on-set.webp` | Portrait and on-set photo on the About page. |
 | Logo | `src/assets/img/logo-mark.webp`, `logo-lockup.webp` | Official BLANKBOX logo, supplied by owner. Blacks are crushed to pure black so it blends into the page. |
 
-Slugs: `blankbox`, `before-us-after-us`, `where-we-lie`, `voices`, `twos-a-party`.
+Slugs: `unicorn-academy`, `mighty-express`, `sago-mini-friends`, `property-brothers-under-pressure`, `violent`, `blankbox`, `before-us-after-us`, `where-we-lie`, `voices`, `twos-a-party`.
 
 Run `npm run build` afterwards. The build lists any assets that are still missing.
 
@@ -27,6 +27,13 @@ Run `npm run build` afterwards. The build lists any assets that are still missin
 | Where We Lie (2024) | From the owner's biography only. No public listing found (IMDb's "Where We Lie" is a different 2022 UK short) | Supplied by owner | Missing | Full film embedded: https://www.youtube.com/watch?v=X3jv-9FzKEU (premise taken from its YouTube description). View count not added: YouTube isn't reachable from the build environment |
 | Voices (2023) | Verified, plus the full title from the screening photo | Official poster with festival laurels (uploaded by owner) | 1: screening photo (supplied by owner) | Not found |
 | Two's a Party (2025) | Verified | **Missing** | Missing | Not found |
+| Unicorn Academy | Verified (Netflix, Spin Master; Levi in sound dept.; CSA nomination 2025). His LinkedIn also lists a 2026 CSA **win**, which isn't on the site until it's confirmed | **Missing**: needs licensed key art | Missing | Not found |
+| Mighty Express | Verified (Netflix, Spin Master; Levi sound designer, 4 episodes 2022) | **Missing** | Missing | Not found |
+| Sago Mini Friends | Verified (Apple TV+; Levi sound designer, 9 episodes 2022) | **Missing** | Missing | Not found |
+| Property Brothers: Under Pressure | Verified (HGTV, premiered 15 Mar 2026). Levi's sound credit comes from his LinkedIn | **Missing** | Missing | Not found |
+| Violent (2014) | Verified (dir. Andrew Huculiak; VIFF awards; TIFF Canada's Top Ten; Levi asst. sound effects editor) | **Missing** | Missing | Not found |
+
+Levi Considine's credits come from IMDb (nm6346683) and his LinkedIn. *Ozion* (2016) is also on his IMDb page, but no public details could be found, so it isn't listed.
 
 ## Sources
 

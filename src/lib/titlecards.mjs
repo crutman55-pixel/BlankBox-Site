@@ -49,6 +49,24 @@ const motifs = {
     </g>
     <line x1="40" y1="470" x2="560" y2="470" stroke="#ece8e0" stroke-width=".75" opacity=".25"/>`,
 
+  // Concentric rings, like sound spreading outward.
+  rings: (a) => {
+    let out = "";
+    for (let r = 26; r <= 196; r += 28) out += `<circle cx="300" cy="350" r="${r}" fill="none" stroke="${a}" stroke-width="1.25" opacity="${(1 - r / 230).toFixed(2)}"/>`;
+    return out + `<circle cx="300" cy="350" r="8" fill="${a}"/>`;
+  },
+
+  // A row of level meters.
+  bars: (a) => {
+    let out = "";
+    const hs = [60, 120, 190, 150, 240, 170, 210, 110, 160, 80, 130];
+    hs.forEach((h, i) => {
+      const x = 120 + i * 33;
+      out += `<rect x="${x}" y="${470 - h}" width="18" height="${h}" fill="${a}" opacity="${(0.35 + (h / 240) * 0.65).toFixed(2)}"/>`;
+    });
+    return out + `<line x1="90" y1="478" x2="510" y2="478" stroke="#ece8e0" stroke-width=".75" opacity=".3"/>`;
+  },
+
   // Two's a Party: two figures. One of them shouldn't be there.
   pair: (a) => `
     <circle cx="230" cy="350" r="70" fill="none" stroke="#ece8e0" stroke-width="1.25" opacity=".55"/>
@@ -78,7 +96,7 @@ export function titleCard(film, { id = film.slug } = {}) {
     .map((l, i) => `<tspan x="300" y="${y0 + i * (size * 1.02)}">${esc(l)}</tspan>`)
     .join("");
 
-  return `<svg class="titlecard" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(film.title)}, a film by ${esc(film.filmmaker)}" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  return `<svg class="titlecard" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(film.title)}, ${esc(film.byline || `a film by ${film.filmmaker}`)}" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <radialGradient id="glow-${id}" cx="50%" cy="38%" r="70%">
       <stop offset="0" stop-color="${a}" stop-opacity=".16"/>
@@ -92,7 +110,7 @@ export function titleCard(film, { id = film.slug } = {}) {
   <rect width="${W}" height="${H}" fill="${ink}"/>
   <rect width="${W}" height="${H}" fill="url(#glow-${id})"/>
   ${motifs[film.theme.motif](a, id)}
-  <text x="300" y="86" text-anchor="middle" class="tc-mono" fill="#ece8e0" opacity=".6" font-size="13" letter-spacing="5">A ${esc(film.filmmaker.toUpperCase())} FILM</text>
+  <text x="300" y="86" text-anchor="middle" class="tc-mono" fill="#ece8e0" opacity=".6" font-size="13" letter-spacing="5">${esc(film.cardTop || `A ${film.filmmaker.toUpperCase()} FILM`)}</text>
   <text text-anchor="middle" class="tc-serif" fill="#ece8e0" font-size="${size}">${titleText}</text>
   ${meta ? `<text x="300" y="838" text-anchor="middle" class="tc-mono" fill="${a}" font-size="12" letter-spacing="4">${esc(meta.toUpperCase())}</text>` : ""}
   <g stroke="#ece8e0" stroke-width="1" opacity=".35" fill="none">

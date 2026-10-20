@@ -23,6 +23,7 @@ export const site = {
 export const nav = [
   { label: "Home", href: "/" },
   { label: "Our Work", href: "/work/" },
+  { label: "Brands", href: "/brands/" },
   { label: "About", href: "/about/" },
   { label: "Contact", href: "/contact/" },
 ];

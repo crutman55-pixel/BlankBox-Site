@@ -6,6 +6,7 @@ import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } fro
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { site } from "./src/config.mjs";
+import { brands } from "./src/data/brands.mjs";
 import { films } from "./src/data/films.mjs";
 import { createLayout } from "./src/lib/layout.mjs";
 import { titleCard } from "./src/lib/titlecards.mjs";
@@ -58,7 +59,7 @@ const stills = (film) => {
     .map((f) => `${base}/assets/stills/${film.slug}/${f}`);
 };
 
-const pages = createPages({ films, href, asset, poster, portrait, stills, keyArt });
+const pages = createPages({ films, brands, href, asset, poster, portrait, stills, keyArt });
 
 // --- Structured data
 const org = {
@@ -81,11 +82,11 @@ const person = {
 };
 const movie = (f) => ({
   "@context": "https://schema.org",
-  "@type": "Movie",
+  "@type": f.kind === "series" ? "TVSeries" : "Movie",
   name: f.title,
   ...(f.year && { dateCreated: String(f.year) }),
   ...(f.logline && { description: f.logline }),
-  director: { "@type": "Person", name: f.filmmaker },
+  ...(f.kind !== "series" && { director: { "@type": "Person", name: f.filmmaker } }),
   ...(f.genres.length && { genre: f.genres }),
   ...(f.cast.length && { actor: f.cast.map((c) => ({ "@type": "Person", name: c.name })) }),
   ...(f.links.length && { sameAs: f.links.map((l) => l.href) }),
@@ -108,7 +109,7 @@ const emit = (path, opts) => {
 emit("/", { title: "", body: pages.home(), current: "/", bodyClass: "page-home", jsonLd: org });
 emit("/work/", {
   title: "Our Work",
-  description: "The BLANKBOX ENTERTAINMENT slate: BlankBox, Before Us. After Us., Where We Lie, Voices and Two's a Party.",
+  description: `The BLANKBOX ENTERTAINMENT slate: ${films.map((f) => f.title).join(", ")}.`,
   body: pages.work(),
   current: "/work/",
   bodyClass: "page-work",
@@ -116,13 +117,20 @@ emit("/work/", {
 films.forEach((f, i) =>
   emit(`/work/${f.slug}/`, {
     title: f.title,
-    description: f.logline ? `${f.title}, a film by ${f.filmmaker}. ${f.logline}` : `${f.title}, a film by ${f.filmmaker}.`,
+    description: `${f.title}${f.platform ? ` (${f.platform})` : ""}. ${f.logline || (f.byline || `A film by ${f.filmmaker}`)}`,
     body: pages.film(f, i),
     current: "/work/",
     bodyClass: "page-film",
     jsonLd: movie(f),
   }),
 );
+emit("/brands/", {
+  title: "Our Work with Brands",
+  description: "BLANKBOX ENTERTAINMENT commercial production: our reel and selected credits with brands.",
+  body: pages.brands(),
+  current: "/brands/",
+  bodyClass: "page-brands",
+});
 emit("/about/", {
   title: "About Cole Rutman",
   description: "Cole Rutman is a Canadian producer and filmmaker, and the creative lead behind BLANKBOX ENTERTAINMENT.",

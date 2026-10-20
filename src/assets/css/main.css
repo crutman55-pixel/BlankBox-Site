@@ -633,7 +633,7 @@ a.channel:hover .channel-v { font-style: italic; transform: translateX(10px); }
 .show-slide.is-active .show-poster { clip-path: inset(0 0 0 0); }
 .show-slide.is-active .show-poster > * { transform: none; }
 .show-ui { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; padding-bottom: 36px; max-width: none; padding-inline: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))); }
-.show-tabs { flex: 1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; max-width: 980px; }
+.show-tabs { flex: 1; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 12px; max-width: 1180px; }
 .show-tab { display: grid; grid-template-columns: auto 1fr; gap: 12px 10px; text-align: left; color: var(--mute); transition: color 0.4s; }
 .show-tab:hover, .show-tab.is-active { color: var(--paper); }
 .show-tab-bar { grid-column: 1 / -1; height: 2px; background: var(--line-2); overflow: hidden; }
@@ -651,7 +651,7 @@ a.channel:hover .channel-v { font-style: italic; transform: translateX(10px); }
   .show-poster { grid-row: 1; width: clamp(140px, 40vw, 210px); }
   .show-title { font-size: clamp(48px, 13vw, 80px); }
   .show-logline { font-size: 18px; margin: 18px 0 24px; }
-  .show-tabs { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .show-tabs { gap: 4px; }
   .show-tab-t, .show-tab .mono { display: none; }
   .show-ctrl .icon-btn[data-show-pause] { display: none; }
 }
@@ -662,3 +662,58 @@ a.channel:hover .channel-v { font-style: italic; transform: translateX(10px); }
 
 /* Contact: "Start with BLANK" */
 .blank-word { display: inline-block; font: 700 1.02em/0.86 var(--sans); letter-spacing: -0.045em; text-transform: uppercase; background: linear-gradient(100deg, #fbf9f4 10%, var(--pewter) 45%, #ffffff 60%, var(--pewter) 85%); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: 0.04em; }
+
+/* Where a title appeared, and team credits */
+.platform { display: inline-flex; align-items: center; gap: 10px; margin-top: 14px; padding: 7px 12px; border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); color: var(--paper); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.platform-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+.team-credit { color: var(--accent); margin-top: 14px; }
+.show-tab-t { font-size: 13px; }
+
+/* About: team */
+.team { padding-block: clamp(80px, 10vw, 160px); border-top: 1px solid var(--line); }
+.member { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(32px, 7vw, 120px); align-items: center; margin-top: clamp(48px, 6vw, 80px); }
+.member-card { position: relative; aspect-ratio: 3 / 4; max-width: 420px; display: grid; place-content: center; background: radial-gradient(70% 60% at 50% 40%, rgba(184, 178, 166, 0.12), transparent 70%), var(--charcoal); }
+.member-card .vf { inset: 20px; }
+.member-card .display { font-size: clamp(96px, 12vw, 190px); line-height: 0.8; }
+.member-card .display em { color: var(--pewter); }
+.member-role { color: var(--pewter); }
+.member-name { font-size: clamp(48px, 6vw, 96px); margin: 18px 0 28px; }
+.member-bio { color: var(--paper-2); max-width: 60ch; }
+.member-bio + .member-bio { margin-top: 18px; }
+.member-bio em { color: var(--paper); }
+.member-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+@media (max-width: 860px) { .member { grid-template-columns: minmax(0, 1fr); } .member-card { max-width: 300px; } }
+
+/* Home: link to brand work, under the hero buttons */
+.hero-actions { align-items: center; }
+.hero-brands { flex-basis: 100%; display: inline-flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 8px; color: var(--paper-2); transition: color 0.3s; }
+.hero-brands:hover { color: var(--paper); }
+@media (max-width: 860px) { .hero-brands { justify-content: flex-start; } }
+
+/* Brands page */
+.brand-reel { padding-bottom: clamp(80px, 10vw, 140px); }
+.reel-slate { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: radial-gradient(60% 70% at 70% 50%, rgba(184, 178, 166, 0.1), transparent 70%), var(--charcoal); border: 1px solid var(--line); }
+.reel-slate .vf { inset: 24px; }
+.reel-slate-box { position: absolute; right: 6%; top: 50%; width: min(42%, 560px); height: auto; transform: translateY(-50%); animation: float 9s var(--ease-in-out) infinite alternate; }
+.reel-slate-copy { position: absolute; left: 6%; bottom: 12%; display: grid; gap: 18px; }
+.reel-slate-copy .mono { display: inline-flex; align-items: center; gap: 10px; color: var(--paper-2); }
+.reel-slate-copy .display { font-size: clamp(48px, 7vw, 120px); }
+.reel-slate-copy em { color: var(--pewter); }
+.reel-slate-tc { position: absolute; top: 40px; right: 48px; color: var(--mute); }
+.brand-credits { padding-bottom: clamp(80px, 10vw, 160px); border-top: 1px solid var(--line); padding-top: clamp(80px, 10vw, 140px); }
+.credits-note { color: var(--mute); }
+.credit-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 32px); }
+.credit-inner { display: grid; gap: 12px; }
+.credit-media { display: grid; place-content: center; aspect-ratio: 16 / 10; overflow: hidden; background: var(--charcoal); border: 1px solid var(--line); }
+.credit-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+a.credit-inner:hover .credit-media img { transform: scale(1.04); }
+.credit-brand-mark { font-size: clamp(28px, 3vw, 44px); color: var(--paper-2); }
+.credit-no, .credit-meta { color: var(--mute); }
+.credit-brand { color: var(--pewter); }
+.credit-title { font: 400 clamp(22px, 2vw, 30px)/1.1 var(--serif); }
+.sk { display: block; height: 10px; background: linear-gradient(90deg, var(--graphite), #222 50%, var(--graphite)); background-size: 200% 100%; animation: sk 2.4s linear infinite; }
+.sk-s { width: 22%; } .sk-l { width: 78%; height: 22px; } .sk-m { width: 46%; }
+.credit--skeleton .credit-media { background: linear-gradient(90deg, var(--charcoal), #161616 50%, var(--charcoal)); background-size: 200% 100%; animation: sk 2.4s linear infinite; }
+@keyframes sk { to { background-position: -200% 0; } }
+@media (max-width: 860px) { .credit-grid { grid-template-columns: 1fr 1fr; } .reel-slate-box { width: 60%; right: -6%; opacity: 0.6; } }
+@media (max-width: 560px) { .credit-grid { grid-template-columns: 1fr; } }

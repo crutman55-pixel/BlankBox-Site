@@ -7,9 +7,14 @@ const ext = `<span aria-hidden="true">↗</span>`;
 
 const viewfinder = `<span class="vf" aria-hidden="true"><i></i><i></i><i></i><i></i></span>`;
 
-export function createPages({ films, href, asset, poster, portrait, stills, keyArt }) {
+export function createPages({ films, brands, href, asset, poster, portrait, stills, keyArt }) {
   const filmUrl = (f) => href(`/work/${f.slug}/`);
   const metaLine = (f) => [f.year, f.format, f.runtime].filter(Boolean).join(" · ");
+  const byline = (f) => f.byline || `A film by ${f.filmmaker}`;
+  const platformBadge = (f, cls = "") =>
+    f.platform ? `<p class="platform mono ${cls}"><span class="platform-dot" aria-hidden="true"></span>${f.kind === "series" ? "On" : "Seen at"} ${esc(f.platform)}</p>` : "";
+  const teamLine = (f, cls = "") =>
+    f.team?.length ? `<p class="team-credit mono ${cls}">${f.team.map((t) => `${esc(t.name)} — ${esc(t.role)}`).join(" · ")}</p>` : "";
 
   /* ---------------------------------------------------------------- HOME */
   function home() {
@@ -22,7 +27,8 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
           <div class="show-copy">
             <p class="mono show-num"><span>${pad(i + 1)}</span> / ${pad(films.length)} — ${esc([f.year, f.format].filter(Boolean).join(" · "))}</p>
             <h3 class="show-title display">${esc(f.title)}</h3>
-            <p class="mono show-by">A film by ${esc(f.filmmaker)}</p>
+            <p class="mono show-by">${esc(byline(f))}</p>
+            ${platformBadge(f)}
             ${f.logline ? `<p class="show-logline">${esc(f.logline)}</p>` : ""}
             <a class="btn btn--solid" href="${filmUrl(f)}"${i ? ' tabindex="-1"' : ""}>View project ${arrow}</a>
           </div>
@@ -73,6 +79,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
       <div class="hero-actions reveal">
         <a class="btn btn--solid" href="${href("/work/")}">Explore our work ${arrow}</a>
         <a class="btn btn--ghost" href="${href("/about/")}">About Us</a>
+        <a class="hero-brands mono" href="${href("/brands/")}">Our work with brands ${arrow}</a>
       </div>
     </div>
   </div>
@@ -122,7 +129,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
         <a href="#${f.slug}" data-preview="${f.slug}">
           <span class="mono idx">${pad(i + 1)}</span>
           <span class="t">${esc(f.title)}</span>
-          <span class="mono by">${esc(f.filmmaker)}</span>
+          <span class="mono by">${esc(f.platform || f.filmmaker)}</span>
           <span class="mono yr">${f.year ?? "TBA"}</span>
         </a>
       </li>`,
@@ -142,8 +149,10 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
         <div class="chapter-copy">
           <p class="chapter-num mono reveal"><span>${pad(i + 1)}</span> / ${pad(films.length)}</p>
           <h2 class="chapter-title display reveal" id="t-${f.slug}">${esc(f.title)}</h2>
-          <p class="chapter-by mono reveal">A film by ${esc(f.filmmaker)}</p>
+          <p class="chapter-by mono reveal">${esc(byline(f))}</p>
+          ${platformBadge(f, "reveal")}
           ${metaLine(f) ? `<p class="chapter-meta mono reveal">${esc(metaLine(f))}${f.genres.filter((g) => g !== f.format).length ? ` · ${esc(f.genres.filter((g) => g !== f.format).slice(0, 2).join(" / "))}` : ""}</p>` : ""}
+          ${teamLine(f, "reveal")}
           ${f.logline ? `<p class="chapter-logline reveal">${esc(f.logline)}</p>` : `<p class="chapter-logline chapter-logline--tba reveal">Synopsis coming soon.</p>`}
           <a class="btn btn--ghost reveal" href="${filmUrl(f)}">View project ${arrow}</a>
         </div>
@@ -232,7 +241,9 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
       <a class="back mono" href="${href("/work/")}">← All work</a>
       <p class="mono section-label">${pad(i + 1)} / ${pad(films.length)}${metaLine(f) ? ` — ${esc(metaLine(f))}` : ""}</p>
       <h1 class="film-title display"><span class="line"><span>${esc(f.title)}</span></span></h1>
-      <p class="film-by mono">A film by ${esc(f.filmmaker)}</p>
+      <p class="film-by mono">${esc(byline(f))}</p>
+      ${platformBadge(f)}
+      ${teamLine(f)}
       ${f.tagline ? `<p class="film-tagline display reveal"><em>${esc(f.tagline)}</em></p>` : ""}
     </div>
   </header>
@@ -335,6 +346,27 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
   </div>
 </section>
 
+<section class="team wrap" aria-labelledby="team-title">
+  <p class="mono section-label reveal">The team</p>
+  <h2 class="section-title display reveal" id="team-title">Who we <em>work with.</em></h2>
+  <article class="member">
+    <div class="member-card reveal-frame" aria-hidden="true">
+      <span class="vf"><i></i><i></i><i></i><i></i></span>
+      <span class="display">L<em>C</em></span>
+    </div>
+    <div class="member-copy">
+      <p class="mono member-role reveal">Creative Specialist</p>
+      <h3 class="member-name display reveal">Levi Considine</h3>
+      <p class="member-bio reveal">Levi Considine is a Toronto-based sound designer and editor whose work has reached audiences on Netflix, Apple TV+ and HGTV. He has worked on Spin Master's animated series <em>Unicorn Academy</em> and <em>Mighty Express</em> for Netflix, on <em>Sago Mini Friends</em> for Apple TV+, and on HGTV's <em>Property Brothers: Under Pressure</em>. His sound team on <em>Unicorn Academy</em> was nominated for the Canadian Screen Award for Best Sound, Animation.</p>
+      <p class="member-bio reveal">Earlier in his career he worked on the sound of <em>Violent</em>, the Canadian-Norwegian drama that won Best Canadian Feature at the Vancouver International Film Festival. As Creative Specialist at BLANKBOX ENTERTAINMENT, he brings that experience across animation, television and features to the company's productions, starting with the sound design of <em>Two's a Party</em>.</p>
+      <div class="member-links reveal">
+        <a class="btn btn--ghost" href="https://www.imdb.com/name/nm6346683/" target="_blank" rel="noopener">View IMDb <span aria-hidden="true">↗</span></a>
+        <a class="btn btn--ghost" href="${href("/work/")}">See his credits ${arrow}</a>
+      </div>
+    </div>
+  </article>
+</section>
+
 <section class="enter" aria-label="Portfolio">
   <a class="enter-link" href="${href("/work/")}">
     <span class="mono enter-label">Continue</span>
@@ -396,6 +428,72 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
 </section>`;
   }
 
+  /* -------------------------------------------------------------- BRANDS */
+  function brandsPage() {
+    const reel = brands.reel
+      ? `<div class="video" data-video="${esc(brands.reel)}">
+          <img class="video-cover" src="https://i.ytimg.com/vi/${encodeURIComponent(brands.reel)}/maxresdefault.jpg" alt="" loading="lazy" decoding="async">
+          <button class="video-play" type="button" aria-label="Play the BlankBox commercial reel"><span class="video-play-icon" aria-hidden="true"></span><span class="mono">Play reel</span></button>
+        </div>`
+      : `<div class="reel-slate">
+          <span class="vf" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <img class="reel-slate-box" src="${asset("img/box.webp")}" alt="" width="1600" height="1600" loading="lazy" decoding="async">
+          <div class="reel-slate-copy">
+            <p class="mono"><span class="rec"></span> Commercial reel</p>
+            <p class="display">Coming <em>soon.</em></p>
+          </div>
+          <span class="reel-slate-tc mono" aria-hidden="true">00:00:00:00</span>
+        </div>`;
+
+    const credits = brands.credits.length
+      ? brands.credits
+          .map(
+            (c, i) => `<li class="credit reveal">
+          <${c.link ? `a href="${esc(c.link)}" target="_blank" rel="noopener"` : "div"} class="credit-inner">
+            <span class="credit-media">${c.image ? `<img src="${asset(c.image)}" alt="${esc(c.brand)}: ${esc(c.title)}" loading="lazy" decoding="async">` : `<span class="credit-brand-mark display">${esc(c.brand)}</span>`}</span>
+            <span class="mono credit-no">${pad(i + 1)}</span>
+            <span class="credit-brand mono">${esc(c.brand)}</span>
+            <span class="credit-title">${esc(c.title)}</span>
+            <span class="credit-meta mono">${esc([c.role, c.agency, c.year].filter(Boolean).join(" · "))}</span>
+          </${c.link ? "a" : "div"}>
+        </li>`,
+          )
+          .join("")
+      : Array.from({ length: 6 }, () => `<li class="credit credit--skeleton" aria-hidden="true"><div class="credit-inner"><span class="credit-media"></span><span class="sk sk-s"></span><span class="sk sk-l"></span><span class="sk sk-m"></span></div></li>`).join("");
+
+    return `
+<section class="page-hero wrap" aria-labelledby="brands-title">
+  <p class="mono section-label reveal">Commercial Production</p>
+  <h1 class="page-title display" id="brands-title"><span class="line"><span>Our work</span></span><span class="line"><span><em>with brands.</em></span></span></h1>
+  <p class="page-lede reveal">The same instinct for story we bring to film and television, applied to campaigns, branded content and commercials.</p>
+</section>
+
+<section class="brand-reel wrap" aria-label="Commercial reel">
+  <div class="section-head">
+    <p class="mono section-label reveal">The reel</p>
+  </div>
+  <div class="reveal">${reel}</div>
+</section>
+
+<section class="brand-credits wrap" aria-labelledby="credits-title">
+  <div class="section-head">
+    <div>
+      <p class="mono section-label reveal">Production credits</p>
+      <h2 class="section-title display reveal" id="credits-title">Selected <em>commercial work.</em></h2>
+    </div>
+    ${brands.credits.length ? "" : `<p class="mono credits-note reveal">Credits are being added.</p>`}
+  </div>
+  <ul class="credit-grid">${credits}</ul>
+</section>
+
+<section class="enter" aria-label="Contact">
+  <a class="enter-link" href="${href("/contact/")}">
+    <span class="mono enter-label">Brand partnerships</span>
+    <span class="enter-title display"><span>Start a project</span> ${arrow}</span>
+  </a>
+</section>`;
+  }
+
   /* ----------------------------------------------------------------- 404 */
   function notFound() {
     return `
@@ -410,5 +508,5 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
 </section>`;
   }
 
-  return { home, work, film, about, contact, notFound };
+  return { home, work, film, about, contact, brands: brandsPage, notFound };
 }
