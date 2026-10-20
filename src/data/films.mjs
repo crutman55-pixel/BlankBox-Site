@@ -28,7 +28,6 @@ export const films = [
       "Spin Master's fantasy-adventure series, based on Julie Sykes's books, launched on Netflix worldwide in November 2023 with a 72-minute movie premiere.",
     synopsis: [
       "Unicorn Academy is a fantasy-adventure animated series from Spin Master Entertainment, adapted from Julie Sykes's book series. It premiered globally on Netflix on 2 November 2023 with a 72-minute movie followed by eight 22-minute episodes, and has been renewed for multiple seasons.",
-      "Levi Considine works in the series' sound department. The show's sound team, Levi among them, was nominated for the Canadian Screen Award for Best Sound, Animation in 2025 for the episode \u201cUnder the Fairy Moon.\u201d",
     ],
     credits: [
       { role: "Sound", name: "Levi Considine" },
@@ -72,10 +71,9 @@ export const films = [
       "A CG-animated preschool series and Spin Master Entertainment's first show to launch straight to a streaming platform, released on Netflix worldwide in September 2020.",
     synopsis: [
       "Mighty Express is a CG-animated preschool series from Spin Master Entertainment. It rolled onto Netflix globally on 22 September 2020, the studio's first series to launch directly on a streaming service.",
-      "Levi Considine is credited as sound designer on four episodes in 2022.",
     ],
     credits: [
-      { role: "Sound designer", name: "Levi Considine (4 episodes, 2022)" },
+      { role: "Sound designer", name: "Levi Considine" },
       { role: "Studio", name: "Spin Master Entertainment" },
     ],
     cast: [],
