@@ -768,3 +768,16 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
 /* Brands page: BLANKBOX MEDIA lockup */
 .page-brands .page-hero { padding-top: calc(var(--header-h) + clamp(40px, 6vw, 90px)); }
 .media-lockup { display: block; width: clamp(220px, 26vw, 380px); height: auto; margin: 0 0 clamp(48px, 6vw, 88px) -2%; mix-blend-mode: screen; }
+.show-slide .net-logo--corner { top: calc(var(--header-h) + 28px); width: clamp(52px, 4.6vw, 76px); }
+@media (max-width: 860px) { .show-slide .net-logo--corner { width: 44px; top: calc(var(--header-h) + 16px); } }
+.show-art { display: grid; justify-items: end; gap: 14px; }
+.net-logo--above { position: static; width: clamp(40px, 3.6vw, 60px); filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.6)); opacity: 0; transition: opacity 0.9s var(--ease) 0.3s; }
+.show-slide.is-active .net-logo--above { opacity: 1; }
+@media (max-width: 860px) { .show-art { justify-items: start; grid-row: 1; } .net-logo--above { width: 36px; } }
+
+/* Hero: the BLANKBOX mark itself */
+.portal-img--mark { mix-blend-mode: screen; filter: drop-shadow(0 0 60px rgba(255, 246, 228, 0.08)); }
+.portal { width: min(40vw, 620px, 68svh); }
+.portal-img--mark { mix-blend-mode: normal; }
+.portal { width: min(32vw, 500px, 56svh); }
+@media (max-width: 860px) { .portal { width: 70vw; } }

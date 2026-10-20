@@ -13,7 +13,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   const byline = (f) => f.byline || `A film by ${f.filmmaker}`;
   const logoNames = { netflix: "Netflix", appletv: "Apple TV+" };
   const netLogo = (f, cls = "") =>
-    f.platformLogo && !(f.posterHasLogo && !cls.includes("corner")) ? `<img class="net-logo net-logo--${f.platformLogo} ${cls}" src="${asset(`img/platforms/${f.platformLogo}.svg`)}" alt="${logoNames[f.platformLogo]}" width="96" height="96" decoding="async">` : "";
+    f.platformLogo && !(f.posterHasLogo && !cls.includes("corner") && !cls.includes("above")) && !(cls.includes("above") && !f.posterHasLogo) ? `<img class="net-logo net-logo--${f.platformLogo} ${cls}" src="${asset(`img/platforms/${f.platformLogo}.svg`)}" alt="${logoNames[f.platformLogo]}" width="96" height="96" decoding="async">` : "";
   const platformBadge = (f, cls = "") =>
     f.platform ? `<p class="platform mono ${cls}"><span class="platform-dot" aria-hidden="true"></span>${f.kind === "series" ? "On" : "Seen at"} ${esc(f.platform)}</p>` : "";
   const teamLine = (f, cls = "") =>
@@ -34,7 +34,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
             ${f.logline ? `<p class="show-logline">${esc(f.logline)}</p>` : ""}
             <a class="btn btn--solid" href="${filmUrl(f)}"${i ? ' tabindex="-1"' : ""}>View project ${arrow}</a>
           </div>
-          <a class="show-poster" href="${filmUrl(f)}" tabindex="-1" aria-hidden="true">${poster(f, `sp-${f.slug}`)}${netLogo(f)}</a>
+          <div class="show-art">${netLogo(f, "net-logo--above")}<a class="show-poster" href="${filmUrl(f)}" tabindex="-1" aria-hidden="true">${poster(f, `sp-${f.slug}`)}${netLogo(f)}</a></div>
         </div>
       </article>`;
       })
@@ -60,7 +60,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   <div class="hero-stage" aria-hidden="true">
     <div class="portal">
       <div class="portal-glow"></div>
-      <img class="portal-img" src="${asset("img/box.webp")}" alt="" width="1600" height="1600" decoding="async" fetchpriority="high">
+      <img class="portal-img portal-img--mark" src="${asset("img/box-mark.webp")}" alt="" width="1400" height="1400" decoding="async" fetchpriority="high">
     </div>
     <div class="hero-sweep"></div>
   </div>
