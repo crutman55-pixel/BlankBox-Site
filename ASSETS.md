@@ -30,7 +30,7 @@ Run `npm run build` afterwards. The build lists any assets that are still missin
 | Unicorn Academy | Verified (Netflix, Spin Master; Levi in sound dept.; CSA nomination 2025). His LinkedIn also lists a 2026 CSA **win**, which isn't on the site until it's confirmed | Netflix key art (supplied by owner; © Spin Master) | 2 (supplied by owner) | Not found |
 | Mighty Express | Verified (Netflix, Spin Master; Levi sound designer, 4 episodes 2022) | Netflix key art plus an alternate (supplied by owner; © Spin Master) | 1 (supplied by owner) | Not found |
 | Sago Mini Friends | Verified (Apple TV+; Levi sound designer) | Apple TV+ key art (supplied by owner) | 1 (supplied by owner) | Not found |
-| Green Grass | From the official poster (credits, festival laurels). Levi: Foley artistry & sound design | **Awaiting file**: poster was sent in chat but not saved | **Awaiting file** | Not found |
+| Green Grass | From the official poster (credits, festival laurels). Levi: Foley artistry & sound design | Official poster (supplied by owner) | 1 (supplied by owner) | Not found |
 | Violent (2014) | Verified (dir. Andrew Huculiak; VIFF awards; TIFF Canada's Top Ten; Levi asst. sound effects editor). Full credits come from the official poster | Official poster plus an alternate (supplied by owner) | Missing | Not found |
 
 Levi Considine's credits come from IMDb (nm6346683) and his LinkedIn. *Ozion* (2016) is also on his IMDb page, but no public details could be found, so it isn't listed.
