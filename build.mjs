@@ -39,7 +39,9 @@ const missing = [];
 const poster = (film, id) => {
   const file = findImage("posters", film.slug);
   if (!file) return titleCard(film, { id });
-  return `<img class="poster-img" src="${base}/assets/${file}" alt="Poster for ${esc(film.title)}" loading="lazy" decoding="async" width="600" height="900">`;
+  // Show the whole poster whatever its shape; a blurred copy fills any space around it.
+  const src = `${base}/assets/${file}`;
+  return `<span class="poster-fit" style="--poster:url('${src}')"><img class="poster-img" src="${src}" alt="Poster for ${esc(film.title)}" loading="lazy" decoding="async"></span>`;
 };
 films.forEach((f) => !findImage("posters", f.slug) && missing.push(`poster: src/assets/posters/${f.slug}.jpg (${f.title})`));
 

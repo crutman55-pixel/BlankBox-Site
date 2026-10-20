@@ -10,6 +10,7 @@ export const films = [
   // ---- Credits of Levi Considine, Creative Specialist (IMDb nm6346683). Shown first on the slate.
   {
     slug: "unicorn-academy",
+    posterHasLogo: true,
     platformLogo: "netflix",
     title: "Unicorn Academy",
     year: "2023–",
@@ -53,6 +54,7 @@ export const films = [
   },
   {
     slug: "mighty-express",
+    posterHasLogo: true,
     platformLogo: "netflix",
     title: "Mighty Express",
     year: "2020–2022",

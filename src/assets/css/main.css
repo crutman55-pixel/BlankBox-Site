@@ -752,3 +752,11 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
 @media (min-width: 861px) { .hero-actions { justify-content: flex-start; } .hero-brands { flex-basis: 100%; width: auto; max-width: 100%; } }
 .hero-brands-row { flex-basis: 100%; display: flex; }
 .hero-brands-row .hero-brands { flex-basis: auto; width: fit-content; }
+
+/* Posters of any aspect ratio: shown whole, with a blurred fill behind */
+.poster-fit { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; background: var(--charcoal); }
+.poster-fit::before { content: ""; position: absolute; inset: -12%; background: var(--poster) center / cover no-repeat; filter: blur(26px) brightness(0.55) saturate(1.1); }
+.poster-fit > .poster-img { position: relative; width: 100%; height: 100%; object-fit: contain; }
+.show-bg--poster .poster-fit::before { display: none; }
+.show-bg--poster .poster-fit > .poster-img { object-fit: cover; }
+.film-hero-bg .poster-fit > .poster-img { object-fit: cover; }

@@ -13,7 +13,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   const byline = (f) => f.byline || `A film by ${f.filmmaker}`;
   const logoNames = { netflix: "Netflix", appletv: "Apple TV+", hgtv: "HGTV" };
   const netLogo = (f, cls = "") =>
-    f.platformLogo ? `<img class="net-logo net-logo--${f.platformLogo} ${cls}" src="${asset(`img/platforms/${f.platformLogo}.svg`)}" alt="${logoNames[f.platformLogo]}" width="96" height="96" decoding="async">` : "";
+    f.platformLogo && !(f.posterHasLogo && !cls.includes("corner")) ? `<img class="net-logo net-logo--${f.platformLogo} ${cls}" src="${asset(`img/platforms/${f.platformLogo}.svg`)}" alt="${logoNames[f.platformLogo]}" width="96" height="96" decoding="async">` : "";
   const platformBadge = (f, cls = "") =>
     f.platform ? `<p class="platform mono ${cls}"><span class="platform-dot" aria-hidden="true"></span>${f.kind === "series" ? "On" : "Seen at"} ${esc(f.platform)}</p>` : "";
   const teamLine = (f, cls = "") =>
@@ -175,7 +175,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     return `
 <section class="page-hero wrap" aria-labelledby="work-title">
   <p class="mono section-label reveal">Our Work</p>
-  <h1 class="page-title display" id="work-title"><span class="line"><span>The slate.</span></span></h1>
+  <h1 class="page-title display" id="work-title"><span class="line"><span>Selected credits.</span></span></h1>
   <p class="page-lede reveal">Each project is its own world, built from the same conviction: start with an idea that won't leave you alone.</p>
 </section>
 
