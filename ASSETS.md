@@ -14,7 +14,7 @@ those sites don't grant reuse rights.
 | Portrait of Cole Rutman | `src/assets/img/cole-rutman.jpg` | 3:4 ratio. Replaces the monogram on the About page. |
 | Logo | `src/lib/layout.mjs` (the `mark()` SVG) and `src/favicon.svg` | The current mark is a stand-in: an open square. Swap in the official BLANKBOX logo. |
 
-Slugs: `blankbox`, `before-us-after-us`, `voices`, `twos-a-party`, `sail-to-the-moon`.
+Slugs: `blankbox`, `before-us-after-us`, `voices`, `twos-a-party`.
 
 Run `npm run build` afterwards. The build lists any assets that are still missing.
 
@@ -26,7 +26,6 @@ Run `npm run build` afterwards. The build lists any assets that are still missin
 | Before Us. After Us. (2024) | Verified | **Missing** | Missing | Released on YouTube on 15 Sep 2024, but no link verified yet |
 | Voices (2023) | Verified | **Missing** | Missing | Not found |
 | Two's a Party (2025) | Verified | **Missing** | Missing | Not found |
-| Sail to the Moon | **Unverified.** No public listing found under this title and filmmaker | **Missing** | **Awaiting upload from owner** | Not found |
 
 ## Sources
 
@@ -45,9 +44,6 @@ Run `npm run build` afterwards. The build lists any assets that are still missin
 
 ### Two's a Party
 - IMDb: https://www.imdb.com/title/tt37610798/ (2025 short, written and directed by Coen Leung, cast, Toronto)
-
-### Sail to the Moon
-- No source yet. Add the IMDb or official link to `src/data/films.mjs` along with the synopsis, year and cast.
 
 ### About page biography
 - The biography text was supplied by the site owner. Public searches could not independently

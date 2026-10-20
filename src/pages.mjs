@@ -76,7 +76,7 @@ export function createPages({ films, href, poster, portrait, stills }) {
   <div class="wrap section-head">
     <div>
       <p class="mono section-label reveal">Scene 02 — Selected work</p>
-      <h2 class="section-title display reveal" id="selected-title">Five films.<br><em>Five worlds.</em></h2>
+      <h2 class="section-title display reveal" id="selected-title">Four films.<br><em>Four worlds.</em></h2>
     </div>
     <div class="reel-controls reveal">
       <button class="icon-btn" type="button" data-reel-prev aria-label="Previous film">←</button>

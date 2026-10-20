@@ -47,19 +47,6 @@ const motifs = {
     <circle cx="370" cy="350" r="70" fill="${a}"/>
     <circle cx="370" cy="350" r="120" fill="${a}" opacity=".08"/>
     <line x1="80" y1="520" x2="520" y2="520" stroke="#ece8e0" stroke-width=".75" opacity=".2"/>`,
-
-  // Sail to the Moon: a horizon, a moon and a small sail.
-  moon: (a) => `
-    <circle cx="300" cy="300" r="120" fill="${a}" opacity=".9"/>
-    <circle cx="300" cy="300" r="190" fill="${a}" opacity=".05"/>
-    <line x1="40" y1="470" x2="560" y2="470" stroke="${a}" stroke-width="1" opacity=".6"/>
-    <path d="M300 410 L300 466 L268 466 Z" fill="#ece8e0" opacity=".85"/>
-    <line x1="300" y1="404" x2="300" y2="468" stroke="#ece8e0" stroke-width="1"/>
-    <g opacity=".25" stroke="${a}" stroke-width=".75">
-      <line x1="170" y1="490" x2="430" y2="490"/>
-      <line x1="220" y1="508" x2="380" y2="508"/>
-      <line x1="260" y1="524" x2="340" y2="524"/>
-    </g>`,
 };
 
 function splitTitle(title) {
