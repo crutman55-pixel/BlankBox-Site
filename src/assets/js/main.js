@@ -219,9 +219,9 @@
     const slides = $$(".show-slide", el);
     const tabs = $$("[data-show-go]", el);
     const pauseBtn = $("[data-show-pause]", el);
-    const ms = 6500;
+    const ms = 5000;
     el.style.setProperty("--show-ms", `${ms}ms`);
-    let i = 0, timer = 0, paused = reduced.matches, hover = false, visible = true;
+    let i = 0, timer = 0, paused = reduced.matches, visible = true;
 
     const go = (n) => {
       n = (n + slides.length) % slides.length;
@@ -244,11 +244,11 @@
     };
     const schedule = () => {
       clearTimeout(timer);
-      if (!paused && !hover && visible) timer = setTimeout(() => go(i + 1), ms);
+      if (!paused && visible) timer = setTimeout(() => go(i + 1), ms);
     };
     const setPaused = (p) => {
       paused = p;
-      el.classList.toggle("is-paused", p || hover);
+      el.classList.toggle("is-paused", p);
       pauseBtn.setAttribute("aria-label", p ? "Play slideshow" : "Pause slideshow");
       pauseBtn.textContent = p ? "▶" : "❚❚";
       schedule();
@@ -258,11 +258,7 @@
     $("[data-show-prev]", el).addEventListener("click", () => go(i - 1));
     $("[data-show-next]", el).addEventListener("click", () => go(i + 1));
     pauseBtn.addEventListener("click", () => setPaused(!paused));
-    // Pause while the visitor is reading or interacting.
-    el.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") { hover = true; el.classList.add("is-paused"); clearTimeout(timer); } });
-    el.addEventListener("pointerleave", () => { hover = false; el.classList.toggle("is-paused", paused); schedule(); });
-    el.addEventListener("focusin", () => { hover = true; clearTimeout(timer); });
-    el.addEventListener("focusout", () => { hover = false; schedule(); });
+    // Keeps rolling every 5 seconds; only the pause button (or reduced-motion settings) stops it.
     el.addEventListener("keydown", (e) => {
       if (e.key === "ArrowRight") go(i + 1);
       if (e.key === "ArrowLeft") go(i - 1);
