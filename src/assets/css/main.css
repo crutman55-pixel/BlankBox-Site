@@ -781,3 +781,11 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
 .portal-img--mark { mix-blend-mode: normal; }
 .portal { width: min(32vw, 500px, 56svh); }
 @media (max-width: 860px) { .portal { width: 70vw; } }
+
+/* Contact: the floating box from the original home hero */
+.contact-hero { position: relative; }
+.contact-box { position: absolute; right: var(--gutter); top: 50%; width: min(40vw, 600px, 64svh); aspect-ratio: 1; transform: translateY(-42%); pointer-events: none; }
+.contact-box img { width: 100%; height: 100%; animation: float 9s var(--ease-in-out) infinite alternate; }
+.contact-hero > :not(.contact-box) { position: relative; }
+@media (max-width: 860px) { .contact-box { right: -12vw; top: 26%; width: 70vw; opacity: 0.35; } }
+@media (max-width: 860px) { .contact-box { right: var(--gutter); top: 18%; width: 44vw; opacity: 0.5; transform: none; } }

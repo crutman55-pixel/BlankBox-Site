@@ -391,9 +391,10 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       : "";
 
     return `
-<section class="page-hero wrap" aria-labelledby="contact-title">
+<section class="page-hero contact-hero wrap" aria-labelledby="contact-title">
+  <div class="contact-box" aria-hidden="true"><img src="${asset("img/box.webp")}" alt="" width="1600" height="1600" decoding="async"></div>
   <p class="mono section-label reveal">Contact</p>
-  <h1 class="page-title display" id="contact-title"><span class="line"><span>Start with</span></span><span class="line"><span class="blank-word">Blank</span></span></h1>
+  <h1 class="page-title display" id="contact-title"><span class="line"><span>Start</span></span><span class="line"><span class="blank-word">Blank</span></span></h1>
   <p class="page-lede reveal">For projects, collaboration, screenings or press, we'd like to hear from you.</p>
 </section>
 
