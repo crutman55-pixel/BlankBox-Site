@@ -45,7 +45,7 @@ films.forEach((f) => !findImage("posters", f.slug) && missing.push(`poster: src/
 const portraitFile = findImage("img", "cole-rutman");
 if (!portraitFile) missing.push("portrait: src/assets/img/cole-rutman.jpg (About page)");
 const portrait = portraitFile
-  ? `<img src="${base}/assets/${portraitFile}" alt="Portrait of Cole Rutman" width="900" height="1200" decoding="async">`
+  ? `<img src="${base}/assets/${portraitFile}" alt="Portrait of Cole Rutman" width="359" height="452" decoding="async">`
   : `<div class="portrait-mono" role="img" aria-label="Cole Rutman monogram"><span class="vf" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="display">C<em>R</em></span><span class="mono">Cole Rutman — Producer &amp; Filmmaker</span></div>`;
 
 // Production stills: any images in src/assets/stills/<slug>/ appear in a gallery on that film's page.

@@ -194,18 +194,20 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
       .map((x) => `<div class="kv"><dt class="mono">${esc(x.label)}</dt><dd>${esc(x.value)}</dd></div>`)
       .join("");
 
+    const shots = stills(f);
+    const videoLabel = f.videoLabel || "Trailer";
     const trailer = f.trailer
       ? `<section class="film-trailer wrap" aria-label="Trailer">
-          <p class="mono section-label">Trailer</p>
+          <p class="mono section-label">${esc(videoLabel)}</p>
           <div class="video" data-video="${esc(f.trailer)}">
-            <button class="video-play" type="button" aria-label="Play the ${esc(f.title)} trailer">
-              <span class="video-play-icon" aria-hidden="true"></span><span class="mono">Play trailer</span>
+            <img class="video-cover" src="${shots[0] || `https://i.ytimg.com/vi/${encodeURIComponent(f.trailer)}/hqdefault.jpg`}" alt="" loading="lazy" decoding="async">
+            <button class="video-play" type="button" aria-label="${esc(videoLabel)}: ${esc(f.title)}">
+              <span class="video-play-icon" aria-hidden="true"></span><span class="mono">${esc(videoLabel)}</span>
             </button>
           </div>
         </section>`
       : "";
 
-    const shots = stills(f);
     const gallery = shots.length
       ? `<section class="film-stills wrap" aria-label="Production stills">
           <p class="mono section-label reveal">Stills</p>
@@ -230,7 +232,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
     return `
 <article class="film" style="--accent:${f.theme.accent};--ink:${f.theme.ink}">
   <header class="film-hero">
-    <div class="film-hero-bg" aria-hidden="true">${poster(f, `bg-${f.slug}`)}</div>
+    <div class="film-hero-bg${shots[0] ? " film-hero-bg--still" : ""}" aria-hidden="true">${shots[0] ? `<img src="${shots[0]}" alt="" decoding="async" fetchpriority="high">` : poster(f, `bg-${f.slug}`)}</div>
     <div class="film-hero-inner wrap">
       <a class="back mono" href="${href("/work/")}">← All work</a>
       <p class="mono section-label">${pad(i + 1)} / ${pad(films.length)}${metaLine(f) ? ` — ${esc(metaLine(f))}` : ""}</p>
@@ -313,6 +315,11 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
     <p class="display">Rutman's cinematic work often highlights <em>high-concept plots</em>, <em>complex storylines</em>, and <em>dark twists</em>.</p>
   </blockquote>
 </section>
+
+<figure class="about-onset wrap">
+  <div class="about-onset-img reveal-frame"><img src="${asset("img/cole-rutman-on-set.webp")}" alt="Cole Rutman directing an actor on a rocky shoreline" width="724" height="1086" loading="lazy" decoding="async"></div>
+  <figcaption class="reveal"><span class="mono section-label">Behind the camera</span><span class="display">On set, directing.</span></figcaption>
+</figure>
 
 <section class="about-grid wrap">
   <div class="about-col">

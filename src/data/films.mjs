@@ -105,17 +105,23 @@ export const films = [
     runtime: null,
     genres: [],
     filmmaker: "Cole Rutman",
-    tagline: null,
-    logline: null,
-    // Add the synopsis, cast and YouTube link once confirmed (set `trailer` to the video ID).
-    synopsis: [],
+    tagline: "Two brothers. No one else.",
+    logline:
+      "James and Lyle Boyd are brothers living alone in the south end of Detroit, Michigan, and Lyle, still a teenager, is facing possible prison time for theft.",
+    synopsis: [
+      "James and Lyle Boyd are brothers who live alone in the south end of Detroit, Michigan. Lyle, a teenager, is facing possible prison time for theft.",
+    ],
     credits: [{ role: "Written, directed & produced by", name: "Cole Rutman" }],
     cast: [],
-    facts: [{ label: "Country", value: "Canada" }],
-    links: [],
-    trailer: null,
+    facts: [
+      { label: "Setting", value: "Detroit, Michigan" },
+      { label: "Watch", value: "Full film on YouTube" },
+    ],
+    links: [{ label: "Watch on YouTube", href: "https://www.youtube.com/watch?v=X3jv-9FzKEU" }],
+    trailer: "X3jv-9FzKEU",
+    videoLabel: "Watch the film",
     theme: { accent: "#c08a5a", ink: "#0b0a0a", motif: "bridge" },
-    sources: ["Biography and poster supplied by Cole Rutman"],
+    sources: ["https://www.youtube.com/watch?v=X3jv-9FzKEU", "Biography and poster supplied by Cole Rutman"],
   },
   {
     slug: "voices",
@@ -130,7 +136,7 @@ export const films = [
       "Ukrainian newcomers to Canada share, in their own words, how the war has changed their lives.",
     synopsis: [
       "Voices brings together interviews with Ukrainian refugees, from children to adults, who describe the impact the war has had on their lives.",
-      "Cole Rutman began the project after the full-scale invasion in February 2022. He pitched it to Western University's Arts and Humanities Student Donation Fund and recruited a crew of 25 students through the faculty's internship program. The film was screened in Toronto and at Western in the fall of 2023.",
+      "Cole Rutman began the project after the full-scale invasion in February 2022. He pitched it to Western University's Arts and Humanities Student Donation Fund and recruited a crew of 25 students through the faculty's internship program. Its first screening, in Toronto, drew about 100 people, and it was later shown in Western's McKellar Room to an audience that included Ukrainian newcomers.",
     ],
     credits: [
       { role: "Directed & produced by", name: "Cole Rutman" },
@@ -138,7 +144,10 @@ export const films = [
     ],
     cast: [],
     facts: [
-      { label: "Screenings", value: "Toronto and Western University, 2023" },
+      { label: "Full title", value: "A Voices Documentary: Ukrainians Finding Safety in Canada" },
+      { label: "Premiere", value: "Toronto, 2023 (about 100 attendees)" },
+      { label: "Screenings", value: "McKellar Room, Western University, November 2023" },
+      { label: "Funding", value: "Western Arts and Humanities Student Donation Fund" },
       { label: "Country", value: "Canada" },
     ],
     links: [
