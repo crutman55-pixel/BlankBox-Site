@@ -81,7 +81,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       <div class="hero-actions reveal">
         <a class="btn btn--solid" href="${href("/work/")}">Explore our work ${arrow}</a>
         <a class="btn btn--ghost" href="${href("/about/")}">About Us</a>
-        <a class="hero-brands" href="${href("/brands/")}">Our work with brands ${arrow}</a>
+        <span class="hero-brands-row"><a class="hero-brands" href="${href("/brands/")}">Our work with brands ${arrow}</a></span>
       </div>
     </div>
   </div>
