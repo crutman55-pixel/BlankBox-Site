@@ -41,6 +41,14 @@ const motifs = {
     return out;
   },
 
+  // Where We Lie: a truss bridge over a horizon.
+  bridge: (a) => `
+    <g fill="none" stroke="${a}" stroke-width="1.5" opacity=".85">
+      <path d="M60 330 H540 M60 400 H540"/>
+      <path d="M60 400 L120 330 L180 400 L240 330 L300 400 L360 330 L420 400 L480 330 L540 400"/>
+    </g>
+    <line x1="40" y1="470" x2="560" y2="470" stroke="#ece8e0" stroke-width=".75" opacity=".25"/>`,
+
   // Two's a Party: two figures. One of them shouldn't be there.
   pair: (a) => `
     <circle cx="230" cy="350" r="70" fill="none" stroke="#ece8e0" stroke-width="1.25" opacity=".55"/>

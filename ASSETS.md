@@ -12,9 +12,9 @@ those sites don't grant reuse rights.
 | Poster | `src/assets/posters/<slug>.jpg` (`.webp` / `.png` also work) | 2:3 ratio, about 1200×1800 px. Replaces the typographic title card everywhere. |
 | Production stills | `src/assets/stills/<slug>/01.jpg`, `02.jpg`, … | Wide, about 16:9 and 2000 px across. Shown in a gallery on the film page in filename order. |
 | Portrait of Cole Rutman | `src/assets/img/cole-rutman.jpg` | 3:4 ratio. Replaces the monogram on the About page. |
-| Logo | `src/lib/layout.mjs` (the `mark()` SVG) and `src/favicon.svg` | The current mark is a stand-in: an open square. Swap in the official BLANKBOX logo. |
+| Logo | `src/assets/img/logo-mark.webp`, `logo-lockup.webp` | Official BLANKBOX logo, supplied by owner. Blacks are crushed to pure black so it blends into the page. |
 
-Slugs: `blankbox`, `before-us-after-us`, `voices`, `twos-a-party`.
+Slugs: `blankbox`, `before-us-after-us`, `where-we-lie`, `voices`, `twos-a-party`.
 
 Run `npm run build` afterwards. The build lists any assets that are still missing.
 
@@ -23,7 +23,8 @@ Run `npm run build` afterwards. The build lists any assets that are still missin
 | Title | Facts | Poster | Stills | Trailer |
 |---|---|---|---|---|
 | BlankBox (2026) | Verified | **Missing** | Missing | Not found |
-| Before Us. After Us. (2024) | Verified | **Missing** | Missing | Released on YouTube on 15 Sep 2024, but no link verified yet |
+| Before Us. After Us. (2024) | Verified | Official poster plus an alternate (supplied by owner) | 1 (supplied by owner) | Released on YouTube on 15 Sep 2024, but no link verified yet |
+| Where We Lie (2024) | From the owner's biography only. No public listing found (IMDb's "Where We Lie" is a different 2022 UK short) | Supplied by owner | Missing | **Needs YouTube link** |
 | Voices (2023) | Verified | **Missing** | Missing | Not found |
 | Two's a Party (2025) | Verified | **Missing** | Missing | Not found |
 

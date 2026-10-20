@@ -105,6 +105,12 @@
       { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
     );
     items.forEach((el) => io.observe(el));
+    const sweep = () =>
+      items.forEach((el) => {
+        if (!el.classList.contains("is-in") && el.getBoundingClientRect().top < window.innerHeight) el.classList.add("is-in");
+      });
+    window.addEventListener("scroll", () => requestAnimationFrame(sweep), { passive: true });
+    setTimeout(sweep, 1200);
   }
 
   /* Statements light up word by word as they cross the viewport. */

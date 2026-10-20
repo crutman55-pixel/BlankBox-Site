@@ -74,7 +74,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
   <div class="wrap section-head">
     <div>
       <p class="mono section-label reveal">Scene 02 — Selected work</p>
-      <h2 class="section-title display reveal" id="selected-title">Four films.<br><em>Four worlds.</em></h2>
+      <h2 class="section-title display reveal" id="selected-title">Five films.<br><em>Five worlds.</em></h2>
     </div>
     <div class="reel-controls reveal">
       <button class="icon-btn" type="button" data-reel-prev aria-label="Previous film">←</button>
@@ -149,7 +149,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
           <h2 class="chapter-title display reveal" id="t-${f.slug}">${esc(f.title)}</h2>
           <p class="chapter-by mono reveal">A film by ${esc(f.filmmaker)}</p>
           ${metaLine(f) ? `<p class="chapter-meta mono reveal">${esc(metaLine(f))}${f.genres.length ? ` · ${esc(f.genres.slice(0, 2).join(" / "))}` : ""}</p>` : ""}
-          ${f.logline ? `<p class="chapter-logline reveal">${esc(f.logline)}</p>` : `<p class="chapter-logline chapter-logline--tba reveal">Details for this title will be announced.</p>`}
+          ${f.logline ? `<p class="chapter-logline reveal">${esc(f.logline)}</p>` : `<p class="chapter-logline chapter-logline--tba reveal">Synopsis coming soon.</p>`}
           <a class="btn btn--ghost reveal" href="${filmUrl(f)}">View project ${arrow}</a>
         </div>
       </article>`,
@@ -247,7 +247,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
     <div class="film-info">
       ${
         tba
-          ? `<section class="film-section reveal"><h2 class="mono section-label">Status</h2><p class="film-synopsis">Details for this title, including synopsis, cast and release information, will be announced.</p></section>`
+          ? `<section class="film-section reveal"><h2 class="mono section-label">Synopsis</h2><p class="film-synopsis chapter-logline--tba">Synopsis coming soon.</p></section>`
           : `<section class="film-section reveal"><h2 class="mono section-label">Synopsis</h2>${f.synopsis.map((p) => `<p class="film-synopsis">${esc(p)}</p>`).join("")}</section>`
       }
       <section class="film-section reveal"><h2 class="mono section-label">Credits</h2><dl class="kv-list">${credits}</dl></section>
@@ -278,7 +278,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
     const filmography = [
       { title: "Voices", year: 2023, slug: "voices", note: "Documentary" },
       { title: "Before Us. After Us.", year: 2024, slug: "before-us-after-us", note: "Short film" },
-      { title: "Where We Lie", year: 2024, note: "Short film" },
+      { title: "Where We Lie", year: 2024, slug: "where-we-lie", note: "Short film" },
       { title: "BlankBox", year: 2026, slug: "blankbox", note: "Short film" },
       { title: "Archival: The Hampton Inheritance", year: 2026, note: "Short film" },
     ]

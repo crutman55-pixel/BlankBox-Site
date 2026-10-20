@@ -102,7 +102,7 @@ export function createLayout({ base, version }) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="${asset("css/main.css")}">
-<script>document.documentElement.classList.add("js")</script>
+<script>document.documentElement.classList.add("js");setTimeout(function(){var d=document.documentElement;if(!d.classList.contains("is-booted"))d.classList.remove("js")},3000)</script>
 ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}
 <script src="${asset("js/main.js")}" defer></script>
 </head>

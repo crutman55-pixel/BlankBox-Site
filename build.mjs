@@ -108,7 +108,7 @@ const emit = (path, opts) => {
 emit("/", { title: "", body: pages.home(), current: "/", bodyClass: "page-home", jsonLd: org });
 emit("/work/", {
   title: "Our Work",
-  description: "The BLANKBOX ENTERTAINMENT slate: BlankBox, Before Us. After Us., Voices and Two's a Party.",
+  description: "The BLANKBOX ENTERTAINMENT slate: BlankBox, Before Us. After Us., Where We Lie, Voices and Two's a Party.",
   body: pages.work(),
   current: "/work/",
   bodyClass: "page-work",
