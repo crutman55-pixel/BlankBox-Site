@@ -163,7 +163,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
           <h2 class="chapter-title display reveal" id="t-${f.slug}">${esc(f.title)}</h2>
           <p class="chapter-by mono reveal">${esc(byline(f))}</p>
           ${metaLine(f) ? `<p class="chapter-meta mono reveal">${esc(metaLine(f))}${f.genres.filter((g) => g !== f.format).length ? ` · ${esc(f.genres.filter((g) => g !== f.format).slice(0, 2).join(" / "))}` : ""}</p>` : ""}
-          ${teamLine(f, "reveal")}
           ${f.logline ? `<p class="chapter-logline reveal">${esc(f.logline)}</p>` : `<p class="chapter-logline chapter-logline--tba reveal">Synopsis coming soon.</p>`}
           <a class="btn btn--ghost reveal" href="${filmUrl(f)}">View project ${arrow}</a>
         </div>
