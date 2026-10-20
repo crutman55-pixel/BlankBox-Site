@@ -10,6 +10,7 @@ export const films = [
   // ---- Credits of Levi Considine, Creative Specialist (IMDb nm6346683). Shown first on the slate.
   {
     slug: "unicorn-academy",
+    hideLogoAbovePoster: true, // the poster already says "A Netflix Series"
     posterHasLogo: true,
     platformLogo: "netflix",
     title: "Unicorn Academy",
