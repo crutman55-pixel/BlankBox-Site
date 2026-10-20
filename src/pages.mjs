@@ -7,7 +7,7 @@ const ext = `<span aria-hidden="true">↗</span>`;
 
 const viewfinder = `<span class="vf" aria-hidden="true"><i></i><i></i><i></i><i></i></span>`;
 
-export function createPages({ films, href, poster, portrait, stills }) {
+export function createPages({ films, href, asset, poster, portrait, stills, keyArt }) {
   const filmUrl = (f) => href(`/work/${f.slug}/`);
   const metaLine = (f) => [f.year, f.format, f.runtime].filter(Boolean).join(" · ");
 
@@ -33,9 +33,7 @@ export function createPages({ films, href, poster, portrait, stills }) {
   <div class="intro-bar intro-bar--top"></div>
   <div class="intro-bar intro-bar--bottom"></div>
   <div class="intro-center">
-    <svg class="intro-box" viewBox="0 0 120 120"><path d="M84 10H10v100h100V36" pathLength="1"/><rect x="100" y="10" width="10" height="10"/></svg>
-    <p class="intro-word">BLANKBOX</p>
-    <p class="intro-sub mono">Entertainment</p>
+    <img class="intro-logo" src="${asset("img/logo-lockup.webp")}" alt="" width="503" height="230" fetchpriority="high">
   </div>
 </div>
 
@@ -219,6 +217,16 @@ export function createPages({ films, href, poster, portrait, stills }) {
         </section>`
       : "";
 
+    const alts = keyArt(f);
+    const keyArtSection = alts.length
+      ? `<section class="film-keyart wrap" aria-label="Alternate key art">
+          <p class="mono section-label reveal">Key art</p>
+          <ul class="keyart">${alts
+            .map((src, n) => `<li class="poster-frame reveal-frame"><img src="${src}" alt="Alternate poster ${n + 1} for ${esc(f.title)}" loading="lazy" decoding="async"></li>`)
+            .join("")}</ul>
+        </section>`
+      : "";
+
     return `
 <article class="film" style="--accent:${f.theme.accent};--ink:${f.theme.ink}">
   <header class="film-hero">
@@ -255,6 +263,7 @@ export function createPages({ films, href, poster, portrait, stills }) {
     </div>
   </div>
   ${gallery}
+  ${keyArtSection}
   ${trailer}
 
   <nav class="film-nav wrap" aria-label="More films">

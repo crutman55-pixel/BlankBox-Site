@@ -5,10 +5,7 @@ export function createLayout({ base, version }) {
   const href = (p) => `${base}${p}`;
   const asset = (p) => `${base}/assets/${p}?v=${version}`;
 
-  const mark = (cls = "mark") => `<svg class="${cls}" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-    <path d="M22 4H4v24h24V10" fill="none" stroke="currentColor" stroke-width="2"/>
-    <rect x="25" y="4" width="3" height="3" fill="currentColor"/>
-  </svg>`;
+  const mark = (cls = "mark") => `<img class="${cls}" src="${asset("img/logo-mark.webp")}" alt="" width="240" height="207" decoding="async">`;
 
   const brand = `<a class="brand" href="${href("/")}" aria-label="${esc(site.name)}, home">
     ${mark()}
@@ -46,8 +43,7 @@ export function createLayout({ base, version }) {
   </div>
   <div class="footer-grid">
     <div class="footer-brand">
-      ${mark("mark mark-lg")}
-      <p class="footer-word">BLANKBOX<br><span>Entertainment</span></p>
+      <img class="footer-lockup" src="${asset("img/logo-lockup.webp")}" alt="${esc(site.name)}" width="503" height="230" decoding="async">
     </div>
     <div>
       <p class="footer-h mono">Navigate</p>
@@ -100,10 +96,11 @@ export function createLayout({ base, version }) {
 <meta name="twitter:title" content="${esc(fullTitle)}">
 <meta name="twitter:description" content="${esc(description)}">
 <meta name="twitter:image" content="${ogImage}">
-<link rel="icon" href="${base}/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="${base}/favicon.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="${base}/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="${asset("css/main.css")}">
 <script>document.documentElement.classList.add("js")</script>
 ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}
@@ -121,5 +118,5 @@ ${footer()}
 `;
   }
 
-  return { page, href, asset, mark };
+  return { page, href, asset };
 }

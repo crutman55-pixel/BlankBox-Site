@@ -18,10 +18,17 @@ const out = join(root, "dist");
 const base = (process.env.BASE_PATH || "").replace(/\/$/, "");
 const version = Date.now().toString(36);
 
-const { page, href } = createLayout({ base, version });
+const { page, href, asset } = createLayout({ base, version });
 
 // --- Assets: use a supplied image when it exists, otherwise fall back gracefully.
 const imageExts = ["webp", "jpg", "jpeg", "png", "avif"];
+// Alternate posters: src/assets/posters/<slug>-alt.webp, <slug>-alt-2.jpg, …
+const keyArt = (film) =>
+  readdirSync(join(src, "assets", "posters"))
+    .filter((f) => f.startsWith(`${film.slug}-alt`) && imageExts.includes(f.split(".").pop().toLowerCase()))
+    .sort()
+    .map((f) => `${base}/assets/posters/${f}`);
+
 const findImage = (dir, name) => {
   for (const e of imageExts) if (existsSync(join(src, "assets", dir, `${name}.${e}`))) return `${dir}/${name}.${e}`;
   return null;
@@ -51,7 +58,7 @@ const stills = (film) => {
     .map((f) => `${base}/assets/stills/${film.slug}/${f}`);
 };
 
-const pages = createPages({ films, href, poster, portrait, stills });
+const pages = createPages({ films, href, asset, poster, portrait, stills, keyArt });
 
 // --- Structured data
 const org = {
@@ -59,7 +66,7 @@ const org = {
   "@type": "Organization",
   name: site.name,
   url: site.url,
-  logo: `${site.url}/favicon.svg`,
+  logo: `${site.url}/assets/img/logo-lockup.png`,
   description: site.description,
   sameAs: site.social.map((s) => s.href),
 };
@@ -134,7 +141,7 @@ emit("/contact/", {
 write("404.html", page({ path: "/404.html", title: "Page not found", body: pages.notFound(), bodyClass: "page-404" }));
 
 cpSync(join(src, "assets"), join(out, "assets"), { recursive: true });
-cpSync(join(src, "favicon.svg"), join(out, "favicon.svg"));
+for (const f of ["favicon.png", "apple-touch-icon.png"]) cpSync(join(src, f), join(out, f));
 write(".nojekyll", "");
 write("robots.txt", `User-agent: *\nAllow: /\nSitemap: ${site.url}/sitemap.xml\n`);
 write(

@@ -65,7 +65,11 @@ export const films = [
     credits: [
       { role: "Written & directed by", name: "Cole Rutman" },
       { role: "Producer", name: "Jack Kukolic" },
+      { role: "Executive producer", name: "Cole Rutman" },
+      { role: "Director of photography", name: "Michal Kedzierski" },
+      { role: "Editor", name: "Amanda Hacksel" },
       { role: "Music", name: "David Han" },
+      { role: "Assistant directors", name: "Emily Lindgreen, Eden Wassermann" },
       { role: "Studio", name: "Oakwood Films" },
     ],
     cast: [
@@ -90,6 +94,7 @@ export const films = [
       "https://letterboxd.com/film/before-us-after-us/",
       "https://www.oakwoodfilms.ca/before-us-after-us",
       "https://www.imdb.com/title/tt32744669/",
+      "Official poster (supplied by Cole Rutman)",
     ],
   },
   {
