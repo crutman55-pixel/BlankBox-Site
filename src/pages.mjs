@@ -129,8 +129,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 
 <section class="enter" aria-label="Full portfolio">
   <a class="enter-link" href="${href("/work/")}">
-    <span class="mono enter-label">Scene 02 — The full slate</span>
-    <span class="enter-title display"><span>View our slate</span> ${arrow}</span>
+    <span class="enter-title display"><span>View our credits</span> ${arrow}</span>
   </a>
 </section>`;
   }
