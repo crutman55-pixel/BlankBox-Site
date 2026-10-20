@@ -182,7 +182,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
       .join("");
     const facts = [
       f.year && { label: "Year", value: f.year },
-      { label: "Format", value: f.format },
+      f.format && { label: "Format", value: f.format },
       f.runtime && { label: "Runtime", value: f.runtime },
       f.genres.length && { label: "Genre", value: f.genres.join(", ") },
       ...f.facts,
@@ -276,10 +276,10 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
   function about() {
     const filmography = [
       { title: "Voices", year: 2023, slug: "voices", note: "Documentary" },
-      { title: "Before Us. After Us.", year: 2024, slug: "before-us-after-us", note: "Short film" },
-      { title: "Where We Lie", year: 2024, slug: "where-we-lie", note: "Short film" },
-      { title: "BlankBox", year: 2026, slug: "blankbox", note: "Short film" },
-      { title: "Archival: The Hampton Inheritance", year: 2026, note: "Short film" },
+      { title: "Before Us. After Us.", year: 2024, slug: "before-us-after-us", note: "" },
+      { title: "Where We Lie", year: 2024, slug: "where-we-lie", note: "" },
+      { title: "BlankBox", year: 2026, slug: "blankbox", note: "" },
+      { title: "Archival: The Hampton Inheritance", year: 2026, note: "" },
     ]
       .map(
         (x) => `<li class="reveal">${
@@ -321,7 +321,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
 <section class="about-grid wrap">
   <div class="about-col">
     <p class="mono section-label reveal">Filmography</p>
-    <p class="about-body reveal">He has written, directed, and produced several short films, including Voices (2023), Before Us. After Us. (2024), Where We Lie (2024), BlankBox (2026), and Archival: The Hampton Inheritance (2026).</p>
+    <p class="about-body reveal">He has written, directed, and produced several films, including Voices (2023), Before Us. After Us. (2024), Where We Lie (2024), BlankBox (2026), and Archival: The Hampton Inheritance (2026).</p>
     <ol class="filmography">${filmography}</ol>
   </div>
   <div class="about-col">
