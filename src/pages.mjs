@@ -1,0 +1,403 @@
+import { site } from "./config.mjs";
+import { esc } from "./lib/util.mjs";
+
+const pad = (n) => String(n).padStart(2, "0");
+const arrow = `<span class="arrow" aria-hidden="true">→</span>`;
+const ext = `<span aria-hidden="true">↗</span>`;
+
+const viewfinder = `<span class="vf" aria-hidden="true"><i></i><i></i><i></i><i></i></span>`;
+
+export function createPages({ films, href, poster, portrait, stills }) {
+  const filmUrl = (f) => href(`/work/${f.slug}/`);
+  const metaLine = (f) => [f.year, f.format, f.runtime].filter(Boolean).join(" · ");
+
+  /* ---------------------------------------------------------------- HOME */
+  function home() {
+    const reel = films
+      .map(
+        (f, i) => `<li class="reel-item" style="--accent:${f.theme.accent}">
+        <a class="reel-link" href="${filmUrl(f)}">
+          <span class="reel-num mono">${pad(i + 1)}</span>
+          <span class="reel-poster">${poster(f, `reel-${f.slug}`)}</span>
+          <span class="reel-title">${esc(f.title)}</span>
+          <span class="reel-meta mono">${esc(f.filmmaker)}${f.year ? ` · ${f.year}` : ""}</span>
+        </a>
+      </li>`,
+      )
+      .join("");
+
+    const feature = films[0];
+
+    return `
+<div class="intro" data-intro aria-hidden="true">
+  <div class="intro-bar intro-bar--top"></div>
+  <div class="intro-bar intro-bar--bottom"></div>
+  <div class="intro-center">
+    <svg class="intro-box" viewBox="0 0 120 120"><path d="M84 10H10v100h100V36" pathLength="1"/><rect x="100" y="10" width="10" height="10"/></svg>
+    <p class="intro-word">BLANKBOX</p>
+    <p class="intro-sub mono">Entertainment</p>
+  </div>
+</div>
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-stage" aria-hidden="true">
+    <div class="hero-box"></div>
+    <div class="hero-sweep"></div>
+  </div>
+  <div class="hero-frame" aria-hidden="true">
+    ${viewfinder}
+    <span class="hero-tc mono"><span class="rec"></span><span data-timecode>00:00:00:00</span></span>
+    <span class="hero-ratio mono">2.39 : 1</span>
+  </div>
+  <div class="hero-inner wrap">
+    <p class="eyebrow mono reveal">Film &amp; Television Development</p>
+    <h1 class="hero-title display" id="hero-title">
+      <span class="line"><span>Every story</span></span>
+      <span class="line"><span>begins as a</span></span>
+      <span class="line"><span><em>blank box.</em></span></span>
+    </h1>
+    <div class="hero-foot">
+      <p class="hero-lede reveal">BLANKBOX ENTERTAINMENT develops film and television for the next generation: high-concept ideas, intricate structures, and endings that keep turning after the credits roll.</p>
+      <div class="hero-actions reveal">
+        <a class="btn btn--solid" href="${href("/work/")}">Explore our work ${arrow}</a>
+        <a class="btn btn--ghost" href="${href("/about/")}">Meet the filmmaker</a>
+      </div>
+    </div>
+  </div>
+  <a class="scroll-cue mono" href="#statement"><span>Scroll</span><i aria-hidden="true"></i></a>
+</section>
+
+<section class="statement wrap" id="statement" aria-label="Our philosophy">
+  <p class="statement-label mono reveal">Scene 01 — The premise</p>
+  <p class="statement-text display" data-words>We are drawn to stories that ask a difficult question, then refuse to let the audience off easily. An empty frame is not a lack of ideas. It is the place every great one starts.</p>
+</section>
+
+<section class="selected" aria-labelledby="selected-title">
+  <div class="wrap section-head">
+    <div>
+      <p class="mono section-label reveal">Scene 02 — Selected work</p>
+      <h2 class="section-title display reveal" id="selected-title">Five films.<br><em>Five worlds.</em></h2>
+    </div>
+    <div class="reel-controls reveal">
+      <button class="icon-btn" type="button" data-reel-prev aria-label="Previous film">←</button>
+      <button class="icon-btn" type="button" data-reel-next aria-label="Next film">→</button>
+    </div>
+  </div>
+  <ol class="reel" data-reel tabindex="0" aria-label="Selected films, scroll horizontally">${reel}</ol>
+</section>
+
+<section class="spotlight wrap" style="--accent:${feature.theme.accent}" aria-labelledby="spotlight-title">
+  <div class="spotlight-poster reveal-frame">${poster(feature, "spotlight")}</div>
+  <div class="spotlight-copy">
+    <p class="mono section-label reveal">Scene 03 — The namesake</p>
+    <h2 class="section-title display reveal" id="spotlight-title">${esc(feature.title)}</h2>
+    <p class="spotlight-meta mono reveal">${esc(metaLine(feature))} · A film by ${esc(feature.filmmaker)}</p>
+    <p class="spotlight-text reveal">${esc(feature.logline)}</p>
+    <p class="spotlight-note reveal">The company shares its name with Cole Rutman's 2026 short, a story about what we lose when a system decides what we should feel.</p>
+    <a class="btn btn--ghost reveal" href="${filmUrl(feature)}">Inside ${esc(feature.title)} ${arrow}</a>
+  </div>
+</section>
+
+<section class="approach wrap" aria-labelledby="approach-title">
+  <div class="section-head">
+    <div>
+      <p class="mono section-label reveal">Scene 04 — How we develop</p>
+      <h2 class="section-title display reveal" id="approach-title">Ideas first.<br><em>Then everything else.</em></h2>
+    </div>
+  </div>
+  <ol class="approach-list">
+    <li class="reveal"><span class="mono">01</span><h3>The concept carries the weight</h3><p>Every project starts with an idea strong enough to hold an audience in a single sentence. If it can't, we keep working until it can.</p></li>
+    <li class="reveal"><span class="mono">02</span><h3>Structure is part of the spectacle</h3><p>Fractured memory, unreliable systems, timelines that fold back on themselves. We treat the architecture of a story as part of the experience.</p></li>
+    <li class="reveal"><span class="mono">03</span><h3>The turn has to be earned</h3><p>We build toward endings that reframe everything before them. Darker and stranger than expected, but never a trick.</p></li>
+    <li class="reveal"><span class="mono">04</span><h3>Room to grow</h3><p>We develop worlds with more story in them than a single runtime can hold, so a short can become the proof of something larger.</p></li>
+  </ol>
+</section>
+
+<section class="enter" aria-label="Full portfolio">
+  <a class="enter-link" href="${href("/work/")}">
+    <span class="mono enter-label">Scene 05 — The full slate</span>
+    <span class="enter-title display"><span>Enter the work</span> ${arrow}</span>
+  </a>
+</section>`;
+  }
+
+  /* ---------------------------------------------------------------- WORK */
+  function work() {
+    const index = films
+      .map(
+        (f, i) => `<li style="--accent:${f.theme.accent}">
+        <a href="#${f.slug}" data-preview="${f.slug}">
+          <span class="mono idx">${pad(i + 1)}</span>
+          <span class="t">${esc(f.title)}</span>
+          <span class="mono by">${esc(f.filmmaker)}</span>
+          <span class="mono yr">${f.year ?? "TBA"}</span>
+        </a>
+      </li>`,
+      )
+      .join("");
+
+    const previews = films
+      .map((f) => `<div class="preview-card" data-preview-card="${f.slug}">${poster(f, `pv-${f.slug}`)}</div>`)
+      .join("");
+
+    const chapters = films
+      .map(
+        (f, i) => `<article class="chapter${i % 2 ? " chapter--alt" : ""}" id="${f.slug}" style="--accent:${f.theme.accent};--ink:${f.theme.ink}" aria-labelledby="t-${f.slug}">
+        <div class="chapter-poster">
+          <a class="poster-frame reveal-frame" href="${filmUrl(f)}" tabindex="-1" aria-hidden="true">${poster(f, `ch-${f.slug}`)}</a>
+        </div>
+        <div class="chapter-copy">
+          <p class="chapter-num mono reveal"><span>${pad(i + 1)}</span> / ${pad(films.length)}</p>
+          <h2 class="chapter-title display reveal" id="t-${f.slug}">${esc(f.title)}</h2>
+          <p class="chapter-by mono reveal">A film by ${esc(f.filmmaker)}</p>
+          ${metaLine(f) ? `<p class="chapter-meta mono reveal">${esc(metaLine(f))}${f.genres.length ? ` · ${esc(f.genres.slice(0, 2).join(" / "))}` : ""}</p>` : ""}
+          ${f.logline ? `<p class="chapter-logline reveal">${esc(f.logline)}</p>` : `<p class="chapter-logline chapter-logline--tba reveal">Details for this title will be announced.</p>`}
+          <a class="btn btn--ghost reveal" href="${filmUrl(f)}">View project ${arrow}</a>
+        </div>
+      </article>`,
+      )
+      .join("");
+
+    return `
+<section class="page-hero wrap" aria-labelledby="work-title">
+  <p class="mono section-label reveal">Our Work</p>
+  <h1 class="page-title display" id="work-title"><span class="line"><span>The slate.</span></span></h1>
+  <p class="page-lede reveal">Film and television from the BLANKBOX circle of filmmakers. Each project is its own world, built from the same conviction: start with an idea that won't leave you alone.</p>
+</section>
+
+<section class="work-index wrap" aria-label="Index of films">
+  <ol class="index-list">${index}</ol>
+  <div class="preview" data-preview-wrap aria-hidden="true">${previews}</div>
+</section>
+
+<div class="chapters">${chapters}</div>`;
+  }
+
+  /* ---------------------------------------------------------------- FILM */
+  function film(f, i) {
+    const prev = films[(i - 1 + films.length) % films.length];
+    const next = films[(i + 1) % films.length];
+    const tba = !f.logline;
+
+    const credits = f.credits
+      .map((c) => `<div class="kv"><dt class="mono">${esc(c.role)}</dt><dd>${esc(c.name)}</dd></div>`)
+      .join("");
+    const cast = f.cast
+      .map((c) => `<li><span>${esc(c.name)}</span>${c.character ? `<span class="mono">${esc(c.character)}</span>` : ""}</li>`)
+      .join("");
+    const facts = [
+      f.year && { label: "Year", value: f.year },
+      { label: "Format", value: f.format },
+      f.runtime && { label: "Runtime", value: f.runtime },
+      f.genres.length && { label: "Genre", value: f.genres.join(", ") },
+      ...f.facts,
+    ]
+      .filter(Boolean)
+      .map((x) => `<div class="kv"><dt class="mono">${esc(x.label)}</dt><dd>${esc(x.value)}</dd></div>`)
+      .join("");
+
+    const trailer = f.trailer
+      ? `<section class="film-trailer wrap" aria-label="Trailer">
+          <p class="mono section-label">Trailer</p>
+          <div class="video" data-video="${esc(f.trailer)}">
+            <button class="video-play" type="button" aria-label="Play the ${esc(f.title)} trailer">
+              <span class="video-play-icon" aria-hidden="true"></span><span class="mono">Play trailer</span>
+            </button>
+          </div>
+        </section>`
+      : "";
+
+    const shots = stills(f);
+    const gallery = shots.length
+      ? `<section class="film-stills wrap" aria-label="Production stills">
+          <p class="mono section-label reveal">Stills</p>
+          <ul class="stills${shots.length === 1 ? " stills--single" : ""}">${shots
+            .map(
+              (src, n) => `<li class="still reveal-frame"><img src="${src}" alt="Still ${n + 1} from ${esc(f.title)}" loading="lazy" decoding="async"></li>`,
+            )
+            .join("")}</ul>
+        </section>`
+      : "";
+
+    return `
+<article class="film" style="--accent:${f.theme.accent};--ink:${f.theme.ink}">
+  <header class="film-hero">
+    <div class="film-hero-bg" aria-hidden="true">${poster(f, `bg-${f.slug}`)}</div>
+    <div class="film-hero-inner wrap">
+      <a class="back mono" href="${href("/work/")}">← All work</a>
+      <p class="mono section-label">${pad(i + 1)} / ${pad(films.length)}${metaLine(f) ? ` — ${esc(metaLine(f))}` : ""}</p>
+      <h1 class="film-title display"><span class="line"><span>${esc(f.title)}</span></span></h1>
+      <p class="film-by mono">A film by ${esc(f.filmmaker)}</p>
+      ${f.tagline ? `<p class="film-tagline display reveal"><em>${esc(f.tagline)}</em></p>` : ""}
+    </div>
+  </header>
+
+  <div class="film-body wrap">
+    <div class="film-poster">
+      <div class="poster-frame reveal-frame">${poster(f, `pd-${f.slug}`)}</div>
+    </div>
+    <div class="film-info">
+      ${
+        tba
+          ? `<section class="film-section reveal"><h2 class="mono section-label">Status</h2><p class="film-synopsis">Details for this title, including synopsis, cast and release information, will be announced.</p></section>`
+          : `<section class="film-section reveal"><h2 class="mono section-label">Synopsis</h2>${f.synopsis.map((p) => `<p class="film-synopsis">${esc(p)}</p>`).join("")}</section>`
+      }
+      <section class="film-section reveal"><h2 class="mono section-label">Credits</h2><dl class="kv-list">${credits}</dl></section>
+      ${cast ? `<section class="film-section reveal"><h2 class="mono section-label">Cast</h2><ul class="cast-list">${cast}</ul></section>` : ""}
+      <section class="film-section reveal"><h2 class="mono section-label">Details</h2><dl class="kv-list">${facts}</dl></section>
+      ${
+        f.links.length
+          ? `<section class="film-section reveal"><h2 class="mono section-label">Elsewhere</h2><ul class="link-list">${f.links
+              .map((l) => `<li><a href="${l.href}" target="_blank" rel="noopener">${esc(l.label)} ${ext}</a></li>`)
+              .join("")}</ul></section>`
+          : ""
+      }
+    </div>
+  </div>
+  ${gallery}
+  ${trailer}
+
+  <nav class="film-nav wrap" aria-label="More films">
+    <a class="film-nav-link" href="${filmUrl(prev)}"><span class="mono">← Previous</span><span class="display">${esc(prev.title)}</span></a>
+    <a class="film-nav-link film-nav-link--next" href="${filmUrl(next)}"><span class="mono">Next →</span><span class="display">${esc(next.title)}</span></a>
+  </nav>
+</article>`;
+  }
+
+  /* --------------------------------------------------------------- ABOUT */
+  function about() {
+    const filmography = [
+      { title: "Voices", year: 2023, slug: "voices", note: "Documentary" },
+      { title: "Before Us. After Us.", year: 2024, slug: "before-us-after-us", note: "Short film" },
+      { title: "Where We Lie", year: 2024, note: "Short film" },
+      { title: "BlankBox", year: 2026, slug: "blankbox", note: "Short film" },
+      { title: "Archival: The Hampton Inheritance", year: 2026, note: "Short film" },
+    ]
+      .map(
+        (x) => `<li class="reveal">${
+          x.slug
+            ? `<a href="${href(`/work/${x.slug}/`)}"><span class="mono">${x.year}</span><span class="t">${esc(x.title)}</span><span class="mono n">${x.note}</span>${arrow}</a>`
+            : `<div><span class="mono">${x.year}</span><span class="t">${esc(x.title)}</span><span class="mono n">${x.note}</span><span></span></div>`
+        }</li>`,
+      )
+      .join("");
+
+    return `
+<section class="about-hero wrap" aria-labelledby="about-title">
+  <div class="about-hero-copy">
+    <p class="mono section-label reveal">About — Producer &amp; Filmmaker</p>
+    <h1 class="page-title display" id="about-title"><span class="line"><span>Cole</span></span><span class="line"><span><em>Rutman</em></span></span></h1>
+    <p class="about-role mono reveal">The creative lead behind BLANKBOX ENTERTAINMENT</p>
+  </div>
+  <figure class="portrait reveal-frame">
+    ${portrait}
+  </figure>
+</section>
+
+<section class="about-lede wrap">
+  <p class="display reveal" data-words>Cole Rutman is a Canadian producer and entertainment industry manager. Recognized as one of North America's young filmmakers to watch, he has balanced a career in independent cinema with leadership roles and business studies at Western University's Ivey Business School <span class="nowrap">(HBA ’26).</span></p>
+</section>
+
+<section class="about-quote wrap" aria-label="Signature">
+  <p class="mono section-label reveal">The signature</p>
+  <blockquote class="reveal">
+    <p class="display">Rutman's cinematic work often highlights <em>high-concept plots</em>, <em>complex storylines</em>, and <em>dark twists</em>.</p>
+  </blockquote>
+</section>
+
+<section class="about-grid wrap">
+  <div class="about-col">
+    <p class="mono section-label reveal">Filmography</p>
+    <p class="about-body reveal">He has written, directed, and produced several short films, including Voices (2023), Before Us. After Us. (2024), Where We Lie (2024), BlankBox (2026), and Archival: The Hampton Inheritance (2026).</p>
+    <ol class="filmography">${filmography}</ol>
+  </div>
+  <div class="about-col">
+    <p class="mono section-label reveal">Recognition</p>
+    <p class="stat reveal"><span class="stat-n display" data-count="18">18</span><span class="stat-l mono">Film festival selections</span></p>
+    <ul class="honours">
+      <li class="reveal"><span class="mono">Semi-finalist</span><span>Flickers’ Rhode Island International Film Festival <span class="muted">(Oscar-qualifying)</span></span></li>
+      <li class="reveal"><span class="mono">Two-time finalist</span><span>LA Student Film Festival</span></li>
+      <li class="reveal"><span class="mono">Nominee</span><span>Canadian Screen Awards</span></li>
+      <li class="reveal"><span class="mono">Gold Key</span><span>Scholastic Art &amp; Writing Awards</span></li>
+    </ul>
+    <p class="about-body reveal">His projects have accumulated 18 film festival selections. He was a semi-finalist at the Oscar-qualifying Flickers Rhode Island International Film Festival, a two-time finalist at the LA Student Film Festival, and a nominee for the Canadian Screen Awards. He also received a Gold Key from the Scholastic Art &amp; Writing Awards.</p>
+  </div>
+</section>
+
+<section class="enter" aria-label="Portfolio">
+  <a class="enter-link" href="${href("/work/")}">
+    <span class="mono enter-label">Continue</span>
+    <span class="enter-title display"><span>See the work</span> ${arrow}</span>
+  </a>
+</section>`;
+  }
+
+  /* ------------------------------------------------------------- CONTACT */
+  function contact() {
+    const linkedin = site.social.find((s) => s.label === "LinkedIn");
+    const form = site.contactEmail
+      ? `<form class="contact-form" data-contact data-to="${esc(site.contactEmail)}" novalidate>
+          <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="c-org">Company <span class="muted">(optional)</span></label><input id="c-org" name="organization" autocomplete="organization"></div>
+          <div class="field"><label for="c-topic">Regarding</label>
+            <select id="c-topic" name="topic">
+              <option>A project or development opportunity</option>
+              <option>Collaboration</option>
+              <option>Press</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field field--wide"><label for="c-msg">Message</label><textarea id="c-msg" name="message" rows="6" required></textarea></div>
+          <div class="form-foot field--wide">
+            <button class="btn btn--solid" type="submit">Send message ${arrow}</button>
+            <p class="form-status mono" role="status" aria-live="polite" data-status></p>
+          </div>
+        </form>`
+      : "";
+
+    return `
+<section class="page-hero wrap" aria-labelledby="contact-title">
+  <p class="mono section-label reveal">Contact</p>
+  <h1 class="page-title display" id="contact-title"><span class="line"><span>Start with a</span></span><span class="line"><span><em>blank page.</em></span></span></h1>
+  <p class="page-lede reveal">For projects, collaboration, screenings or press, we'd like to hear from you.</p>
+</section>
+
+<section class="contact wrap">
+  <div class="contact-channels">
+    ${
+      site.contactEmail
+        ? `<a class="channel reveal" href="mailto:${esc(site.contactEmail)}"><span class="mono">Email</span><span class="channel-v">${esc(site.contactEmail)}</span>${arrow}</a>`
+        : ""
+    }
+    ${
+      linkedin
+        ? `<a class="channel reveal" href="${linkedin.href}" target="_blank" rel="noopener"><span class="mono">LinkedIn</span><span class="channel-v">Message Cole Rutman</span>${ext}</a>`
+        : ""
+    }
+    ${site.social
+      .filter((s) => s !== linkedin)
+      .map((s) => `<a class="channel reveal" href="${s.href}" target="_blank" rel="noopener"><span class="mono">${esc(s.label)}</span><span class="channel-v">Filmography</span>${ext}</a>`)
+      .join("")}
+    <div class="channel channel--static reveal"><span class="mono">Based in</span><span class="channel-v">${esc(site.location)}</span></div>
+  </div>
+  ${form}
+</section>`;
+  }
+
+  /* ----------------------------------------------------------------- 404 */
+  function notFound() {
+    return `
+<section class="nf wrap">
+  <p class="mono section-label">Error 404 — Missing reel</p>
+  <h1 class="page-title display"><span class="line"><span>This box is</span></span><span class="line"><span><em>empty.</em></span></span></h1>
+  <p class="page-lede">The page you were looking for isn't here. It may have moved, or it may never have existed.</p>
+  <div class="hero-actions">
+    <a class="btn btn--solid" href="${href("/")}">Return home ${arrow}</a>
+    <a class="btn btn--ghost" href="${href("/work/")}">Our work</a>
+  </div>
+</section>`;
+  }
+
+  return { home, work, film, about, contact, notFound };
+}

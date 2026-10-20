@@ -1,0 +1,312 @@
+/* BLANKBOX ENTERTAINMENT — interactions. No dependencies. */
+(() => {
+  "use strict";
+
+  const doc = document.documentElement;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const store = {
+    get: (k) => { try { return sessionStorage.getItem(k); } catch { return null; } },
+    set: (k, v) => { try { sessionStorage.setItem(k, v); } catch { /* storage unavailable */ } },
+  };
+
+  /* ---------------------------------------------------------- Opening sequence */
+  function intro(done) {
+    const el = $("[data-intro]");
+    if (!el || reduced.matches || store.get("bb-intro")) {
+      el?.classList.add("is-done");
+      return done();
+    }
+    store.set("bb-intro", "1");
+    document.body.style.overflow = "hidden";
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      el.classList.add("is-leaving");
+      document.body.style.overflow = "";
+      setTimeout(done, 450);
+      setTimeout(() => el.classList.add("is-done"), 1400);
+      window.removeEventListener("keydown", finish);
+      window.removeEventListener("pointerdown", finish);
+    };
+    window.addEventListener("keydown", finish);
+    window.addEventListener("pointerdown", finish);
+    setTimeout(finish, 2200);
+  }
+
+  /* ---------------------------------------------------------- Header */
+  function header() {
+    const el = $("[data-header]");
+    if (!el) return;
+    let last = window.scrollY;
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY;
+      el.classList.toggle("is-scrolled", y > 24);
+      const menuOpen = document.body.classList.contains("menu-open");
+      el.classList.toggle("is-hidden", !menuOpen && y > 400 && y > last + 4);
+      if (y < last - 4 || y < 400) el.classList.remove("is-hidden");
+      last = y;
+      ticking = false;
+    };
+    window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    el.addEventListener("focusin", () => el.classList.remove("is-hidden"));
+    update();
+  }
+
+  /* ---------------------------------------------------------- Mobile menu */
+  function menu() {
+    const btn = $("[data-menu-toggle]");
+    const panel = $("[data-menu]");
+    if (!btn || !panel) return;
+    const label = $(".menu-toggle-label", btn);
+    const focusables = () => [btn, ...$$("a", panel)];
+
+    const open = () => {
+      panel.hidden = false;
+      requestAnimationFrame(() => panel.classList.add("is-open"));
+      btn.setAttribute("aria-expanded", "true");
+      label.textContent = "Close";
+      document.body.classList.add("menu-open");
+      setTimeout(() => $("a", panel)?.focus({ preventScroll: true }), 200);
+    };
+    const close = (returnFocus = true) => {
+      panel.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
+      label.textContent = "Menu";
+      document.body.classList.remove("menu-open");
+      setTimeout(() => { if (btn.getAttribute("aria-expanded") === "false") panel.hidden = true; }, reduced.matches ? 0 : 800);
+      if (returnFocus) btn.focus({ preventScroll: true });
+    };
+    btn.addEventListener("click", () => (btn.getAttribute("aria-expanded") === "true" ? close() : open()));
+    panel.addEventListener("click", (e) => { if (e.target.closest("a")) close(false); });
+    document.addEventListener("keydown", (e) => {
+      if (btn.getAttribute("aria-expanded") !== "true") return;
+      if (e.key === "Escape") return close();
+      if (e.key === "Tab") {
+        const f = focusables();
+        const i = f.indexOf(document.activeElement);
+        if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+        else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+      }
+    });
+    window.matchMedia("(min-width: 861px)").addEventListener("change", (e) => e.matches && btn.getAttribute("aria-expanded") === "true" && close(false));
+  }
+
+  /* ---------------------------------------------------------- Scroll reveals */
+  function reveals() {
+    const items = $$(".reveal, .reveal-frame, main .line");
+    if (!("IntersectionObserver" in window)) return items.forEach((el) => el.classList.add("is-in"));
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }),
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+    );
+    items.forEach((el) => io.observe(el));
+  }
+
+  /* Statements light up word by word as they cross the viewport. */
+  function words() {
+    $$("[data-words]").forEach((el) => {
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach((node) => {
+        const frag = document.createDocumentFragment();
+        node.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) return frag.append(part);
+          const s = document.createElement("span");
+          s.className = "w";
+          s.textContent = part;
+          frag.append(s);
+        });
+        node.replaceWith(frag);
+      });
+      const ws = $$(".w", el);
+      if (reduced.matches) return ws.forEach((w) => w.classList.add("is-lit"));
+      let ticking = false;
+      const update = () => {
+        const r = el.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
+        const n = Math.round(p * ws.length);
+        ws.forEach((w, i) => w.classList.toggle("is-lit", i < n));
+        ticking = false;
+      };
+      window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+      update();
+    });
+  }
+
+  /* ---------------------------------------------------------- Hero timecode */
+  function timecode() {
+    const el = $("[data-timecode]");
+    if (!el || reduced.matches) return;
+    const start = performance.now();
+    const p = (n) => String(n).padStart(2, "0");
+    let lastFrame = -1;
+    const tick = (now) => {
+      const frames = Math.floor(((now - start) / 1000) * 24);
+      if (frames !== lastFrame) {
+        lastFrame = frames;
+        const s = Math.floor(frames / 24);
+        el.textContent = `${p(Math.floor(s / 3600))}:${p(Math.floor(s / 60) % 60)}:${p(s % 60)}:${p(frames % 24)}`;
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  /* ---------------------------------------------------------- Reel (home) */
+  function reel() {
+    const el = $("[data-reel]");
+    if (!el) return;
+    const prev = $("[data-reel-prev]");
+    const next = $("[data-reel-next]");
+    const step = () => (el.querySelector(".reel-item")?.getBoundingClientRect().width || 300) + 24;
+    const sync = () => {
+      prev.disabled = el.scrollLeft < 8;
+      next.disabled = el.scrollLeft + el.clientWidth > el.scrollWidth - 8;
+    };
+    const behavior = () => (reduced.matches ? "auto" : "smooth");
+    prev.addEventListener("click", () => el.scrollBy({ left: -step(), behavior: behavior() }));
+    next.addEventListener("click", () => el.scrollBy({ left: step(), behavior: behavior() }));
+    el.addEventListener("scroll", sync, { passive: true });
+    el.addEventListener("keydown", (e) => {
+      if (e.target !== el) return;
+      if (e.key === "ArrowRight") { e.preventDefault(); next.click(); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); prev.click(); }
+    });
+    window.addEventListener("resize", sync);
+    sync();
+
+    // Drag to scroll with a mouse; touch uses native scrolling.
+    let down = false, moved = false, x0 = 0, s0 = 0;
+    el.addEventListener("pointerdown", (e) => {
+      if (e.pointerType !== "mouse" || e.button !== 0) return;
+      down = true; moved = false; x0 = e.clientX; s0 = el.scrollLeft;
+    });
+    window.addEventListener("pointermove", (e) => {
+      if (!down) return;
+      const dx = e.clientX - x0;
+      if (!moved && Math.abs(dx) > 6) { moved = true; el.classList.add("is-dragging"); }
+      if (moved) el.scrollLeft = s0 - dx;
+    });
+    window.addEventListener("pointerup", () => {
+      if (!down) return;
+      down = false;
+      if (moved) {
+        el.classList.remove("is-dragging");
+        const w = step();
+        el.scrollTo({ left: Math.round(el.scrollLeft / w) * w, behavior: behavior() });
+      }
+    });
+  }
+
+  /* ---------------------------------------------------------- Work index preview */
+  function preview() {
+    const wrap = $("[data-preview-wrap]");
+    if (!wrap || !fine.matches) return;
+    const cards = new Map($$("[data-preview-card]").map((c) => [c.dataset.previewCard, c]));
+    let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+    const loop = () => {
+      x += (tx - x) * 0.14;
+      y += (ty - y) * 0.14;
+      wrap.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.3 ? requestAnimationFrame(loop) : 0;
+    };
+    const move = (e) => {
+      tx = e.clientX + 32;
+      ty = e.clientY - wrap.offsetHeight / 2;
+      if (reduced.matches) { x = tx; y = ty; wrap.style.transform = `translate3d(${x}px, ${y}px, 0)`; }
+      else if (!raf) raf = requestAnimationFrame(loop);
+    };
+    $$("[data-preview]").forEach((a) => {
+      a.addEventListener("pointerenter", (e) => {
+        if (!wrap.classList.contains("is-on")) { x = e.clientX + 32; y = e.clientY - wrap.offsetHeight / 2; }
+        cards.forEach((c, k) => c.classList.toggle("is-on", k === a.dataset.preview));
+        wrap.classList.add("is-on");
+        move(e);
+      });
+      a.addEventListener("pointermove", move);
+      a.addEventListener("pointerleave", () => wrap.classList.remove("is-on"));
+    });
+  }
+
+  /* ---------------------------------------------------------- Trailer embeds (click to load) */
+  function videos() {
+    $$("[data-video]").forEach((el) => {
+      $(".video-play", el)?.addEventListener("click", () => {
+        const id = encodeURIComponent(el.dataset.video);
+        const f = document.createElement("iframe");
+        f.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+        f.title = "Trailer";
+        f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+        f.allowFullscreen = true;
+        el.replaceChildren(f);
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------- Contact form → email */
+  function contact() {
+    const form = $("[data-contact]");
+    if (!form) return;
+    const status = $("[data-status]", form);
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let firstBad = null;
+      $$("[required]", form).forEach((f) => {
+        const bad = !f.value.trim() || (f.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value));
+        f.setAttribute("aria-invalid", bad ? "true" : "false");
+        if (bad && !firstBad) firstBad = f;
+      });
+      if (firstBad) {
+        status.textContent = "Please complete the highlighted fields.";
+        firstBad.focus();
+        return;
+      }
+      const d = Object.fromEntries(new FormData(form));
+      const subject = `${d.topic} — ${d.name}${d.organization ? ` (${d.organization})` : ""}`;
+      const body = `${d.message}\n\n— ${d.name}\n${d.email}${d.organization ? `\n${d.organization}` : ""}`;
+      window.location.href = `mailto:${form.dataset.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      status.textContent = "Opening your email app…";
+    });
+    form.addEventListener("input", (e) => e.target.getAttribute("aria-invalid") === "true" && e.target.value.trim() && e.target.setAttribute("aria-invalid", "false"));
+  }
+
+  /* ---------------------------------------------------------- Images: graceful fallback */
+  function images() {
+    $$("img").forEach((img) => {
+      const fail = () => img.closest(".poster-frame, .reel-poster, .spotlight-poster, .portrait, .preview-card, .film-hero-bg")?.classList.add("img-failed");
+      if (img.complete && img.naturalWidth === 0) fail();
+      else img.addEventListener("error", fail, { once: true });
+    });
+  }
+
+  /* ---------------------------------------------------------- Boot */
+  function start() {
+    document.body.classList.add("is-ready");
+    reveals();
+  }
+
+  header();
+  menu();
+  words();
+  timecode();
+  reel();
+  preview();
+  videos();
+  contact();
+  images();
+  $("[data-to-top]")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: reduced.matches ? "auto" : "smooth" });
+    $("#main")?.focus({ preventScroll: true });
+  });
+  intro(start);
+  doc.classList.add("is-booted");
+})();
