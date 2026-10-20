@@ -147,6 +147,8 @@ export const films = [
       { label: "Full title", value: "A Voices Documentary: Ukrainians Finding Safety in Canada" },
       { label: "Premiere", value: "Toronto, 2023 (about 100 attendees)" },
       { label: "Screenings", value: "McKellar Room, Western University, November 2023" },
+      { label: "Official selection", value: "Toronto International Nollywood Film Festival, 2024" },
+      { label: "Official selection", value: "Fort Langley Film Festival, 2024" },
       { label: "Funding", value: "Western Arts and Humanities Student Donation Fund" },
       { label: "Country", value: "Canada" },
     ],
