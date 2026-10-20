@@ -2,7 +2,8 @@
 //   node build.mjs            → writes the site to dist/
 //   BASE_PATH=/repo node build.mjs  → for hosting under a sub-path (GitHub Pages project sites)
 
-import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { site } from "./src/config.mjs";
@@ -21,6 +22,9 @@ const version = Date.now().toString(36);
 
 const { page, href, asset } = createLayout({ base, version });
 
+// Version each image URL by its contents, so a replaced file is never served from cache.
+const img = (rel) => `${base}/assets/${rel}?v=${createHash("md5").update(readFileSync(join(src, "assets", rel))).digest("hex").slice(0, 8)}`;
+
 // --- Assets: use a supplied image when it exists, otherwise fall back gracefully.
 const imageExts = ["webp", "jpg", "jpeg", "png", "avif"];
 // Alternate posters: src/assets/posters/<slug>-alt.webp, <slug>-alt-2.jpg, …
@@ -28,7 +32,7 @@ const keyArt = (film) =>
   readdirSync(join(src, "assets", "posters"))
     .filter((f) => f.startsWith(`${film.slug}-alt`) && imageExts.includes(f.split(".").pop().toLowerCase()))
     .sort()
-    .map((f) => `${base}/assets/posters/${f}`);
+    .map((f) => img(`posters/${f}`));
 
 const findImage = (dir, name) => {
   for (const e of imageExts) if (existsSync(join(src, "assets", dir, `${name}.${e}`))) return `${dir}/${name}.${e}`;
@@ -40,7 +44,7 @@ const poster = (film, id) => {
   const file = findImage("posters", film.slug);
   if (!file) return titleCard(film, { id });
   // Show the whole poster whatever its shape; a blurred copy fills any space around it.
-  const src = `${base}/assets/${file}`;
+  const src = img(file);
   return `<span class="poster-fit" style="--poster:url('${src}')"><img class="poster-img" src="${src}" alt="Poster for ${esc(film.title)}" loading="lazy" decoding="async"></span>`;
 };
 films.forEach((f) => !findImage("posters", f.slug) && missing.push(`poster: src/assets/posters/${f.slug}.jpg (${f.title})`));
@@ -58,7 +62,7 @@ const stills = (film) => {
   return readdirSync(dir)
     .filter((f) => imageExts.includes(f.split(".").pop().toLowerCase()))
     .sort()
-    .map((f) => `${base}/assets/stills/${film.slug}/${f}`);
+    .map((f) => img(`stills/${film.slug}/${f}`));
 };
 
 const pages = createPages({ films, brands, href, asset, poster, portrait, stills, keyArt });
