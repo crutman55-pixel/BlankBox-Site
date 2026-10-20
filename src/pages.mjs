@@ -297,7 +297,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     return `
 <section class="about-hero wrap" aria-labelledby="about-title">
   <div class="about-hero-copy">
-    <p class="mono section-label reveal">About — Producer &amp; Filmmaker</p>
+    <p class="mono section-label reveal">About — Producer &amp; CEO</p>
     <h1 class="page-title display" id="about-title"><span class="line"><span>Cole</span></span><span class="line"><span><em>Rutman</em></span></span></h1>
     <p class="about-role mono reveal">The creative lead behind BLANKBOX ENTERTAINMENT</p>
   </div>

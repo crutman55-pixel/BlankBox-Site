@@ -82,7 +82,7 @@ const person = {
   "@type": "Person",
   name: "Cole Rutman",
   nationality: "Canadian",
-  jobTitle: "Producer and filmmaker",
+  jobTitle: "Producer and CEO",
   alumniOf: "Ivey Business School, Western University",
   sameAs: ["https://www.linkedin.com/in/cole-rutman-b57327254/", "https://www.imdb.com/name/nm16290719/"],
 };
