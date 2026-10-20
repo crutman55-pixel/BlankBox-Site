@@ -290,7 +290,7 @@ a:hover .arrow, a:focus-visible .arrow, button:hover .arrow { transform: transla
 
 /* ------------------------------------------------------------- Approach */
 .approach { padding-block: clamp(80px, 12vw, 180px); border-top: 1px solid var(--line); }
-.approach-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.approach-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
 .approach-list li { padding: 32px clamp(16px, 2vw, 32px) 40px 0; border-right: 1px solid var(--line); }
 .approach-list li + li { padding-left: clamp(16px, 2vw, 32px); }
 .approach-list li:last-child { border-right: 0; }
@@ -486,10 +486,6 @@ a.channel:hover .channel-v { font-style: italic; transform: translateX(10px); }
 
 /* ------------------------------------------------------------- Responsive */
 @media (max-width: 1100px) {
-  .approach-list { grid-template-columns: 1fr 1fr; }
-  .approach-list li:nth-child(2) { border-right: 0; }
-  .approach-list li:nth-child(3) { padding-left: 0; }
-  .approach-list li:nth-child(n + 3) { border-top: 1px solid var(--line); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-brand { grid-column: 1 / -1; }
 }
@@ -504,6 +500,10 @@ a.channel:hover .channel-v { font-style: italic; transform: translateX(10px); }
   .hero-tc { left: 22px; }
   .scroll-cue { display: none; }
   .section-head { flex-direction: column; align-items: flex-start; }
+  .approach-list { grid-template-columns: 1fr; }
+  .approach-list li, .approach-list li + li { padding-left: 0; padding-right: 0; border-right: 0; }
+  .approach-list li + li { border-top: 1px solid var(--line); }
+  .approach-list h3 { margin-top: 24px; }
   .spotlight, .chapter, .film-body, .about-hero, .about-grid, .contact { grid-template-columns: minmax(0, 1fr); }
   .chapter--alt .chapter-poster { order: 0; }
   .chapter-poster, .film-poster { position: relative; top: 0; }
@@ -520,7 +520,6 @@ a.channel:hover .channel-v { font-style: italic; transform: translateX(10px); }
 
 @media (max-width: 560px) {
   body { font-size: 16px; }
-  .approach-list { grid-template-columns: 1fr; }
   .approach-list li, .approach-list li + li { padding-left: 0; padding-right: 0; border-right: 0; }
   .approach-list li + li { border-top: 1px solid var(--line); }
   .approach-list h3 { margin-top: 24px; }
