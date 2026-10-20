@@ -231,7 +231,7 @@ a:hover .arrow, a:focus-visible .arrow, button:hover .arrow { transform: transla
 @keyframes blink { 50% { opacity: 0.2; } }
 .hero-ratio { position: absolute; top: 14px; right: 30px; color: var(--mute); }
 .hero-inner { position: relative; }
-.hero-title { font-size: clamp(58px, min(10.2vw, 19svh), 184px); line-height: 0.9; letter-spacing: -0.025em; margin: 28px 0 clamp(36px, 5vw, 64px); max-width: 56%; }
+.hero-title { font-size: clamp(52px, min(8.4vw, 17svh), 160px); line-height: 0.9; letter-spacing: -0.025em; margin: 28px 0 clamp(36px, 5vw, 64px); max-width: 60%; }
 .hero-title em { background: linear-gradient(100deg, var(--paper) 10%, var(--pewter) 45%, #f6f2ea 60%, var(--pewter) 85%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hero-title .line:nth-child(2) > span { --d: 0.08s; }
 .hero-title .line:nth-child(3) > span { --d: 0.16s; }

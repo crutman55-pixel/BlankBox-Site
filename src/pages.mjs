@@ -72,9 +72,9 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   <div class="hero-inner wrap">
     <p class="eyebrow mono reveal">Film &amp; Television Development</p>
     <h1 class="hero-title display" id="hero-title">
-      <span class="line"><span>Every story</span></span>
-      <span class="line"><span>begins as a</span></span>
-      <span class="line"><span><em>blank box.</em></span></span>
+      <span class="line"><span>Every great</span></span>
+      <span class="line"><span>story begins</span></span>
+      <span class="line"><span>as a <em>blank box.</em></span></span>
     </h1>
     <div class="hero-foot">
       <p class="hero-lede reveal">BLANKBOX ENTERTAINMENT develops and distributes film and television for a new generation, combining bold concepts and compelling storytelling for the evolving entertainment landscape.</p>
