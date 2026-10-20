@@ -717,3 +717,20 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
 @keyframes sk { to { background-position: -200% 0; } }
 @media (max-width: 860px) { .credit-grid { grid-template-columns: 1fr 1fr; } .reel-slate-box { width: 60%; right: -6%; opacity: 0.6; } }
 @media (max-width: 560px) { .credit-grid { grid-template-columns: 1fr; } }
+
+/* Platform logos (where a title streamed or aired) */
+.show-poster, .poster-frame { position: relative; }
+.net-logo { position: absolute; top: 5%; right: 6%; width: 28%; height: auto; z-index: 2; filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.7)); }
+.reveal-frame > .net-logo, .show-poster > .net-logo { transform: none !important; }
+.net-logo--hgtv { width: 30%; }
+.net-logo--corner { position: absolute; top: calc(var(--header-h) + 36px); right: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))); width: clamp(64px, 7vw, 120px); left: auto; }
+.net-logo--corner.net-logo--hgtv { width: clamp(96px, 10vw, 170px); }
+.show-slide .net-logo--corner { z-index: 3; }
+@media (max-width: 860px) { .net-logo--corner { width: 56px; top: calc(var(--header-h) + 20px); } .net-logo--corner.net-logo--hgtv { width: 84px; } }
+
+/* Home: bigger "Our work with brands" */
+.hero-brands { flex-basis: 100%; justify-content: space-between; height: 64px; padding: 0 26px; margin-top: 4px; border: 1px solid var(--line-2); font: 500 17px/1 var(--sans); letter-spacing: 0.01em; text-transform: none; color: var(--paper); position: relative; overflow: hidden; isolation: isolate; transition: color 0.5s var(--ease), border-color 0.5s; }
+.hero-brands::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--paper); transform: scaleX(0); transform-origin: left; transition: transform 0.7s var(--ease); }
+.hero-brands:hover, .hero-brands:focus-visible { color: var(--black); border-color: var(--paper); }
+.hero-brands:hover::before, .hero-brands:focus-visible::before { transform: scaleX(1); }
+.hero-brands .arrow { font-size: 20px; }

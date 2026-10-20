@@ -110,7 +110,7 @@ export function titleCard(film, { id = film.slug } = {}) {
   <rect width="${W}" height="${H}" fill="${ink}"/>
   <rect width="${W}" height="${H}" fill="url(#glow-${id})"/>
   ${motifs[film.theme.motif](a, id)}
-  <text x="300" y="86" text-anchor="middle" class="tc-mono" fill="#ece8e0" opacity=".6" font-size="13" letter-spacing="5">${esc(film.cardTop || `A ${film.filmmaker.toUpperCase()} FILM`)}</text>
+  ${film.platformLogo ? "" : `<text x="300" y="86" text-anchor="middle" class="tc-mono" fill="#ece8e0" opacity=".6" font-size="13" letter-spacing="5">${esc(film.cardTop || `A ${film.filmmaker.toUpperCase()} FILM`)}</text>`}
   <text text-anchor="middle" class="tc-serif" fill="#ece8e0" font-size="${size}">${titleText}</text>
   ${meta ? `<text x="300" y="838" text-anchor="middle" class="tc-mono" fill="${a}" font-size="12" letter-spacing="4">${esc(meta.toUpperCase())}</text>` : ""}
   <g stroke="#ece8e0" stroke-width="1" opacity=".35" fill="none">

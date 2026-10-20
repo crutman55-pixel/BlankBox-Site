@@ -11,6 +11,9 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   const filmUrl = (f) => href(`/work/${f.slug}/`);
   const metaLine = (f) => [f.year, f.format, f.runtime].filter(Boolean).join(" · ");
   const byline = (f) => f.byline || `A film by ${f.filmmaker}`;
+  const logoNames = { netflix: "Netflix", appletv: "Apple TV+", hgtv: "HGTV" };
+  const netLogo = (f, cls = "") =>
+    f.platformLogo ? `<img class="net-logo net-logo--${f.platformLogo} ${cls}" src="${asset(`img/platforms/${f.platformLogo}.svg`)}" alt="${logoNames[f.platformLogo]}" width="96" height="96" decoding="async">` : "";
   const platformBadge = (f, cls = "") =>
     f.platform ? `<p class="platform mono ${cls}"><span class="platform-dot" aria-hidden="true"></span>${f.kind === "series" ? "On" : "Seen at"} ${esc(f.platform)}</p>` : "";
   const teamLine = (f, cls = "") =>
@@ -32,7 +35,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
             ${f.logline ? `<p class="show-logline">${esc(f.logline)}</p>` : ""}
             <a class="btn btn--solid" href="${filmUrl(f)}"${i ? ' tabindex="-1"' : ""}>View project ${arrow}</a>
           </div>
-          <a class="show-poster" href="${filmUrl(f)}" tabindex="-1" aria-hidden="true">${poster(f, `sp-${f.slug}`)}</a>
+          <a class="show-poster" href="${filmUrl(f)}" tabindex="-1" aria-hidden="true">${poster(f, `sp-${f.slug}`)}${netLogo(f)}</a>
         </div>
       </article>`;
       })
@@ -79,7 +82,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       <div class="hero-actions reveal">
         <a class="btn btn--solid" href="${href("/work/")}">Explore our work ${arrow}</a>
         <a class="btn btn--ghost" href="${href("/about/")}">About Us</a>
-        <a class="hero-brands mono" href="${href("/brands/")}">Our work with brands ${arrow}</a>
+        <a class="hero-brands" href="${href("/brands/")}">Our work with brands ${arrow}</a>
       </div>
     </div>
   </div>
@@ -144,7 +147,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       .map(
         (f, i) => `<article class="chapter${i % 2 ? " chapter--alt" : ""}" id="${f.slug}" style="--accent:${f.theme.accent};--ink:${f.theme.ink}" aria-labelledby="t-${f.slug}">
         <div class="chapter-poster">
-          <a class="poster-frame reveal-frame" href="${filmUrl(f)}" tabindex="-1" aria-hidden="true">${poster(f, `ch-${f.slug}`)}</a>
+          <a class="poster-frame reveal-frame" href="${filmUrl(f)}" tabindex="-1" aria-hidden="true">${poster(f, `ch-${f.slug}`)}${netLogo(f)}</a>
         </div>
         <div class="chapter-copy">
           <p class="chapter-num mono reveal"><span>${pad(i + 1)}</span> / ${pad(films.length)}</p>
@@ -237,6 +240,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 <article class="film" style="--accent:${f.theme.accent};--ink:${f.theme.ink}">
   <header class="film-hero">
     <div class="film-hero-bg${shots[0] ? " film-hero-bg--still" : ""}" aria-hidden="true">${shots[0] ? `<img src="${shots[0]}" alt="" decoding="async" fetchpriority="high">` : poster(f, `bg-${f.slug}`)}</div>
+    ${netLogo(f, "net-logo--corner")}
     <div class="film-hero-inner wrap">
       <a class="back mono" href="${href("/work/")}">← All work</a>
       <p class="mono section-label">${pad(i + 1)} / ${pad(films.length)}${metaLine(f) ? ` — ${esc(metaLine(f))}` : ""}</p>
@@ -250,7 +254,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 
   <div class="film-body wrap">
     <div class="film-poster">
-      <div class="poster-frame reveal-frame">${poster(f, `pd-${f.slug}`)}</div>
+      <div class="poster-frame reveal-frame">${poster(f, `pd-${f.slug}`)}${netLogo(f)}</div>
     </div>
     <div class="film-info">
       ${

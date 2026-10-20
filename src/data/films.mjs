@@ -10,6 +10,7 @@ export const films = [
   // ---- Credits of Levi Considine, Creative Specialist (IMDb nm6346683). Shown first on the slate.
   {
     slug: "unicorn-academy",
+    platformLogo: "netflix",
     title: "Unicorn Academy",
     year: "2023–",
     format: "Animated series",
@@ -52,6 +53,7 @@ export const films = [
   },
   {
     slug: "mighty-express",
+    platformLogo: "netflix",
     title: "Mighty Express",
     year: "2020–2022",
     format: "Animated series",
@@ -89,6 +91,7 @@ export const films = [
   },
   {
     slug: "sago-mini-friends",
+    platformLogo: "appletv",
     title: "Sago Mini Friends",
     year: 2022,
     format: "Animated series",
@@ -104,9 +107,8 @@ export const films = [
     logline: "An animated preschool series based on the Sago Mini brand, made for Apple TV+.",
     synopsis: [
       "Sago Mini Friends is an animated preschool series based on the Sago Mini brand, made for Apple TV+.",
-      "Levi Considine is credited as sound designer on nine episodes in 2022.",
     ],
-    credits: [{ role: "Sound designer", name: "Levi Considine (9 episodes, 2022)" }],
+    credits: [{ role: "Sound designer", name: "Levi Considine" }],
     cast: [],
     facts: [{ label: "Where it appeared", value: "Apple TV+" }],
     links: [{ label: "IMDb: Levi Considine", href: "https://www.imdb.com/name/nm6346683/" }],
@@ -116,6 +118,7 @@ export const films = [
   },
   {
     slug: "property-brothers-under-pressure",
+    platformLogo: "hgtv",
     title: "Property Brothers: Under Pressure",
     year: 2026,
     format: "Television series",
