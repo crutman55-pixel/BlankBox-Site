@@ -10,7 +10,6 @@ export const films = [
   // ---- Credits of Levi Considine, Creative Specialist (IMDb nm6346683). Shown first on the slate.
   {
     slug: "unicorn-academy",
-    hideLogoAbovePoster: true, // the poster already says "A Netflix Series"
     posterHasLogo: true,
     platformLogo: "netflix",
     title: "Unicorn Academy",
@@ -70,9 +69,9 @@ export const films = [
     team: [{ name: "Levi Considine", role: "Sound designer" }],
     tagline: null,
     logline:
-      "A CG-animated preschool series and Spin Master Entertainment's first show to launch straight to a streaming platform, released on Netflix worldwide in September 2020.",
+      "A CG-animated preschool series and Spin Master Entertainment's first show to launch straight to a streaming platform, released on Netflix worldwide.",
     synopsis: [
-      "Mighty Express is a CG-animated preschool series from Spin Master Entertainment. It rolled onto Netflix globally on 22 September 2020, the studio's first series to launch directly on a streaming service.",
+      "Mighty Express is a CG-animated preschool series from Spin Master Entertainment. It rolled onto Netflix globally as the studio's first series to launch directly on a streaming service.",
     ],
     credits: [
       { role: "Sound designer", name: "Levi Considine" },
@@ -81,7 +80,6 @@ export const films = [
     cast: [],
     facts: [
       { label: "Where it appeared", value: "Netflix (worldwide)" },
-      { label: "Premiere", value: "22 September 2020" },
     ],
     links: [{ label: "IMDb: Levi Considine", href: "https://www.imdb.com/name/nm6346683/" }],
     trailer: null,
