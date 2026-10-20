@@ -315,7 +315,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
 
 <figure class="about-onset wrap">
   <div class="about-onset-img reveal-frame"><img src="${asset("img/cole-rutman-on-set.webp")}" alt="Cole Rutman directing an actor on a rocky shoreline" width="724" height="1086" loading="lazy" decoding="async"></div>
-  <figcaption class="reveal"><span class="mono section-label">Behind the camera</span><span class="display">On set, directing.</span></figcaption>
+  <figcaption class="reveal"><span class="mono section-label">Behind the camera</span><span class="display">On set, directing.</span><a class="btn btn--ghost about-imdb" href="https://www.imdb.com/name/nm16290719/" target="_blank" rel="noopener">View IMDb <span aria-hidden="true">↗</span></a></figcaption>
 </figure>
 
 <section class="about-grid wrap">

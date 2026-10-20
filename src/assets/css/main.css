@@ -661,3 +661,4 @@ a.channel:hover .channel-v { font-style: italic; transform: translateX(10px); }
 @media (prefers-reduced-motion: reduce) {
   .show-tab.is-active .show-tab-bar i { animation: none; transform: scaleX(1); }
 }
+.about-imdb { justify-self: start; }
