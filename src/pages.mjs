@@ -77,7 +77,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       <span class="line"><span>as a <em>blank box.</em></span></span>
     </h1>
     <div class="hero-foot">
-      <p class="hero-lede reveal">BLANKBOX ENTERTAINMENT develops and distributes film and television for a new generation, combining bold concepts and compelling storytelling for the evolving entertainment landscape.</p>
+      <p class="hero-lede reveal">BLANKBOX ENTERTAINMENT develops and distributes film and television for the new generation, combining bold concepts with compelling storytelling for the evolving entertainment landscape.</p>
       <div class="hero-actions reveal">
         <a class="btn btn--solid" href="${href("/work/")}">Explore our work ${arrow}</a>
         <a class="btn btn--ghost" href="${href("/about/")}">About Us</a>
