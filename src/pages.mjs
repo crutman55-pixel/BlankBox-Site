@@ -26,7 +26,6 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
       )
       .join("");
 
-    const feature = films[0];
 
     return `
 <div class="intro" data-intro aria-hidden="true">
@@ -39,7 +38,14 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-stage" aria-hidden="true">
-    <div class="hero-box"></div>
+    <div class="portal">
+      <div class="portal-floor"></div>
+      <div class="portal-spill"></div>
+      <div class="portal-frame">
+        <i class="pf-top"></i><i class="pf-left"></i><i class="pf-right"></i>
+        <i class="pf-in-top"></i><i class="pf-in-right"></i><i class="pf-in-left"></i>
+      </div>
+    </div>
     <div class="hero-sweep"></div>
   </div>
   <div class="hero-frame" aria-hidden="true">
@@ -55,25 +61,21 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
       <span class="line"><span><em>blank box.</em></span></span>
     </h1>
     <div class="hero-foot">
-      <p class="hero-lede reveal">BLANKBOX ENTERTAINMENT develops film and television for the next generation: high-concept ideas, intricate structures, and endings that keep turning after the credits roll.</p>
+      <p class="hero-lede reveal">BLANKBOX ENTERTAINMENT develops film and television for a new generation, combining bold concepts, micro-series, and compelling storytelling for the evolving entertainment landscape.</p>
       <div class="hero-actions reveal">
         <a class="btn btn--solid" href="${href("/work/")}">Explore our work ${arrow}</a>
-        <a class="btn btn--ghost" href="${href("/about/")}">Meet the filmmaker</a>
+        <a class="btn btn--ghost" href="${href("/about/")}">About Us</a>
       </div>
     </div>
   </div>
-  <a class="scroll-cue mono" href="#statement"><span>Scroll</span><i aria-hidden="true"></i></a>
+  <a class="scroll-cue mono" href="#selected"><span>Scroll</span><i aria-hidden="true"></i></a>
 </section>
 
-<section class="statement wrap" id="statement" aria-label="Our philosophy">
-  <p class="statement-label mono reveal">Scene 01 — The premise</p>
-  <p class="statement-text display" data-words>We are drawn to stories that ask a difficult question, then refuse to let the audience off easily. An empty frame is not a lack of ideas. It is the place every great one starts.</p>
-</section>
 
-<section class="selected" aria-labelledby="selected-title">
+<section class="selected" id="selected" aria-labelledby="selected-title">
   <div class="wrap section-head">
     <div>
-      <p class="mono section-label reveal">Scene 02 — Selected work</p>
+      <p class="mono section-label reveal">Scene 01 — Selected work</p>
       <h2 class="section-title display reveal" id="selected-title">Five films.<br><em>Five worlds.</em></h2>
     </div>
     <div class="reel-controls reveal">
@@ -84,22 +86,11 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
   <ol class="reel" data-reel tabindex="0" aria-label="Selected films, scroll horizontally">${reel}</ol>
 </section>
 
-<section class="spotlight wrap" style="--accent:${feature.theme.accent}" aria-labelledby="spotlight-title">
-  <div class="spotlight-poster reveal-frame">${poster(feature, "spotlight")}</div>
-  <div class="spotlight-copy">
-    <p class="mono section-label reveal">Scene 03 — The namesake</p>
-    <h2 class="section-title display reveal" id="spotlight-title">${esc(feature.title)}</h2>
-    <p class="spotlight-meta mono reveal">${esc(metaLine(feature))} · A film by ${esc(feature.filmmaker)}</p>
-    <p class="spotlight-text reveal">${esc(feature.logline)}</p>
-    <p class="spotlight-note reveal">The company shares its name with Cole Rutman's 2026 short, a story about what we lose when a system decides what we should feel.</p>
-    <a class="btn btn--ghost reveal" href="${filmUrl(feature)}">Inside ${esc(feature.title)} ${arrow}</a>
-  </div>
-</section>
 
 <section class="approach wrap" aria-labelledby="approach-title">
   <div class="section-head">
     <div>
-      <p class="mono section-label reveal">Scene 04 — How we develop</p>
+      <p class="mono section-label reveal">Scene 02 — How we develop</p>
       <h2 class="section-title display reveal" id="approach-title">Ideas first.<br><em>Then everything else.</em></h2>
     </div>
   </div>
@@ -113,8 +104,8 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
 
 <section class="enter" aria-label="Full portfolio">
   <a class="enter-link" href="${href("/work/")}">
-    <span class="mono enter-label">Scene 05 — The full slate</span>
-    <span class="enter-title display"><span>Enter the work</span> ${arrow}</span>
+    <span class="mono enter-label">Scene 03 — The full slate</span>
+    <span class="enter-title display"><span>View our slate</span> ${arrow}</span>
   </a>
 </section>`;
   }
@@ -160,7 +151,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
 <section class="page-hero wrap" aria-labelledby="work-title">
   <p class="mono section-label reveal">Our Work</p>
   <h1 class="page-title display" id="work-title"><span class="line"><span>The slate.</span></span></h1>
-  <p class="page-lede reveal">Film and television from the BLANKBOX circle of filmmakers. Each project is its own world, built from the same conviction: start with an idea that won't leave you alone.</p>
+  <p class="page-lede reveal">Each project is its own world, built from the same conviction: start with an idea that won't leave you alone.</p>
 </section>
 
 <section class="work-index wrap" aria-label="Index of films">
@@ -375,7 +366,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
     return `
 <section class="page-hero wrap" aria-labelledby="contact-title">
   <p class="mono section-label reveal">Contact</p>
-  <h1 class="page-title display" id="contact-title"><span class="line"><span>Start with a</span></span><span class="line"><span><em>blank page.</em></span></span></h1>
+  <h1 class="page-title display" id="contact-title"><span class="line"><span>Start with</span></span><span class="line"><span><em>Blank*</em></span></span></h1>
   <p class="page-lede reveal">For projects, collaboration, screenings or press, we'd like to hear from you.</p>
 </section>
 

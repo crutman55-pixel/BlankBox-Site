@@ -9,7 +9,7 @@ export const site = {
   // Set to your custom domain (e.g. "blankbox.com") to have the build write a CNAME file.
   domain: "",
   description:
-    "BLANKBOX ENTERTAINMENT develops film and television for the next generation: high-concept stories, complex structures, and endings that stay with you.",
+    "BLANKBOX ENTERTAINMENT develops film and television for a new generation, combining bold concepts, micro-series, and compelling storytelling for the evolving entertainment landscape.",
   // Contact email shown on the Contact page and used by the contact form.
   // Leave empty to hide the form and route visitors to LinkedIn instead.
   contactEmail: "",
