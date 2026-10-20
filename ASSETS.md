@@ -22,10 +22,10 @@ Run `npm run build` afterwards. The build lists any assets that are still missin
 
 | Title | Facts | Poster | Stills | Trailer |
 |---|---|---|---|---|
-| BlankBox (2026) | Verified | **Missing** | 1 (supplied by owner) | Not found |
+| BlankBox (2026) | Verified | Official poster (uploaded by owner) | 1 (supplied by owner) | Not found |
 | Before Us. After Us. (2024) | Verified | Official poster plus an alternate (supplied by owner) | 2 (supplied by owner) | Released on YouTube on 15 Sep 2024, but no link verified yet |
 | Where We Lie (2024) | From the owner's biography only. No public listing found (IMDb's "Where We Lie" is a different 2022 UK short) | Supplied by owner | Missing | Full film embedded: https://www.youtube.com/watch?v=X3jv-9FzKEU (premise taken from its YouTube description). View count not added: YouTube isn't reachable from the build environment |
-| Voices (2023) | Verified, plus the full title from the screening photo | **Missing** | 1: screening photo (supplied by owner) | Not found |
+| Voices (2023) | Verified, plus the full title from the screening photo | Official poster with festival laurels (uploaded by owner) | 1: screening photo (supplied by owner) | Not found |
 | Two's a Party (2025) | Verified | **Missing** | Missing | Not found |
 
 ## Sources
