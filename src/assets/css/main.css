@@ -282,7 +282,7 @@ a:hover .arrow, a:focus-visible .arrow, button:hover .arrow { transform: transla
 
 /* ------------------------------------------------------------- Approach */
 .approach { padding-block: clamp(80px, 12vw, 180px); border-top: 1px solid var(--line); }
-.approach-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.approach-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
 .approach-list li { padding: 32px clamp(16px, 2vw, 32px) 40px 0; border-right: 1px solid var(--line); }
 .approach-list li + li { padding-left: clamp(16px, 2vw, 32px); }
 .approach-list li:last-child { border-right: 0; }

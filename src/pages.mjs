@@ -110,8 +110,9 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     </div>
   </div>
   <ol class="approach-list">
-    <li class="reveal"><span class="mono">01</span><h3>The concept carries the weight</h3><p>Every project starts with an idea strong enough to hold an audience in a single sentence. If it can't, we keep working until it can.</p></li>
+    <li class="reveal"><span class="mono">01</span><h3>The concept carries the weight</h3><p>Every project we take part in starts with an idea strong enough to hold an audience in a single sentence. If it can't, we keep working until it can.</p></li>
     <li class="reveal"><span class="mono">02</span><h3>Made for every screen</h3><p>We believe audiences are changing, so we develop entertainment suited to viewers everywhere: social media, TV and movie screens.</p></li>
+    <li class="reveal"><span class="mono">03</span><h3>Built-in audience distribution</h3><p>We love producing and distributing content with strong audience and IP potential. We're just as serious about the market as we are about the art.</p></li>
   </ol>
 </section>
 
