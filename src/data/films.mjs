@@ -53,6 +53,7 @@ export const films = [
   },
   {
     slug: "mighty-express",
+    hideLogoAbovePoster: true, // the poster already shows the Netflix "N" in its corner
     posterHasLogo: true,
     platformLogo: "netflix",
     title: "Mighty Express",
