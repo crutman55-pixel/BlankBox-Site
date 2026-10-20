@@ -13,22 +13,30 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
 
   /* ---------------------------------------------------------------- HOME */
   function home() {
-    const slate = films
-      .map(
-        (f, i) => `<li style="--accent:${f.theme.accent}">
-        <a href="${filmUrl(f)}" data-preview="${f.slug}">
-          <span class="mono s-no">${pad(i + 1)}</span>
-          <span class="s-title">${esc(f.title)}</span>
-          <span class="mono s-fmt">${esc([...new Set([f.format, f.genres[0]].filter(Boolean))].join(" · "))}</span>
-          <span class="mono s-by">${esc(f.filmmaker)}</span>
-          <span class="mono s-yr">${f.year ?? "TBA"}</span>
-          <span class="s-go" aria-hidden="true">→</span>
-        </a>
-      </li>`,
-      )
+    const slides = films
+      .map((f, i) => {
+        const bg = stills(f)[0];
+        return `<article class="show-slide${i === 0 ? " is-active" : ""}" style="--accent:${f.theme.accent}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${films.length}: ${esc(f.title)}"${i ? " aria-hidden=\"true\"" : ""}>
+        <div class="show-bg${bg ? "" : " show-bg--poster"}" aria-hidden="true">${bg ? `<img src="${bg}" alt="" decoding="async"${i ? ' loading="lazy"' : ""}>` : poster(f, `sb-${f.slug}`)}</div>
+        <div class="show-inner wrap">
+          <div class="show-copy">
+            <p class="mono show-num"><span>${pad(i + 1)}</span> / ${pad(films.length)} — ${esc([f.year, f.format].filter(Boolean).join(" · "))}</p>
+            <h3 class="show-title display">${esc(f.title)}</h3>
+            <p class="mono show-by">A film by ${esc(f.filmmaker)}</p>
+            ${f.logline ? `<p class="show-logline">${esc(f.logline)}</p>` : ""}
+            <a class="btn btn--solid" href="${filmUrl(f)}"${i ? ' tabindex="-1"' : ""}>View project ${arrow}</a>
+          </div>
+          <a class="show-poster" href="${filmUrl(f)}" tabindex="-1" aria-hidden="true">${poster(f, `sp-${f.slug}`)}</a>
+        </div>
+      </article>`;
+      })
       .join("");
-    const previews = films
-      .map((f) => `<div class="preview-card" data-preview-card="${f.slug}">${poster(f, `hp-${f.slug}`)}</div>`)
+    const tabs = films
+      .map(
+        (f, i) => `<button class="show-tab${i === 0 ? " is-active" : ""}" type="button" data-show-go="${i}" aria-label="Show ${esc(f.title)}"${i === 0 ? ' aria-current="true"' : ""}>
+        <span class="show-tab-bar"><i></i></span><span class="mono">${pad(i + 1)}</span><span class="show-tab-t">${esc(f.title)}</span>
+      </button>`,
+      )
       .join("");
 
     return `
@@ -76,12 +84,16 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
 </section>
 
 
-<section class="slate wrap" id="selected" aria-label="The slate">
-  <div class="slate-head mono" aria-hidden="true">
-    <span>No.</span><span>Title</span><span class="s-fmt">Format</span><span class="s-by">Filmmaker</span><span class="s-yr">Year</span><span></span>
+<section class="showcase" id="selected" data-showcase aria-roledescription="carousel" aria-label="The slate">
+  <div class="show-track">${slides}</div>
+  <div class="show-ui wrap">
+    <div class="show-tabs">${tabs}</div>
+    <div class="show-ctrl">
+      <button class="icon-btn" type="button" data-show-prev aria-label="Previous film">←</button>
+      <button class="icon-btn" type="button" data-show-pause aria-label="Pause slideshow">❚❚</button>
+      <button class="icon-btn" type="button" data-show-next aria-label="Next film">→</button>
+    </div>
   </div>
-  <ol class="slate-list">${slate}</ol>
-  <div class="preview" data-preview-wrap aria-hidden="true">${previews}</div>
 </section>
 
 

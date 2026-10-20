@@ -212,6 +212,78 @@
     });
   }
 
+  /* ---------------------------------------------------------- Home slideshow */
+  function showcase() {
+    const el = $("[data-showcase]");
+    if (!el) return;
+    const slides = $$(".show-slide", el);
+    const tabs = $$("[data-show-go]", el);
+    const pauseBtn = $("[data-show-pause]", el);
+    const ms = 6500;
+    el.style.setProperty("--show-ms", `${ms}ms`);
+    let i = 0, timer = 0, paused = reduced.matches, hover = false, visible = true;
+
+    const go = (n) => {
+      n = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => {
+        const on = k === n;
+        s.classList.toggle("is-active", on);
+        on ? s.removeAttribute("aria-hidden") : s.setAttribute("aria-hidden", "true");
+        $$("a.btn", s).forEach((a) => (on ? a.removeAttribute("tabindex") : a.setAttribute("tabindex", "-1")));
+        $$("img[loading='lazy']", s).forEach((img) => k === (n + 1) % slides.length && (img.loading = "eager"));
+      });
+      tabs.forEach((t, k) => {
+        t.classList.toggle("is-done", k < n);
+        t.classList.remove("is-active");
+        t.toggleAttribute("aria-current", k === n);
+      });
+      void tabs[n].offsetWidth; // restart the progress bar animation
+      tabs[n].classList.add("is-active");
+      i = n;
+      schedule();
+    };
+    const schedule = () => {
+      clearTimeout(timer);
+      if (!paused && !hover && visible) timer = setTimeout(() => go(i + 1), ms);
+    };
+    const setPaused = (p) => {
+      paused = p;
+      el.classList.toggle("is-paused", p || hover);
+      pauseBtn.setAttribute("aria-label", p ? "Play slideshow" : "Pause slideshow");
+      pauseBtn.textContent = p ? "▶" : "❚❚";
+      schedule();
+    };
+
+    tabs.forEach((t) => t.addEventListener("click", () => go(Number(t.dataset.showGo))));
+    $("[data-show-prev]", el).addEventListener("click", () => go(i - 1));
+    $("[data-show-next]", el).addEventListener("click", () => go(i + 1));
+    pauseBtn.addEventListener("click", () => setPaused(!paused));
+    // Pause while the visitor is reading or interacting.
+    el.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") { hover = true; el.classList.add("is-paused"); clearTimeout(timer); } });
+    el.addEventListener("pointerleave", () => { hover = false; el.classList.toggle("is-paused", paused); schedule(); });
+    el.addEventListener("focusin", () => { hover = true; clearTimeout(timer); });
+    el.addEventListener("focusout", () => { hover = false; schedule(); });
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") go(i + 1);
+      if (e.key === "ArrowLeft") go(i - 1);
+    });
+    // Swipe on touch screens.
+    let x0 = null;
+    el.addEventListener("touchstart", (e) => (x0 = e.touches[0].clientX), { passive: true });
+    el.addEventListener("touchend", (e) => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 50) go(dx < 0 ? i + 1 : i - 1);
+      x0 = null;
+    });
+    // Only run while on screen.
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([en]) => { visible = en.isIntersecting; schedule(); }).observe(el);
+    }
+    setPaused(paused);
+    go(0);
+  }
+
   /* ---------------------------------------------------------- Work index preview */
   function preview() {
     const wrap = $("[data-preview-wrap]");
@@ -304,6 +376,7 @@
   words();
   timecode();
   reel();
+  showcase();
   preview();
   videos();
   contact();
