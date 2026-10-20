@@ -427,7 +427,8 @@ a:hover .arrow, a:focus-visible .arrow, button:hover .arrow { transform: transla
 .portrait-mono .display em { color: var(--pewter); }
 .portrait-mono .mono { color: var(--mute); text-align: center; }
 .about-lede { padding-block: clamp(80px, 12vw, 180px); border-top: 1px solid var(--line); }
-.about-lede p { font-size: clamp(30px, 4vw, 64px); line-height: 1.1; max-width: 26ch; }
+.about-lede > p { font-size: clamp(36px, 5vw, 80px); line-height: 1.05; max-width: 20ch; }
+.about-lede-body p { font-family: var(--sans); line-height: 1.7; }
 .about-quote { padding-block: clamp(60px, 8vw, 120px); border-top: 1px solid var(--line); }
 .about-quote blockquote { margin-top: 32px; padding-left: clamp(20px, 4vw, 56px); border-left: 1px solid var(--pewter); }
 .about-quote blockquote p { font-size: clamp(32px, 4.6vw, 76px); line-height: 1.04; max-width: 20ch; }
@@ -760,3 +761,6 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
 .show-bg--poster .poster-fit::before { display: none; }
 .show-bg--poster .poster-fit > .poster-img { object-fit: cover; }
 .film-hero-bg .poster-fit > .poster-img { object-fit: cover; }
+
+.about-lede-body { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 64px); margin-top: clamp(40px, 5vw, 72px); color: var(--paper-2); font-size: clamp(17px, 1.3vw, 20px); max-width: 1100px; }
+@media (max-width: 860px) { .about-lede-body { grid-template-columns: 1fr; } }

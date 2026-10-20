@@ -135,7 +135,7 @@ emit("/brands/", {
 });
 emit("/about/", {
   title: "About Cole Rutman",
-  description: "Cole Rutman is a Canadian producer and filmmaker, and the creative lead behind BLANKBOX ENTERTAINMENT.",
+  description: "Cole Rutman is a Canadian producer and entertainment industry manager who leads BLANKBOX ENTERTAINMENT.",
   body: pages.about(),
   current: "/about/",
   bodyClass: "page-about",

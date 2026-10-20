@@ -322,7 +322,11 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 </section>
 
 <section class="about-lede wrap">
-  <p class="display reveal" data-words>Cole Rutman is a Canadian producer and entertainment industry manager. Recognized as one of North America's young filmmakers to watch, he has balanced a career in independent cinema with leadership roles and business studies at Western University's Ivey Business School <span class="nowrap">(HBA ’26).</span></p>
+  <p class="display reveal" data-words>Cole Rutman is a Canadian producer and entertainment industry manager.</p>
+  <div class="about-lede-body">
+    <p class="reveal">A graduate of Ivey Business School at Western University, Cole has worked as an executive producer and creative director at TED conferences, and scaled a mobile app through Canada's number one accelerator, DMZ Toronto.</p>
+    <p class="reveal">In his creative work, he has produced numerous short films and documentaries, and produced and directed a theatre production. With experience running multiple commercial shoots and creative projects from start to finish, he leads BLANKBOX ENTERTAINMENT with a vision of becoming a major distributor of new-age content for audiences around the world.</p>
+  </div>
 </section>
 
 <section class="about-quote wrap" aria-label="Signature">
