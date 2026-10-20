@@ -11,7 +11,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   const filmUrl = (f) => href(`/work/${f.slug}/`);
   const metaLine = (f) => [f.year, f.format, f.runtime].filter(Boolean).join(" · ");
   const byline = (f) => f.byline || `A film by ${f.filmmaker}`;
-  const logoNames = { netflix: "Netflix", appletv: "Apple TV+", hgtv: "HGTV" };
+  const logoNames = { netflix: "Netflix", appletv: "Apple TV+" };
   const netLogo = (f, cls = "") =>
     f.platformLogo && !(f.posterHasLogo && !cls.includes("corner")) ? `<img class="net-logo net-logo--${f.platformLogo} ${cls}" src="${asset(`img/platforms/${f.platformLogo}.svg`)}" alt="${logoNames[f.platformLogo]}" width="96" height="96" decoding="async">` : "";
   const platformBadge = (f, cls = "") =>
@@ -368,7 +368,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     <div class="member-copy">
       <p class="mono member-role reveal">Creative Specialist</p>
       <h3 class="member-name display reveal">Levi Considine</h3>
-      <p class="member-bio reveal">Levi Considine is a Toronto-based sound designer and editor whose work has reached audiences on Netflix, Apple TV+ and HGTV. He has worked on Spin Master's animated series <em>Unicorn Academy</em> and <em>Mighty Express</em> for Netflix, on <em>Sago Mini Friends</em> for Apple TV+, and on HGTV's <em>Property Brothers: Under Pressure</em>. His sound team on <em>Unicorn Academy</em> was nominated for the Canadian Screen Award for Best Sound, Animation.</p>
+      <p class="member-bio reveal">Levi Considine is a Toronto-based sound designer and editor whose work has reached audiences on Netflix and Apple TV+. He has worked on Spin Master's animated series <em>Unicorn Academy</em> and <em>Mighty Express</em> for Netflix and on <em>Sago Mini Friends</em> for Apple TV+, and created the Foley and sound design for Michael Greco's festival-selected animated short <em>Green Grass</em>. His sound team on <em>Unicorn Academy</em> was nominated for the Canadian Screen Award for Best Sound, Animation.</p>
       <p class="member-bio reveal">Earlier in his career he worked on the sound of <em>Violent</em>, the Canadian-Norwegian drama that won Best Canadian Feature at the Vancouver International Film Festival. As Creative Specialist at BLANKBOX ENTERTAINMENT, he brings that experience across animation, television and features to the company's productions, starting with the sound design of <em>Two's a Party</em>.</p>
       <div class="member-links reveal">
         <a class="btn btn--ghost" href="https://www.imdb.com/name/nm6346683/" target="_blank" rel="noopener">View IMDb <span aria-hidden="true">↗</span></a>
