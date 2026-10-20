@@ -31,7 +31,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
             <p class="mono show-num"><span>${pad(i + 1)}</span> / ${pad(films.length)} — ${esc([f.year, f.format].filter(Boolean).join(" · "))}</p>
             <h3 class="show-title display">${esc(f.title)}</h3>
             <p class="mono show-by">${esc(byline(f))}</p>
-            ${platformBadge(f)}
             ${f.logline ? `<p class="show-logline">${esc(f.logline)}</p>` : ""}
             <a class="btn btn--solid" href="${filmUrl(f)}"${i ? ' tabindex="-1"' : ""}>View project ${arrow}</a>
           </div>
@@ -164,7 +163,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
           <p class="chapter-num mono reveal"><span>${pad(i + 1)}</span> / ${pad(films.length)}</p>
           <h2 class="chapter-title display reveal" id="t-${f.slug}">${esc(f.title)}</h2>
           <p class="chapter-by mono reveal">${esc(byline(f))}</p>
-          ${platformBadge(f, "reveal")}
           ${metaLine(f) ? `<p class="chapter-meta mono reveal">${esc(metaLine(f))}${f.genres.filter((g) => g !== f.format).length ? ` · ${esc(f.genres.filter((g) => g !== f.format).slice(0, 2).join(" / "))}` : ""}</p>` : ""}
           ${teamLine(f, "reveal")}
           ${f.logline ? `<p class="chapter-logline reveal">${esc(f.logline)}</p>` : `<p class="chapter-logline chapter-logline--tba reveal">Synopsis coming soon.</p>`}
@@ -257,7 +255,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       <p class="mono section-label">${pad(i + 1)} / ${pad(films.length)}${metaLine(f) ? ` — ${esc(metaLine(f))}` : ""}</p>
       <h1 class="film-title display"><span class="line"><span>${esc(f.title)}</span></span></h1>
       <p class="film-by mono">${esc(byline(f))}</p>
-      ${platformBadge(f)}
       ${teamLine(f)}
       ${f.tagline ? `<p class="film-tagline display reveal"><em>${esc(f.tagline)}</em></p>` : ""}
     </div>
@@ -361,9 +358,8 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   </div>
 </section>
 
-<section class="team wrap" aria-labelledby="team-title">
+<section class="team wrap" aria-label="The team">
   <p class="mono section-label reveal">The team</p>
-  <h2 class="section-title display reveal" id="team-title">Who we <em>work with.</em></h2>
   <article class="member">
     <div class="member-card reveal-frame" aria-hidden="true">
       <span class="vf"><i></i><i></i><i></i><i></i></span>
