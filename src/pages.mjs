@@ -77,7 +77,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       <span class="line"><span>as a <em>blank box.</em></span></span>
     </h1>
     <div class="hero-foot">
-      <p class="hero-lede reveal">BLANKBOX ENTERTAINMENT is a film and television company built for the evolving entertainment landscape. We combine bold concepts and IP with compelling storytelling.</p>
+      <p class="hero-lede reveal">BLANKBOX ENTERTAINMENT is a film and television company built for the evolving entertainment landscape. We focus on bold concepts and IP with compelling storytelling.</p>
       <div class="hero-actions reveal">
         <a class="btn btn--solid" href="${href("/work/")}">Explore our work ${arrow}</a>
         <a class="btn btn--ghost" href="${href("/about/")}">About Us</a>
@@ -101,19 +101,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   </div>
 </section>
 
-
-<section class="approach wrap" aria-labelledby="approach-title">
-  <div class="section-head">
-    <div>
-      <h2 class="section-title display reveal" id="approach-title">We're All About<br><em>Entertainment</em></h2>
-    </div>
-  </div>
-  <ol class="approach-list">
-    <li class="reveal"><span class="mono">01</span><h3>The concept carries the weight</h3><p>Every project we take part in starts with an idea strong enough to hold an audience in a single sentence. If it can't, we keep working until it can.</p></li>
-    <li class="reveal"><span class="mono">02</span><h3>Made for every screen</h3><p>We believe audiences are changing, so we develop entertainment suited to viewers everywhere: social media, TV and movie screens.</p></li>
-    <li class="reveal"><span class="mono">03</span><h3>Built-in audience distribution</h3><p>We love producing and distributing content with strong audience and IP potential. We're just as serious about the market as we are about the art.</p></li>
-  </ol>
-</section>
 
 <section class="mission wrap" aria-labelledby="mission-title">
   <p class="mono section-label reveal">Our mission</p>
