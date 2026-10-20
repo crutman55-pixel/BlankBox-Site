@@ -95,7 +95,8 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
   <ol class="approach-list">
     <li class="reveal"><span class="mono">01</span><h3>The concept carries the weight</h3><p>Every project starts with an idea strong enough to hold an audience in a single sentence. If it can't, we keep working until it can.</p></li>
     <li class="reveal"><span class="mono">02</span><h3>Structure is part of the spectacle</h3><p>Fractured memory, unreliable systems, timelines that fold back on themselves. We treat the architecture of a story as part of the experience.</p></li>
-    <li class="reveal"><span class="mono">03</span><h3>Room to grow</h3><p>We develop worlds with more story in them than a single runtime can hold, so a short can become the proof of something larger.</p></li>
+    <li class="reveal"><span class="mono">03</span><h3>Made for every screen</h3><p>We believe audiences are changing, so we develop entertainment suited to viewers everywhere: social media, TV and movie screens.</p></li>
+    <li class="reveal"><span class="mono">04</span><h3>Room to grow</h3><p>We develop worlds with more story in them than a single runtime can hold, so a short can become the proof of something larger.</p></li>
   </ol>
 </section>
 
