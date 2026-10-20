@@ -7,10 +7,10 @@ export function createLayout({ base, version }) {
 
   const mark = (cls = "mark") => `<img class="${cls}" src="${asset("img/logo-mark.webp")}" alt="" width="240" height="207" decoding="async">`;
 
-  const brand = `<a class="brand" href="${href("/")}" aria-label="${esc(site.name)}, home">
+  const brand = (current) => `<a class="brand" href="${href("/")}" aria-label="${esc(site.name)}, home">
     ${mark()}
     <span class="brand-word">BLANKBOX</span>
-    <span class="brand-sub">Entertainment</span>
+    <span class="brand-sub">${current === "/brands/" ? "Media" : "Entertainment"}</span>
   </a>`;
 
   const navList = (current, cls) =>
@@ -23,7 +23,7 @@ export function createLayout({ base, version }) {
 
   const header = (current) => `<a class="skip" href="#main">Skip to content</a>
 <header class="site-header" data-header>
-  ${brand}
+  ${brand(current)}
   <nav class="nav" aria-label="Primary">${navList(current, "nav-list")}</nav>
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
     <span class="menu-toggle-label">Menu</span><span class="menu-toggle-icon" aria-hidden="true"><i></i><i></i></span>

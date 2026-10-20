@@ -764,3 +764,7 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
 
 .about-lede-body { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 64px); margin-top: clamp(40px, 5vw, 72px); color: var(--paper-2); font-size: clamp(17px, 1.3vw, 20px); max-width: 1100px; }
 @media (max-width: 860px) { .about-lede-body { grid-template-columns: 1fr; } }
+
+/* Brands page: BLANKBOX MEDIA lockup */
+.page-brands .page-hero { padding-top: calc(var(--header-h) + clamp(40px, 6vw, 90px)); }
+.media-lockup { display: block; width: clamp(220px, 26vw, 380px); height: auto; margin: 0 0 clamp(48px, 6vw, 88px) -2%; mix-blend-mode: screen; }
