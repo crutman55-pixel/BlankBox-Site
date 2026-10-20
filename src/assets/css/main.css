@@ -734,3 +734,12 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
 .hero-brands:hover, .hero-brands:focus-visible { color: var(--black); border-color: var(--paper); }
 .hero-brands:hover::before, .hero-brands:focus-visible::before { transform: scaleX(1); }
 .hero-brands .arrow { font-size: 20px; }
+
+/* Home: our mission */
+.mission { padding-block: clamp(90px, 12vw, 180px); border-top: 1px solid var(--line); }
+.mission-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(40px, 7vw, 120px); align-items: end; margin-top: clamp(32px, 4vw, 56px); }
+.mission-statement { font-size: clamp(38px, 4.6vw, 76px); line-height: 1.04; text-wrap: balance; }
+.mission-statement em { color: var(--pewter); }
+.mission-body { display: grid; gap: 20px; color: var(--paper-2); font-size: clamp(16px, 1.2vw, 18px); max-width: 52ch; padding-left: clamp(0px, 2vw, 32px); border-left: 1px solid var(--line-2); }
+.mission-body p:nth-child(2) { --d: 0.08s; }
+@media (max-width: 860px) { .mission-grid { grid-template-columns: minmax(0, 1fr); } .mission-body { border-left: 0; padding-left: 0; } }

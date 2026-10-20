@@ -116,6 +116,17 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   </ol>
 </section>
 
+<section class="mission wrap" aria-labelledby="mission-title">
+  <p class="mono section-label reveal">Our mission</p>
+  <div class="mission-grid">
+    <h2 class="mission-statement display reveal" id="mission-title">Our mission is to make great entertainment <em>reach further, connect deeper,</em> and find the audience it deserves.</h2>
+    <div class="mission-body">
+      <p class="reveal">BLANKBOX is a new-age entertainment company that brings stories to audiences around the world. From film and television to digital-first series, we focus on the connection between great content and the people who watch it.</p>
+      <p class="reveal">We believe the future of entertainment lies in understanding audiences, finding stories that resonate with them, and bringing those stories to the platforms where they belong.</p>
+    </div>
+  </div>
+</section>
+
 <section class="enter" aria-label="Full portfolio">
   <a class="enter-link" href="${href("/work/")}">
     <span class="mono enter-label">Scene 02 — The full slate</span>
