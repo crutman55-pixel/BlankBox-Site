@@ -105,8 +105,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 <section class="approach wrap" aria-labelledby="approach-title">
   <div class="section-head">
     <div>
-      <p class="mono section-label reveal">Scene 01 — How we develop</p>
-      <h2 class="section-title display reveal" id="approach-title">Ideas first.<br><em>Then everything else.</em></h2>
+      <h2 class="section-title display reveal" id="approach-title">We're All About<br><em>Entertainment</em></h2>
     </div>
   </div>
   <ol class="approach-list">
