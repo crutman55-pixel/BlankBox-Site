@@ -213,19 +213,11 @@ a:hover .arrow, a:focus-visible .arrow, button:hover .arrow { transform: transla
   background: radial-gradient(60% 50% at 70% 35%, rgba(184, 178, 166, 0.13), transparent 70%),
               radial-gradient(40% 40% at 20% 90%, rgba(184, 178, 166, 0.05), transparent 70%);
 }
-/* The portal: an open, lit frame, the blank box the brand is named for. */
-.portal { position: absolute; top: 47%; left: 72%; width: min(37vw, 560px, 58svh); aspect-ratio: 1.12; transform: translate(-50%, -50%); }
-.portal-frame { position: absolute; inset: 0; }
-.portal-frame i { position: absolute; display: block; }
-.pf-top { left: 0; right: 0; top: 0; height: 5.5%; background: linear-gradient(180deg, #f4f1ea, #cfcac0 70%, #a9a49a); box-shadow: 0 0 40px rgba(255, 248, 235, 0.12); }
-.pf-left { left: 0; top: 0; bottom: 0; width: 6%; background: linear-gradient(90deg, #5e5b55, #a8a399 55%, #cfcac0); }
-.pf-right { right: 0; top: 0; bottom: 0; width: 6.5%; background: linear-gradient(90deg, #fbf8f2, #e2ded5 60%, #b9b4aa); box-shadow: 0 0 80px rgba(255, 246, 228, 0.25); }
-/* Inner faces give the frame depth; the right one catches the light. */
-.pf-in-top { left: 6.5%; right: 6.5%; top: 5.5%; height: 4.5%; background: linear-gradient(180deg, #6f6b64, #2a2926); clip-path: polygon(0 0, 100% 0, 92% 100%, 3% 100%); }
-.pf-in-left { left: 6.5%; top: 5.5%; bottom: 0; width: 2.5%; background: linear-gradient(90deg, #3a3834, #121211); clip-path: polygon(0 0, 100% 8%, 100% 99%, 0 100%); }
-.pf-in-right { right: 6.5%; top: 5.5%; bottom: 0; width: 7%; background: linear-gradient(90deg, rgba(255, 248, 235, 0.05), rgba(255, 248, 235, 0.85)); clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 97%); filter: blur(0.4px); animation: glow 7s var(--ease-in-out) infinite alternate; }
-.portal-spill { position: absolute; left: 20%; right: -35%; bottom: -10%; height: 40%; background: radial-gradient(55% 50% at 66% 42%, rgba(255, 246, 228, 0.45), transparent 72%); filter: blur(18px); animation: glow 7s var(--ease-in-out) infinite alternate; }
-.portal-floor { position: absolute; left: -10%; right: -25%; bottom: -1px; height: 1px; background: linear-gradient(90deg, transparent, rgba(236, 232, 224, 0.14) 30%, rgba(255, 246, 228, 0.35) 72%, transparent); }
+/* The portal: a lit, floating box, the blank box the brand is named for. */
+.portal { position: absolute; top: 47%; left: 72%; width: min(46vw, 720px, 76svh); aspect-ratio: 1; transform: translate(-50%, -50%); }
+.portal-img { position: absolute; inset: 0; width: 100%; height: 100%; animation: float 9s var(--ease-in-out) infinite alternate; }
+.portal-glow { position: absolute; left: 22%; right: 22%; bottom: 4%; height: 12%; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 246, 228, 0.12), transparent); filter: blur(20px); animation: glow 9s var(--ease-in-out) infinite alternate; }
+@keyframes float { from { transform: translateY(-1.5%) rotate(-0.6deg); } to { transform: translateY(1.5%) rotate(0.6deg); } }
 @keyframes glow { from { opacity: 0.75; } to { opacity: 1; } }
 .hero-sweep {
   position: absolute; inset: -20% -40%;
@@ -499,7 +491,7 @@ a.channel:hover .channel-v { font-style: italic; transform: translateX(10px); }
   .nav, .brand-sub { display: none; }
   .menu-toggle { display: inline-flex; }
   .hero-foot { grid-template-columns: 1fr; }
-  .portal { left: 62%; top: 34%; width: 82vw; opacity: 0.35; }
+  .portal { left: 60%; top: 32%; width: 96vw; opacity: 0.4; }
   .hero-ratio { display: none; }
   .hero-tc { left: 22px; }
   .scroll-cue { display: none; }

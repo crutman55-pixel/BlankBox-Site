@@ -105,11 +105,11 @@ export const films = [
     runtime: null,
     genres: [],
     filmmaker: "Cole Rutman",
-    tagline: "Two brothers. No one else.",
+    tagline: null,
     logline:
-      "James and Lyle Boyd are brothers living alone in the south end of Detroit, Michigan, and Lyle, still a teenager, is facing possible prison time for theft.",
+      "Two brothers living alone in Detroit. When Lyle faces prison time for theft, James tries to set him on a better path before it's too late.",
     synopsis: [
-      "James and Lyle Boyd are brothers who live alone in the south end of Detroit, Michigan. Lyle, a teenager, is facing possible prison time for theft.",
+      "James and Lyle Boyd are brothers who live alone in the south end of Detroit, Michigan. Lyle, a teenager, is facing possible prison time for theft, and James tries to set his brother on a better path before it's too late.",
     ],
     credits: [{ role: "Written, directed & produced by", name: "Cole Rutman" }],
     cast: [],

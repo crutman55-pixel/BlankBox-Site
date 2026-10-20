@@ -51,12 +51,8 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-stage" aria-hidden="true">
     <div class="portal">
-      <div class="portal-floor"></div>
-      <div class="portal-spill"></div>
-      <div class="portal-frame">
-        <i class="pf-top"></i><i class="pf-left"></i><i class="pf-right"></i>
-        <i class="pf-in-top"></i><i class="pf-in-right"></i><i class="pf-in-left"></i>
-      </div>
+      <div class="portal-glow"></div>
+      <img class="portal-img" src="${asset("img/box.webp")}" alt="" width="1600" height="1600" decoding="async" fetchpriority="high">
     </div>
     <div class="hero-sweep"></div>
   </div>
@@ -73,7 +69,7 @@ export function createPages({ films, href, asset, poster, portrait, stills, keyA
       <span class="line"><span><em>blank box.</em></span></span>
     </h1>
     <div class="hero-foot">
-      <p class="hero-lede reveal">BlankBox develops film and television for a new generation, combining bold concepts, micro-series, and compelling storytelling for the evolving entertainment landscape.</p>
+      <p class="hero-lede reveal">BLANKBOX ENTERTAINMENT develops film and television for a new generation, combining bold concepts, micro-series, and compelling storytelling for the evolving entertainment landscape.</p>
       <div class="hero-actions reveal">
         <a class="btn btn--solid" href="${href("/work/")}">Explore our work ${arrow}</a>
         <a class="btn btn--ghost" href="${href("/about/")}">About Us</a>
