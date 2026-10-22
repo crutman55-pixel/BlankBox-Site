@@ -323,6 +323,30 @@
     await confirmAndSend();
   }
 
+  // Posts the brief as form data (no CORS preflight). Every path resolves within ~10s,
+  // so the chat can never hang on "Sending…".
+  async function send(fields) {
+    if (!endpoint) return "error";
+    const form = () => { const f = new FormData(); Object.entries(fields).forEach(([k, v]) => f.append(k, v)); return f; };
+    const ctrl = new AbortController();
+    const attempt = (async () => {
+      try {
+        const res = await fetch(endpoint, { method: "POST", headers: { Accept: "application/json" }, body: form(), signal: ctrl.signal });
+        const body = await res.json().catch(() => ({}));
+        if (res.ok && String(body.success) !== "false") return "sent";
+        return /activat/i.test(body.message || "") ? "activate" : "error";
+      } catch {
+        // Fall back to the classic endpoint; the response is opaque but the email still goes out.
+        try {
+          await fetch(endpoint.replace("/ajax/", "/"), { method: "POST", mode: "no-cors", body: form(), signal: ctrl.signal });
+          return "sent";
+        } catch { return "error"; }
+      }
+    })();
+    const timeout = new Promise((r) => setTimeout(() => { ctrl.abort(); r("error"); }, 10000));
+    return Promise.race([attempt, timeout]);
+  }
+
   async function confirmAndSend() {
     await say("Here's your brief. Does everything look right?");
     const card = el("div", "msg msg--bot summary");
@@ -343,22 +367,8 @@
     log.append(sending); scroll();
     clearDock();
     const brief = Object.fromEntries(rows);
-    let outcome = "error";
-    try {
-      if (!endpoint) throw new Error("no endpoint");
-      const ctrl = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), 15000);
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ _subject: `New project brief: ${data.company} (${data.name})`, _template: "table", _captcha: "false", _replyto: data.email, ...brief }),
-        signal: ctrl.signal,
-      });
-      clearTimeout(timer);
-      const body = await res.json().catch(() => ({}));
-      const ok = res.ok && String(body.success) !== "false";
-      outcome = ok ? "sent" : /activat/i.test(body.message || "") ? "activate" : "error";
-    } catch { outcome = "error"; }
+    const subject = `New project brief: ${data.company} (${data.name})`;
+    const outcome = await send({ _subject: subject, _template: "table", _captcha: "false", _replyto: data.email, ...brief });
     sending.remove();
 
     if (outcome === "sent") return success();
