@@ -17,7 +17,8 @@ import { createPages } from "./src/pages.mjs";
 const root = dirname(fileURLToPath(import.meta.url));
 const src = join(root, "src");
 const out = join(root, "dist");
-const base = (process.env.BASE_PATH || "").replace(/\/$/, "");
+// A custom domain serves from the root, whatever sub-path Pages reports.
+const base = site.domain ? "" : (process.env.BASE_PATH || "").replace(/\/$/, "");
 const version = Date.now().toString(36);
 
 const { page, href, asset } = createLayout({ base, version });
