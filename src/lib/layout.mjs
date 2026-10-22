@@ -105,6 +105,7 @@ export function createLayout({ base, version }) {
 <script>document.documentElement.classList.add("js");setTimeout(function(){var d=document.documentElement;if(!d.classList.contains("is-booted"))d.classList.remove("js")},3000)</script>
 ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}
 <script src="${asset("js/main.js")}" defer></script>
+${["page-brands", "page-contact"].includes(bodyClass) && site.formEndpoint ? `<script src="${asset("js/brief.js")}" data-endpoint="${esc(site.formEndpoint)}" defer></script>` : ""}
 </head>
 <body class="${bodyClass}" id="top">
 ${header(current)}
@@ -112,6 +113,7 @@ ${header(current)}
 ${body}
 </main>
 ${footer()}
+${bodyClass === "page-brands" && site.formEndpoint ? `<button class="brief-fab" type="button" data-brief-open aria-label="Start your project brief"><span class="brief-fab-ring" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="9" cy="10" r="1.1" fill="currentColor"/><circle cx="12" cy="10" r="1.1" fill="currentColor"/><circle cx="15" cy="10" r="1.1" fill="currentColor"/></svg><span class="brief-fab-label">Work with us</span></button>` : ""}
 <div class="grain" aria-hidden="true"></div>
 </body>
 </html>

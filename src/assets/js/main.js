@@ -252,7 +252,11 @@
     $$("[data-inview-play]").forEach((v) => {
       if (reduced.matches || !("IntersectionObserver" in window)) return;
       v.muted = true;
-      new IntersectionObserver(([e]) => { e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }, { rootMargin: "300px 0px", threshold: 0 }).observe(v);
+      // Start loading well before the row is reached, so it is already playing on arrival.
+      new IntersectionObserver(([e]) => {
+        if (e.isIntersecting) { if (v.preload !== "auto") { v.preload = "auto"; v.load(); } v.play().catch(() => {}); }
+        else v.pause();
+      }, { rootMargin: "900px 0px", threshold: 0 }).observe(v);
     });
     const phones = $("[data-phones]");
     if (phones && fine.matches && !reduced.matches) {
@@ -264,7 +268,22 @@
       phones.addEventListener("pointerleave", () => { phones.style.setProperty("--rx", "0deg"); phones.style.setProperty("--ry", "0deg"); });
     }
     // Background loop in the Brands hero respects reduced motion.
-    $$(".bhero-media video").forEach((v) => { if (reduced.matches) { v.removeAttribute("autoplay"); v.pause(); } });
+    $$(".bhero-media video").forEach((v) => {
+      if (reduced.matches) { v.removeAttribute("autoplay"); v.pause(); return; }
+      v.muted = true;
+      const reveal = () => v.classList.add("is-playing");
+      v.addEventListener("playing", reveal, { once: true });
+      v.addEventListener("timeupdate", () => v.currentTime > 0 && reveal(), { once: true });
+      if (!v.paused && v.currentTime > 0) reveal();
+      v.play().catch(() => {});
+    });
+    // Floating brief button appears once the visitor scrolls past the hero.
+    const fab = $(".brief-fab");
+    const hero = $(".bhero");
+    if (fab && hero && "IntersectionObserver" in window) {
+      fab.classList.add("is-hidden");
+      new IntersectionObserver(([e]) => fab.classList.toggle("is-hidden", e.intersectionRatio > 0.35), { threshold: [0, 0.35, 1] }).observe(hero);
+    }
   }
 
   /* ---------------------------------------------------------- Mobile: nudge muted videos to start */
@@ -572,7 +591,6 @@
   preview();
   videos();
   contact();
-  workForm();
   images();
   $("[data-to-top]")?.addEventListener("click", (e) => {
     e.preventDefault();
