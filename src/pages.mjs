@@ -352,6 +352,15 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 <section class="team wrap" aria-label="The team">
   <p class="mono section-label reveal">The team</p>
   <article class="member">
+    <div class="member-card member-card--photo reveal-frame"><img src="${asset("img/ben-naroditsky.webp")}" alt="Portrait of Ben Naroditsky" width="720" height="960" loading="lazy" decoding="async"></div>
+    <div class="member-copy">
+      <p class="mono member-role reveal">Co-founder · Post-production &amp; Operations</p>
+      <h3 class="member-name display reveal">Ben Naroditsky</h3>
+      <p class="member-bio reveal">Ben Naroditsky is a co-founder of BLANKBOX ENTERTAINMENT, where he leads post-production and operations. He oversees projects end to end, from schedules and deliverables through final audio post, and co-produced <em>BlankBox</em>, the AI-themed short film the studio takes its name from, which reached over 25,000 views on Instagram during its campaign.</p>
+      <p class="member-bio reveal">He holds a Master of Professional Communication and a BA with Distinction in Media Production, both from Toronto Metropolitan University, and an advanced diploma in Business Administration and Marketing from Seneca College. Outside the studio he serves as Director of Awards with IABC Toronto and has worked in corporate communications and design for the City of Pickering. He works in English and Russian.</p>
+    </div>
+  </article>
+  <article class="member">
     <div class="member-card reveal-frame" aria-hidden="true">
       <span class="vf"><i></i><i></i><i></i><i></i></span>
       <span class="display">L<em>C</em></span>

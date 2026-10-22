@@ -1190,3 +1190,7 @@ a.sc2-name:hover { color: var(--gold); }
 .svc-progress { height: 2px; margin-top: 28px; background: var(--line); overflow: hidden; }
 .svc-progress i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), var(--ember)); transform-origin: left; transform: scaleX(0.3); transition: transform 0.3s; }
 @media (max-width: 560px) { .svc-slider { grid-auto-columns: 82vw; } }
+
+.member-card--photo { display: block; }
+.member-card--photo img { width: 100%; height: 100%; object-fit: cover; }
+.member + .member { margin-top: clamp(64px, 8vw, 120px); padding-top: clamp(64px, 8vw, 120px); border-top: 1px solid var(--line); }
