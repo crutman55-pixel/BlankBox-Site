@@ -29,14 +29,6 @@ export const brands = {
     { name: "LUG", logo: "clients/lug.png" },
     { name: "Western Mustangs", logo: "clients/western-mustangs.png", knockout: true },
   ],
-  // Featured film on the Brands page (a self-hosted vertical video in src/assets/video/).
-  reelVideo: {
-    src: "video/reel-wide.mp4",
-    webm: "video/reel-wide.webm",
-    poster: "video/reel-wide-poster.webp",
-    client: "Pickleplex Social Club",
-    title: "Brand film",
-  },
   reel: null,
   credits: [],
 };

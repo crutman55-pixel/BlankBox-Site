@@ -446,7 +446,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       ["Impact", "Craft that lands. Cinema-grade picture, sound and edit, so the feeling arrives exactly where it should."],
       ["Recall", "The part your customers carry with them. A moment, a line or an image that keeps your brand in mind long after it ends."],
     ];
-    const rv = brands.reelVideo;
     const logos = (k) =>
       brands.clients
         .map((c) => `<li${k ? ' aria-hidden="true"' : ""}><img${c.knockout ? ' class="logo-knockout"' : ""} src="${asset(c.logo)}" alt="${k ? "" : esc(c.name)}" loading="lazy" decoding="async" height="80"></li>`)
@@ -557,6 +556,10 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       )
       .join("")}
   </div>
+  <figure class="feed-shot reveal-frame">
+    <img src="${asset("img/feed-phones.webp")}" alt="Hands scrolling through a row of phones playing BLANKBOX social content" loading="lazy" decoding="async">
+    <figcaption class="mono">Shot, cut and delivered for every screen</figcaption>
+  </figure>
 </section>
 
 <section class="method wrap" aria-labelledby="method-title">
@@ -591,21 +594,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   </ol>
 </section>
 
-${
-  rv
-    ? `<section class="feature wrap" aria-label="Featured brand film">
-  <div class="feature-player reveal" data-autoplay-video>
-    <video muted playsinline loop preload="metadata" poster="${asset(rv.poster)}">
-      <source src="${asset(rv.webm)}" type="video/webm">
-      <source src="${asset(rv.src)}" type="video/mp4">
-    </video>
-    <button class="sound-btn" type="button" aria-pressed="false" data-sound>
-      <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
-    </button>
-  </div>
-</section>`
-    : ""
-}
 
 <section class="enter" aria-label="Contact">
   <a class="enter-link" href="${href("/contact/")}">

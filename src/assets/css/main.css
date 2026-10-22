@@ -1070,3 +1070,18 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
 @media (max-width: 860px) { .method-item.is-active .method-art { left: 74%; width: 120px; } .method-art { width: 120px; } }
 @media (prefers-reduced-motion: reduce) { .method-art .arc, .method-art .loop, .method-art .ray { stroke-dashoffset: 0; } .method-art .beat { opacity: 1; } }
 .method-item:not(.is-active) .method-art { opacity: 0; }
+
+/* Feed: second layer under the phones */
+.feed-shot { grid-column: 1 / -1; position: relative; margin-top: clamp(24px, 4vw, 56px); aspect-ratio: 21 / 9; overflow: hidden; border: 1px solid var(--line-2); box-shadow: 0 60px 140px -50px rgba(255, 122, 61, 0.35); }
+.feed-shot img { width: 100%; height: 100%; object-fit: cover; object-position: center 45%; }
+.feed-shot::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(7, 7, 7, 0.75), transparent 45%); }
+.feed-shot figcaption { position: absolute; left: clamp(18px, 2vw, 28px); bottom: clamp(16px, 2vw, 24px); z-index: 1; color: var(--paper); }
+@media (max-width: 860px) { .feed-shot { aspect-ratio: 4 / 5; } }
+.feed-shot { grid-column: 2; justify-self: center; width: min(100%, 520px); aspect-ratio: 4 / 5; margin-top: 0; }
+.feed-shot img { object-position: center 40%; }
+@media (max-width: 860px) { .feed-shot { grid-column: 1; width: 100%; } }
+
+/* Feed: copy stays in view while the phones and the photo scroll past */
+.feed-copy { grid-row: 1 / span 2; align-self: start; position: sticky; top: calc(var(--header-h) + 40px); }
+.feed .phones { grid-column: 2; }
+@media (max-width: 860px) { .feed-copy { grid-row: auto; position: static; } .feed .phones { grid-column: 1; } }
