@@ -1410,3 +1410,4 @@ video::-webkit-media-controls, video::-webkit-media-controls-panel, video::-webk
 .brief-fab.is-hidden { opacity: 0; transform: translateY(20px) scale(.9); pointer-events: none; }
 .brief-fab.is-hidden { animation: none; }
 .brief-fab:not(.is-hidden) { animation: fab-in .6s var(--ease) both; }
+.bhero-title { max-width: none; }

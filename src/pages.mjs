@@ -461,13 +461,13 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   <div class="bhero-inner wrap">
     <img class="media-lockup reveal" src="${asset("img/logo-lockup-media.webp")}" alt="BLANKBOX MEDIA" width="1006" height="460" fetchpriority="high">
     <h1 class="bhero-title display" id="brands-title">
-      <span class="line"><span>Have you thought</span></span>
-      <span class="line"><span>about <em class="glow">filmmakers</em></span></span>
-      <span class="line"><span>for your brand?</span></span>
+      <span class="line"><span>Everyone has a story.</span></span>
+      <span class="line"><span>What about</span></span>
+      <span class="line"><span><em class="glow">your brand?</em></span></span>
     </h1>
     <div class="bhero-foot">
       <div class="pitch">
-        <p class="pitch-line display reveal"><span>Everyone has a story.</span> <em>What about your brand?</em></p>
+        <p class="pitch-line display reveal"><span>People skip ads.</span> <em>They finish stories.</em></p>
         <p class="pitch-sub reveal">Our creative production team is made up of professional filmmakers and storytellers who create campaigns, branded content and commercials that people choose to watch, and remember.</p>
         <div class="hero-actions reveal">
           <a class="btn btn--accent" href="${href("/contact/#brief")}" data-brief-open>Start a project ${arrow}</a>
