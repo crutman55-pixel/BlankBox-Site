@@ -438,6 +438,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       ["Social-native content", "Vertical-first stories made for the feed, with hooks that stop the scroll and formats each platform rewards.", ["Reels", "TikTok", "Shorts"], "img/services/social.webp"],
       ["Events & coverage", "Launches, openings and live moments captured as stories, not just footage, and turned around fast.", ["Recaps", "Highlights", "Interviews"], "img/services/events.webp"],
       ["Retainer video production", "An embedded creative team on call every month, keeping your channels full of content that performs.", ["Monthly", "Always-on", "Scalable"], "img/services/retainer.webp"],
+      ["Graphics, animation & interactive media", "Motion design, titles and interactive pieces that explain, entertain and make your brand unmistakable.", ["Motion", "2D / 3D", "Interactive"], null],
     ];
     const method = [
       ["Hook", "The first three seconds decide everything. We open on an image, a question or a turn that stops the scroll.", "img/method/hook.webp"],
@@ -501,7 +502,19 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     ${services
       .map(
         ([t, d, tags, img], i) => `<li class="service reveal" style="--d:${i * 0.07}s">
-        <span class="service-media"><img src="${asset(img)}" alt="" loading="lazy" decoding="async"></span>
+        <span class="service-media${img ? "" : " service-media--motion"}">${
+          img
+            ? `<img src="${asset(img)}" alt="" loading="lazy" decoding="async">`
+            : `<svg viewBox="0 0 400 300" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+                <defs><linearGradient id="mg" x1="0" x2="1"><stop offset="0" stop-color="#ffc76b"/><stop offset="1" stop-color="#ff7a3d"/></linearGradient></defs>
+                <rect width="400" height="300" fill="#0d0d0d"/>
+                <g fill="none" stroke="rgba(236,232,224,.08)">${Array.from({ length: 9 }, (_, k) => `<line x1="${k * 50}" y1="0" x2="${k * 50}" y2="300"/>`).join("")}${Array.from({ length: 7 }, (_, k) => `<line x1="0" y1="${k * 50}" x2="400" y2="${k * 50}"/>`).join("")}</g>
+                <path class="mg-curve" d="M30 230 C 120 230, 140 70, 230 70 S 340 150, 370 60" fill="none" stroke="url(#mg)" stroke-width="3" pathLength="1"/>
+                <rect class="mg-sq" x="160" y="110" width="80" height="80" fill="none" stroke="#ece8e0" stroke-width="2"/>
+                <circle class="mg-dot" r="7" fill="#ffc76b"><animateMotion dur="5s" repeatCount="indefinite" path="M30 230 C 120 230, 140 70, 230 70 S 340 150, 370 60"/></circle>
+                <g fill="#ece8e0" opacity=".5"><circle cx="30" cy="230" r="4"/><circle cx="370" cy="60" r="4"/></g>
+              </svg>`
+        }</span>
         <span class="service-no mono">${pad(i + 1)}</span>
         <h3 class="service-title display">${esc(t)}</h3>
         <p class="service-desc">${esc(d)}</p>

@@ -988,3 +988,17 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
   .bhero .media-lockup { display: none; }
   .bhero .pitch-sub { display: none; }
 }
+
+/* Five services: 3 + 2 */
+.service-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.service { grid-column: span 2; }
+.service:nth-child(4), .service:nth-child(5) { grid-column: span 3; }
+.service:nth-child(4) .service-media, .service:nth-child(5) .service-media { aspect-ratio: 16 / 8; }
+@media (max-width: 1100px) { .service-grid { grid-template-columns: 1fr 1fr; } .service, .service:nth-child(4) { grid-column: span 1; } .service:nth-child(5) { grid-column: 1 / -1; } }
+@media (max-width: 560px) { .service-grid { grid-template-columns: 1fr; } .service:nth-child(5) { grid-column: auto; } }
+.service-media--motion svg { width: 100%; height: 100%; display: block; }
+.mg-curve { stroke-dasharray: 1; stroke-dashoffset: 1; animation: mgdraw 5s var(--ease-in-out) infinite; }
+.mg-sq { transform-origin: 200px 150px; animation: mgspin 10s linear infinite; }
+@keyframes mgdraw { 0% { stroke-dashoffset: 1; } 60%, 100% { stroke-dashoffset: 0; } }
+@keyframes mgspin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .mg-curve { stroke-dashoffset: 0; } }
