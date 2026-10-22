@@ -5,9 +5,9 @@ export const site = {
   shortName: "BlankBox",
   // Full public URL once a domain is connected (no trailing slash).
   // Used for canonical links, sitemap and social previews.
-  url: "https://crutman55-pixel.github.io/BlankBox-Site",
+  url: "https://blankboxmedia.com",
   // Set to your custom domain (e.g. "blankbox.com") to have the build write a CNAME file.
-  domain: "",
+  domain: "blankboxmedia.com",
   description:
     "BLANKBOX ENTERTAINMENT is a film and television company built for the evolving entertainment landscape. We focus on bold concepts and IP with compelling stories.",
   // Contact email shown on the Contact page and used by the contact form.
