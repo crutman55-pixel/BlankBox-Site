@@ -510,7 +510,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     </ul>
     <ul class="feed-platforms reveal" aria-label="Platforms">${["Instagram", "TikTok", "YouTube Shorts", "LinkedIn"].map((x) => `<li class="mono">${x}</li>`).join("")}</ul>
   </div>
-  ${[["feed", "@pickleplex", ""], ["eze", "@eze.entertainment", " phones--b"], ["screens", "", " phones--b phones--c"]]
+  ${[["screens", "", " phones--c"], ["eze", "@eze.entertainment", " phones--b"], ["feed", "@pickleplex", " phones--b phones--a"]]
     .map(
       ([key, handle, cls]) => `<div class="phones${cls}" data-phones aria-hidden="true">
     ${[1, 2, 3]

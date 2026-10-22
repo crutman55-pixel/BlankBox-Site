@@ -1222,3 +1222,4 @@ a.sc2-name:hover { color: var(--gold); }
   .beat:not(:last-child) .beat-name::after { content: ""; }
 }
 .beats-head { display: grid; justify-content: start; gap: 18px; }
+.phones--a::before { background: radial-gradient(50% 50% at 50% 55%, rgba(255, 122, 61, 0.28), transparent 70%); }
