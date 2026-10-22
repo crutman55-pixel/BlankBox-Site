@@ -517,14 +517,10 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       .map(
         (n) => `<div class="phone phone--${n}">
         <div class="phone-screen">
-          ${
-            key === "screens"
-              ? `<img class="phone-still phone-still--${n}" src="${asset("img/services/social-full.webp")}" alt="" loading="lazy" decoding="async">`
-              : `<video muted loop playsinline preload="none" poster="${asset(`video/${key}-${n}.webp`)}" data-inview-play>
+          <video muted loop playsinline preload="none" poster="${asset(`video/${key}-${n}.webp`)}" data-inview-play>
             <source src="${asset(`video/${key}-${n}.webm`)}" type="video/webm">
             <source src="${asset(`video/${key}-${n}.mp4`)}" type="video/mp4">
-          </video>`
-          }
+          </video>
           <div class="phone-ui">
             <span class="phone-progress"><i></i></span>
             ${handle ? `<span class="phone-handle mono">${handle}</span>` : ""}
