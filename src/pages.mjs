@@ -560,10 +560,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   </div>`,
     )
     .join("")}
-  <figure class="feed-shot reveal-frame">
-    <img src="${asset("img/feed-phones.webp")}" alt="Hands scrolling through a row of phones playing BLANKBOX social content" loading="lazy" decoding="async">
-    <figcaption class="mono">Shot, cut and delivered for every screen</figcaption>
-  </figure>
 </section>
 
 <section class="method wrap" aria-labelledby="method-title">
