@@ -441,10 +441,10 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       ["Graphics, animation & interactive media", "Motion design, titles and interactive pieces that explain, entertain and make your brand unmistakable.", ["Motion", "2D / 3D", "Interactive"], null],
     ];
     const method = [
-      ["Hook", "The first three seconds decide everything. We open on an image, a question or a turn that stops the scroll.", "img/method/hook.webp"],
-      ["Narrative", "A story people want to finish. Characters, tension and payoff, built around your brand instead of bolted on.", "img/method/narrative.webp"],
-      ["Impact", "Craft that lands. Cinema-grade picture, sound and edit, so the feeling arrives exactly where it should.", "img/method/impact.webp"],
-      ["Recall", "The part they carry with them. A moment, a line or an image that keeps your brand in mind long after it ends.", "img/method/recall.webp"],
+      ["Hook", "The first three seconds decide everything. We open on an image, a question or a turn that stops the scroll."],
+      ["Narrative", "A story people want to finish. Characters, tension and payoff, built around your brand instead of bolted on."],
+      ["Impact", "Craft that lands. Cinema-grade picture, sound and edit, so the feeling arrives exactly where it should."],
+      ["Recall", "The part they carry with them. A moment, a line or an image that keeps your brand in mind long after it ends."],
     ];
     const rv = brands.reelVideo;
     const logos = (k) =>
@@ -569,8 +569,16 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   <ol class="method-list" data-method>
     ${method
       .map(
-        ([t, d, img], i) => `<li class="method-item${i === 0 ? " is-active" : ""}">
-        <img class="method-img" src="${asset(img)}" alt="" loading="lazy" decoding="async">
+        ([t, d], i) => `<li class="method-item${i === 0 ? " is-active" : ""}">
+        <span class="method-ghost display" aria-hidden="true">${pad(i + 1)}</span>
+        <span class="method-art method-art--${t.toLowerCase()}" aria-hidden="true">${
+          {
+            Hook: `<svg viewBox="0 0 200 200"><circle class="ring r1" cx="100" cy="100" r="20"/><circle class="ring r2" cx="100" cy="100" r="20"/><circle class="ring r3" cx="100" cy="100" r="20"/><circle class="core" cx="100" cy="100" r="9"/></svg>`,
+            Narrative: `<svg viewBox="0 0 200 200"><path class="arc" d="M10 150 C 60 150, 70 60, 110 60 S 160 120, 190 40" pathLength="1"/><circle class="beat b1" cx="10" cy="150" r="5"/><circle class="beat b2" cx="110" cy="60" r="5"/><circle class="beat b3" cx="190" cy="40" r="5"/></svg>`,
+            Impact: `<svg viewBox="0 0 200 200">${Array.from({ length: 12 }, (_, k) => `<line class="ray" x1="100" y1="100" x2="${100 + 80 * Math.cos((k * Math.PI) / 6)}" y2="${100 + 80 * Math.sin((k * Math.PI) / 6)}" pathLength="1" style="--k:${k}"/>`).join("")}<circle class="core" cx="100" cy="100" r="14"/></svg>`,
+            Recall: `<svg viewBox="0 0 200 200"><path class="loop" d="M100 100 C 140 40, 190 70, 160 110 S 60 160, 40 110 S 60 40, 100 100 Z" pathLength="1"/><circle class="orbit" r="6"><animateMotion dur="4s" repeatCount="indefinite" path="M100 100 C 140 40, 190 70, 160 110 S 60 160, 40 110 S 60 40, 100 100 Z"/></circle></svg>`,
+          }[t]
+        }</span>
         <button class="method-btn" type="button" aria-expanded="${i === 0}" aria-controls="method-${i}">
           <span class="mono method-no">${pad(i + 1)} / 04</span>
           <span class="method-title display">${t}</span>
@@ -585,12 +593,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 
 ${
   rv
-    ? `<section class="feature wrap" aria-labelledby="feature-title">
-  <div class="feature-head">
-    <p class="mono section-label reveal">Featured work</p>
-    <h2 class="feature-title display reveal" id="feature-title">${esc(rv.client)}</h2>
-    <p class="mono feature-kind reveal">${esc(rv.title)}</p>
-  </div>
+    ? `<section class="feature wrap" aria-label="Featured brand film">
   <div class="feature-player reveal" data-autoplay-video>
     <video muted playsinline loop preload="metadata" poster="${asset(rv.poster)}">
       <source src="${asset(rv.webm)}" type="video/webm">

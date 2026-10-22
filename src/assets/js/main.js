@@ -291,6 +291,14 @@
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(([e]) => { visible = e.isIntersecting; set(i); }, { threshold: 0.4 }).observe(list);
     }
+    // A soft spotlight follows the pointer across the panels.
+    if (fine.matches) {
+      items.forEach((it) => it.addEventListener("pointermove", (e) => {
+        const r = it.getBoundingClientRect();
+        it.style.setProperty("--mx", `${e.clientX - r.left}px`);
+        it.style.setProperty("--my", `${e.clientY - r.top}px`);
+      }));
+    }
     set(0);
   }
 
