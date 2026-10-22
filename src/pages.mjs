@@ -571,7 +571,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   <div class="section-head">
     <div>
       <p class="mono section-label reveal">Featured work</p>
-      <h2 class="section-title display reveal" id="sc2-title">Recent <em>work.</em></h2>
+      <h2 class="section-title display reveal" id="sc2-title">Highlighted <em>Work</em></h2>
     </div>
   </div>
   <div class="sc2-grid">
