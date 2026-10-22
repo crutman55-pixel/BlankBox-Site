@@ -489,41 +489,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   <div class="marquee" data-marquee><ul class="marquee-track">${[0, 1, 2, 3].map(logos).join("")}</ul></div>
 </section>
 
-<section class="services wrap" id="services" aria-labelledby="services-title">
-  <div class="section-head">
-    <div>
-      <p class="mono section-label reveal">Services</p>
-      <h2 class="section-title display reveal" id="services-title">What we <em>make.</em></h2>
-    </div>
-  </div>
-  <ol class="service-grid">
-    ${services
-      .map(
-        ([t, d, tags, img], i) => `<li class="service reveal" style="--d:${i * 0.07}s">
-        <span class="service-media${img ? "" : " service-media--motion"}">${
-          img
-            ? `<img src="${asset(img)}" alt="" loading="lazy" decoding="async">`
-            : `<svg viewBox="0 0 400 300" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-                <defs><linearGradient id="mg" x1="0" x2="1"><stop offset="0" stop-color="#ffc76b"/><stop offset="1" stop-color="#ff7a3d"/></linearGradient></defs>
-                <rect width="400" height="300" fill="#0d0d0d"/>
-                <g fill="none" stroke="rgba(236,232,224,.08)">${Array.from({ length: 9 }, (_, k) => `<line x1="${k * 50}" y1="0" x2="${k * 50}" y2="300"/>`).join("")}${Array.from({ length: 7 }, (_, k) => `<line x1="0" y1="${k * 50}" x2="400" y2="${k * 50}"/>`).join("")}</g>
-                <path class="mg-curve" d="M30 230 C 120 230, 140 70, 230 70 S 340 150, 370 60" fill="none" stroke="url(#mg)" stroke-width="3" pathLength="1"/>
-                <rect class="mg-sq" x="160" y="110" width="80" height="80" fill="none" stroke="#ece8e0" stroke-width="2"/>
-                <circle class="mg-dot" r="7" fill="#ffc76b"><animateMotion dur="5s" repeatCount="indefinite" path="M30 230 C 120 230, 140 70, 230 70 S 340 150, 370 60"/></circle>
-                <g fill="#ece8e0" opacity=".5"><circle cx="30" cy="230" r="4"/><circle cx="370" cy="60" r="4"/></g>
-              </svg>`
-        }</span>
-        <span class="service-no mono">${pad(i + 1)}</span>
-        <h3 class="service-title display">${esc(t)}</h3>
-        <p class="service-desc">${esc(d)}</p>
-        <ul class="service-tags">${tags.map((x) => `<li class="mono">${esc(x)}</li>`).join("")}</ul>
-        <span class="service-arrow" aria-hidden="true">→</span>
-      </li>`,
-      )
-      .join("")}
-  </ol>
-</section>
-
 <section class="feed wrap" aria-labelledby="feed-title">
   <div class="feed-copy">
     <p class="mono section-label reveal">Content creation</p>
@@ -563,6 +528,30 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   </div>`,
     )
     .join("")}
+</section>
+
+<section class="services wrap" id="services" aria-labelledby="services-title">
+  <div class="section-head">
+    <div>
+      <p class="mono section-label reveal">Services</p>
+      <h2 class="section-title display reveal" id="services-title">What we <em>make.</em></h2>
+    </div>
+  </div>
+  <ol class="svc-list">
+    ${services
+      .map(
+        ([t, d, tags, img], i) => `<li class="svc${i % 2 ? " svc--alt" : ""}">
+        <div class="svc-media reveal-frame"><img src="${asset(img)}" alt="" loading="lazy" decoding="async"></div>
+        <div class="svc-copy">
+          <span class="svc-no mono reveal">${pad(i + 1)} / ${pad(services.length)}</span>
+          <h3 class="svc-title display reveal">${esc(t)}</h3>
+          <p class="svc-desc reveal">${esc(d)}</p>
+          <ul class="service-tags reveal">${tags.map((x) => `<li class="mono">${esc(x)}</li>`).join("")}</ul>
+        </div>
+      </li>`,
+      )
+      .join("")}
+  </ol>
 </section>
 
 <section class="method wrap" aria-labelledby="method-title">
