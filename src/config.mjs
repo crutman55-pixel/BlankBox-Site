@@ -13,6 +13,8 @@ export const site = {
   // Contact email shown on the Contact page and used by the contact form.
   // Leave empty to hide the form and route visitors to LinkedIn instead.
   contactEmail: "",
+  // Work-with-us form: enquiries are emailed via FormSubmit.co.
+  formEndpoint: "https://formsubmit.co/ajax/crutman55@gmail.com",
   location: "Canada",
   social: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/cole-rutman-b57327254/" },

@@ -310,9 +310,21 @@
   function beats() {
     const el = $("[data-beats]");
     if (!el) return;
-    if (reduced.matches || !("IntersectionObserver" in window)) return el.classList.add("is-on");
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.classList.add("is-on"); io.disconnect(); } }, { threshold: 0.5 });
-    io.observe(el);
+    const items = $$(".beat", el);
+    if (reduced.matches) { el.style.setProperty("--p", 1); items.forEach((it) => it.classList.add("is-lit")); return; }
+    // The line fills in step with the visitor's scroll; each beat lights as the fill reaches it.
+    let ticking = false;
+    const update = () => {
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const p = Math.min(1, Math.max(0, (vh * 0.8 - r.top) / (r.height + vh * 0.35)));
+      el.style.setProperty("--p", p.toFixed(3));
+      items.forEach((it, i) => it.classList.toggle("is-lit", p >= i / items.length + 0.02));
+      ticking = false;
+    };
+    window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    window.addEventListener("resize", update);
+    update();
   }
 
   /* ---------------------------------------------------------- Count-up numbers (Brands) */
@@ -481,6 +493,47 @@
     form.addEventListener("input", (e) => e.target.getAttribute("aria-invalid") === "true" && e.target.value.trim() && e.target.setAttribute("aria-invalid", "false"));
   }
 
+  /* ---------------------------------------------------------- Work with us form → email */
+  function workForm() {
+    const form = $("[data-work-form]");
+    if (!form) return;
+    const status = $("[data-status]", form);
+    const btn = $("button[type=submit]", form);
+    form.addEventListener("input", (e) => e.target.getAttribute("aria-invalid") === "true" && e.target.value.trim() && e.target.setAttribute("aria-invalid", "false"));
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      let bad = null;
+      $$("[required]", form).forEach((f) => {
+        const no = !f.value.trim() || (f.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value));
+        f.setAttribute("aria-invalid", no ? "true" : "false");
+        if (no && !bad) bad = f;
+      });
+      if (bad) { status.textContent = "Please complete the highlighted fields."; bad.focus(); return; }
+      const d = Object.fromEntries(new FormData(form));
+      if (d._honey) return;
+      btn.disabled = true; status.textContent = "Sending…";
+      try {
+        const res = await fetch(form.dataset.endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            _subject: `New enquiry: ${d.company} (${d.budget})`,
+            _template: "table",
+            _captcha: "false",
+            _replyto: d.email,
+            Name: d.name, Company: d.company, Email: d.email, Phone: d.phone || "—", Budget: d.budget, "How can we help": d.message,
+          }),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        form.classList.add("is-sent");
+        status.textContent = "Thank you. We'll be in touch shortly.";
+      } catch {
+        status.textContent = "Something went wrong. Please try again in a moment.";
+      } finally { btn.disabled = false; }
+    });
+  }
+
   /* ---------------------------------------------------------- Images: graceful fallback */
   function images() {
     $$("img").forEach((img) => {
@@ -509,6 +562,7 @@
   preview();
   videos();
   contact();
+  workForm();
   images();
   $("[data-to-top]")?.addEventListener("click", (e) => {
     e.preventDefault();

@@ -1223,3 +1223,30 @@ a.sc2-name:hover { color: var(--gold); }
 }
 .beats-head { display: grid; justify-content: start; gap: 18px; }
 .phones--a::before { background: radial-gradient(50% 50% at 50% 55%, rgba(255, 122, 61, 0.28), transparent 70%); }
+
+/* Contact: Work with us */
+.work-form { padding: clamp(28px, 3.4vw, 52px); border: 1px solid var(--line-2); background: radial-gradient(600px circle at 100% 0%, rgba(255, 122, 61, 0.10), transparent 60%), linear-gradient(180deg, #111, #0a0a0a); --gold: #ffc76b; --ember: #ff7a3d; }
+.work-head { margin-bottom: 8px; }
+.work-title { font-size: clamp(32px, 3.4vw, 52px); margin-top: 16px; }
+.budget { border: 0; padding: 0; margin: 0; }
+.budget legend { font: 400 11px var(--mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--mute); margin-bottom: 12px; }
+.budget-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; cursor: pointer; }
+.chip input { position: absolute; opacity: 0; inset: 0; }
+.chip span { display: inline-block; padding: 10px 16px; border: 1px solid var(--line-2); font-size: 14px; color: var(--paper-2); transition: border-color .3s, color .3s, background .3s; }
+.chip input:checked + span { border-color: var(--gold); color: var(--black); background: linear-gradient(100deg, var(--gold), var(--ember)); }
+.chip input:focus-visible + span { outline: 1px solid var(--paper); outline-offset: 3px; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; }
+.work-form textarea::placeholder { color: var(--mute); }
+.work-form.is-sent .form-status { color: var(--gold); }
+.work-form button:disabled { opacity: .6; pointer-events: none; }
+
+/* Four beats: fill driven by scroll */
+.beats-line::after, .beats-line.is-on::after { transform: scaleX(var(--p, 0)); transition: none; }
+.beat-dot, .beat-name, .beat-desc { transition-delay: 0s !important; }
+.beats-line.is-on .beat-dot { background: var(--black); border-color: var(--line-2); box-shadow: none; }
+.beats-line.is-on .beat-name, .beats-line.is-on .beat-desc { opacity: 0.35; transform: none; }
+.beat.is-lit .beat-dot { background: var(--ember) !important; border-color: var(--gold) !important; box-shadow: 0 0 0 5px rgba(255, 122, 61, 0.15), 0 0 18px rgba(255, 122, 61, 0.6) !important; }
+.beat.is-lit .beat-name, .beat.is-lit .beat-desc { opacity: 1 !important; transform: none; }
+.beat .beat-desc { opacity: 0.35; transform: none; }
+@media (max-width: 760px) { .beats-line::after, .beats-line.is-on::after { transform: scaleY(var(--p, 0)); } }

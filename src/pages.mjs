@@ -388,22 +388,26 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   /* ------------------------------------------------------------- CONTACT */
   function contact() {
     const linkedin = site.social.find((s) => s.label === "LinkedIn");
-    const form = site.contactEmail
-      ? `<form class="contact-form" data-contact data-to="${esc(site.contactEmail)}" novalidate>
-          <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" autocomplete="name" required></div>
-          <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
-          <div class="field"><label for="c-org">Company <span class="muted">(optional)</span></label><input id="c-org" name="organization" autocomplete="organization"></div>
-          <div class="field"><label for="c-topic">Regarding</label>
-            <select id="c-topic" name="topic">
-              <option>A project or development opportunity</option>
-              <option>Collaboration</option>
-              <option>Press</option>
-              <option>Something else</option>
-            </select>
+    const form = site.formEndpoint
+      ? `<form class="contact-form work-form" data-work-form data-endpoint="${esc(site.formEndpoint)}" novalidate>
+          <div class="work-head field--wide">
+            <p class="mono section-label">Work with us</p>
+            <h2 class="work-title display">Tell us about <em class="glow">your project.</em></h2>
           </div>
-          <div class="field field--wide"><label for="c-msg">Message</label><textarea id="c-msg" name="message" rows="6" required></textarea></div>
+          <div class="field"><label for="w-name">Name</label><input id="w-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="w-company">Company</label><input id="w-company" name="company" autocomplete="organization" required></div>
+          <div class="field"><label for="w-email">Email</label><input id="w-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="w-phone">Phone <span class="muted">(optional)</span></label><input id="w-phone" name="phone" type="tel" autocomplete="tel"></div>
+          <fieldset class="field field--wide budget">
+            <legend>Estimated budget</legend>
+            <div class="budget-opts">${["Under $5K", "$5K–$15K", "$15K–$50K", "$50K+", "Not sure yet"]
+              .map((x, i) => `<label class="chip"><input type="radio" name="budget" value="${x}"${i === 4 ? " checked" : ""}><span>${x}</span></label>`)
+              .join("")}</div>
+          </fieldset>
+          <div class="field field--wide"><label for="w-msg">How can we help?</label><textarea id="w-msg" name="message" rows="6" required placeholder="The project, the goal, the timeline."></textarea></div>
+          <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="form-foot field--wide">
-            <button class="btn btn--solid" type="submit">Send message ${arrow}</button>
+            <button class="btn btn--solid" type="submit">Send enquiry ${arrow}</button>
             <p class="form-status mono" role="status" aria-live="polite" data-status></p>
           </div>
         </form>`
@@ -425,8 +429,8 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
         : ""
     }
     ${
-      linkedin
-        ? `<a class="channel reveal" href="${linkedin.href}" target="_blank" rel="noopener"><span class="mono">LinkedIn</span><span class="channel-v">Message Cole Rutman</span>${ext}</a>`
+      site.formEndpoint
+        ? `<a class="channel reveal" href="#w-name"><span class="mono">Brands</span><span class="channel-v">Work with us</span>${arrow}</a>`
         : ""
     }
     ${site.social
@@ -478,7 +482,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     <div class="bhero-foot">
       <div class="pitch">
         <p class="pitch-line display reveal"><span>People skip ads.</span> <em>They finish stories.</em></p>
-        <p class="pitch-sub reveal">Our storytellers and creative production team make campaigns, branded content and commercials that people choose to watch, and remember.</p>
+        <p class="pitch-sub reveal">Our creative production team is made up of professional filmmakers and storytellers who create campaigns, branded content and commercials that people choose to watch, and remember.</p>
         <div class="hero-actions reveal">
           <a class="btn btn--accent" href="${href("/contact/")}">Start a project ${arrow}</a>
           <a class="btn btn--ghost" href="#services">Our services</a>
