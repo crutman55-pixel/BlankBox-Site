@@ -244,6 +244,20 @@
       }
       sync();
     });
+    // Phone mockups: play while on screen; the stack tilts toward the pointer.
+    $$("[data-inview-play]").forEach((v) => {
+      if (reduced.matches || !("IntersectionObserver" in window)) return;
+      new IntersectionObserver(([e]) => { e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }, { threshold: 0.3 }).observe(v);
+    });
+    const phones = $("[data-phones]");
+    if (phones && fine.matches && !reduced.matches) {
+      phones.addEventListener("pointermove", (e) => {
+        const r = phones.getBoundingClientRect();
+        phones.style.setProperty("--rx", `${((e.clientY - r.top) / r.height - 0.5) * -8}deg`);
+        phones.style.setProperty("--ry", `${((e.clientX - r.left) / r.width - 0.5) * 12}deg`);
+      });
+      phones.addEventListener("pointerleave", () => { phones.style.setProperty("--rx", "0deg"); phones.style.setProperty("--ry", "0deg"); });
+    }
     // Background loop in the Brands hero respects reduced motion.
     $$(".bhero-media video").forEach((v) => { if (reduced.matches) { v.removeAttribute("autoplay"); v.pause(); } });
   }

@@ -27,6 +27,7 @@ export const brands = {
     { name: "Pickleplex Social Club", logo: "clients/pickleplex.png" },
     { name: "TEDx", logo: "clients/tedx.png" },
     { name: "LUG", logo: "clients/lug.png" },
+    { name: "Western Mustangs", logo: "clients/western-mustangs.png", knockout: true },
   ],
   // Featured film on the Brands page (a self-hosted vertical video in src/assets/video/).
   reelVideo: {

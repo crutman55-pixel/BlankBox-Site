@@ -449,7 +449,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     const rv = brands.reelVideo;
     const logos = (k) =>
       brands.clients
-        .map((c) => `<li${k ? ' aria-hidden="true"' : ""}><img src="${asset(c.logo)}" alt="${k ? "" : esc(c.name)}" loading="lazy" decoding="async" height="80"></li>`)
+        .map((c) => `<li${k ? ' aria-hidden="true"' : ""}><img${c.knockout ? ' class="logo-knockout"' : ""} src="${asset(c.logo)}" alt="${k ? "" : esc(c.name)}" loading="lazy" decoding="async" height="80"></li>`)
         .join("");
 
     return `
@@ -524,6 +524,39 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       )
       .join("")}
   </ol>
+</section>
+
+<section class="feed wrap" aria-labelledby="feed-title">
+  <div class="feed-copy">
+    <p class="mono section-label reveal">Content creation</p>
+    <h2 class="section-title display reveal" id="feed-title">Made for <em class="glow">the feed.</em></h2>
+    <p class="feed-lede reveal">Short-form built like cinema: shot, cut and sound-designed for the platforms where your audience actually spends its time.</p>
+    <ul class="feed-points">
+      <li class="reveal"><span class="mono">0–3s</span>A hook in the first frame</li>
+      <li class="reveal"><span class="mono">9:16</span>Native vertical, not cropped widescreen</li>
+      <li class="reveal"><span class="mono">CC</span>Captioned for sound-off viewing</li>
+    </ul>
+    <ul class="feed-platforms reveal" aria-label="Platforms">${["Instagram", "TikTok", "YouTube Shorts", "LinkedIn"].map((x) => `<li class="mono">${x}</li>`).join("")}</ul>
+  </div>
+  <div class="phones" data-phones aria-hidden="true">
+    ${[1, 2, 3]
+      .map(
+        (n) => `<div class="phone phone--${n}">
+        <div class="phone-screen">
+          <video muted loop playsinline preload="none" poster="${asset(`video/feed-${n}.webp`)}" data-inview-play>
+            <source src="${asset(`video/feed-${n}.webm`)}" type="video/webm">
+            <source src="${asset(`video/feed-${n}.mp4`)}" type="video/mp4">
+          </video>
+          <div class="phone-ui">
+            <span class="phone-progress"><i></i></span>
+            <span class="phone-handle mono">@pickleplex</span>
+            <span class="phone-actions"><i class="pa-heart"></i><i class="pa-chat"></i><i class="pa-share"></i></span>
+          </div>
+        </div>
+      </div>`,
+      )
+      .join("")}
+  </div>
 </section>
 
 <section class="method wrap" aria-labelledby="method-title">
