@@ -28,7 +28,10 @@ export const brands = {
     { name: "TEDx", logo: "clients/tedx.png" },
     { name: "LUG", logo: "clients/lug.png" },
     { name: "Western Mustangs", logo: "clients/western-mustangs.png", knockout: true },
+    { name: "EZE Entertainment", logo: "clients/eze.png" },
   ],
+  // YouTube videos shown in the "See it in motion" section (id from the watch URL; start in seconds).
+  youtube: [{ id: "EnVp_KTusrA", start: 7, title: "Watch the film", label: "BLANKBOX Media" }],
   reel: null,
   credits: [],
 };

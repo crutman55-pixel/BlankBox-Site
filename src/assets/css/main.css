@@ -1085,3 +1085,20 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
 .feed-copy { grid-row: 1 / span 2; align-self: start; position: sticky; top: calc(var(--header-h) + 40px); }
 .feed .phones { grid-column: 2; }
 @media (max-width: 860px) { .feed-copy { grid-row: auto; position: static; } .feed .phones { grid-column: 1; } }
+
+/* Second row of phones */
+.phones--b { grid-column: 2; margin-top: clamp(10px, 2vw, 30px); }
+.phones--b .phone--1 { transform: translate(-125%, -46%) rotateX(var(--rx)) rotateY(calc(var(--ry) + 14deg)) rotateZ(6deg) scale(0.88); }
+.phones--b .phone--3 { transform: translate(25%, -46%) rotateX(var(--rx)) rotateY(calc(var(--ry) - 14deg)) rotateZ(-6deg) scale(0.88); }
+.phones--b::before { background: radial-gradient(50% 50% at 50% 55%, rgba(180, 60, 255, 0.28), transparent 70%); }
+@media (max-width: 860px) { .phones--b { grid-column: 1; } }
+
+/* Watch: YouTube */
+.watch { padding-bottom: clamp(80px, 10vw, 150px); }
+.watch-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+.watch-item .video { margin-top: 0; border-color: var(--line-2); box-shadow: 0 50px 120px -50px rgba(255, 122, 61, 0.35); }
+.watch-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 16px; }
+.watch-meta .mono { color: var(--mute); }
+.watch-meta a { font: 400 clamp(20px, 1.8vw, 28px)/1.2 var(--serif); transition: color 0.3s; }
+.watch-meta a:hover { color: var(--gold); }
+.watch .video-play-icon { background: rgba(7, 7, 7, 0.4); }

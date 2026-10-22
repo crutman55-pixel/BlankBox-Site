@@ -537,25 +537,29 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     </ul>
     <ul class="feed-platforms reveal" aria-label="Platforms">${["Instagram", "TikTok", "YouTube Shorts", "LinkedIn"].map((x) => `<li class="mono">${x}</li>`).join("")}</ul>
   </div>
-  <div class="phones" data-phones aria-hidden="true">
+  ${[["feed", "@pickleplex", ""], ["eze", "@eze.entertainment", " phones--b"]]
+    .map(
+      ([key, handle, cls]) => `<div class="phones${cls}" data-phones aria-hidden="true">
     ${[1, 2, 3]
       .map(
         (n) => `<div class="phone phone--${n}">
         <div class="phone-screen">
-          <video muted loop playsinline preload="none" poster="${asset(`video/feed-${n}.webp`)}" data-inview-play>
-            <source src="${asset(`video/feed-${n}.webm`)}" type="video/webm">
-            <source src="${asset(`video/feed-${n}.mp4`)}" type="video/mp4">
+          <video muted loop playsinline preload="none" poster="${asset(`video/${key}-${n}.webp`)}" data-inview-play>
+            <source src="${asset(`video/${key}-${n}.webm`)}" type="video/webm">
+            <source src="${asset(`video/${key}-${n}.mp4`)}" type="video/mp4">
           </video>
           <div class="phone-ui">
             <span class="phone-progress"><i></i></span>
-            <span class="phone-handle mono">@pickleplex</span>
+            <span class="phone-handle mono">${handle}</span>
             <span class="phone-actions"><i class="pa-heart"></i><i class="pa-chat"></i><i class="pa-share"></i></span>
           </div>
         </div>
       </div>`,
       )
       .join("")}
-  </div>
+  </div>`,
+    )
+    .join("")}
   <figure class="feed-shot reveal-frame">
     <img src="${asset("img/feed-phones.webp")}" alt="Hands scrolling through a row of phones playing BLANKBOX social content" loading="lazy" decoding="async">
     <figcaption class="mono">Shot, cut and delivered for every screen</figcaption>
@@ -595,7 +599,45 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 </section>
 
 
-<section class="enter" aria-label="Contact">
+<section class="feature wrap" aria-label="Featured brand film">
+  <div class="feature-player reveal" data-autoplay-video>
+    <video muted playsinline loop preload="metadata" poster="${asset("video/reel-wide-poster.webp")}">
+      <source src="${asset("video/reel-wide.webm")}" type="video/webm">
+      <source src="${asset("video/reel-wide.mp4")}" type="video/mp4">
+    </video>
+    <button class="sound-btn" type="button" aria-pressed="false" data-sound>
+      <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
+    </button>
+  </div>
+</section>
+
+${brands.youtube.length ? `<section class="watch wrap" aria-labelledby="watch-title">
+  <div class="section-head">
+    <div>
+      <p class="mono section-label reveal">Watch</p>
+      <h2 class="section-title display reveal" id="watch-title">See it <em class="glow">in motion.</em></h2>
+    </div>
+    <a class="btn btn--ghost reveal" href="https://www.youtube.com/watch?v=${esc(brands.youtube[0].id)}" target="_blank" rel="noopener">Open on YouTube <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="watch-grid">
+    ${brands.youtube
+      .map(
+        (v) => `<article class="watch-item reveal">
+        <div class="video" data-video="${esc(v.id)}" data-start="${v.start || 0}">
+          <img class="video-cover" src="https://i.ytimg.com/vi/${encodeURIComponent(v.id)}/hqdefault.jpg" alt="" loading="lazy" decoding="async">
+          <button class="video-play" type="button" aria-label="Play ${esc(v.title)}"><span class="video-play-icon" aria-hidden="true"></span><span class="mono">Play</span></button>
+        </div>
+        <div class="watch-meta">
+          <p class="mono">${esc(v.label)}</p>
+          <a href="https://www.youtube.com/watch?v=${esc(v.id)}${v.start ? `&t=${v.start}s` : ""}" target="_blank" rel="noopener">${esc(v.title)} <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>`,
+      )
+      .join("")}
+  </div>
+</section>
+
+` : ""}<section class="enter" aria-label="Contact">
   <a class="enter-link" href="${href("/contact/")}">
     <span class="mono enter-label">Brand partnerships</span>
     <span class="enter-title display"><span>Start a project</span> ${arrow}</span>

@@ -432,7 +432,7 @@
       $(".video-play", el)?.addEventListener("click", () => {
         const id = encodeURIComponent(el.dataset.video);
         const f = document.createElement("iframe");
-        f.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+        f.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&start=${Number(el.dataset.start) || 0}`;
         f.title = "Trailer";
         f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
         f.allowFullscreen = true;
