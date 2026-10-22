@@ -986,7 +986,11 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
 .bstats dd { font-size: clamp(56px, 6vw, 108px); }
 @media (max-height: 760px) and (min-width: 861px) {
   .bhero .media-lockup { display: none; }
-  .bhero .pitch-sub { display: none; }
+  .bhero-title { font-size: clamp(46px, 11svh, 120px); }
+  .bhero .pitch-line { font-size: clamp(24px, 4.4svh, 40px); }
+  .bhero .pitch-sub { font-size: 15px; margin-top: 10px; }
+  .bhero .hero-actions { margin-top: 18px; }
+  .bstats dd { font-size: clamp(48px, 9svh, 96px); }
 }
 
 /* Five services: 3 + 2 */
