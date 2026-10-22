@@ -393,7 +393,7 @@
   async function send(fields) {
     const errors = [];
     if (WEB3) {
-      const r = await post("https://api.web3forms.com/submit", { access_key: WEB3, subject: fields._subject, from_name: "BLANKBOX brief", replyto: fields._replyto, ...fields });
+      const r = await post("https://api.web3forms.com/submit", { access_key: WEB3, subject: fields._subject, from_name: "BLANKBOX brief", replyto: fields._replyto, ...Object.fromEntries(Object.entries(fields).filter(([k]) => !k.startsWith("_"))) });
       if (r.ok) return { outcome: "sent" };
       errors.push(`Web3Forms: ${r.message}`);
     }

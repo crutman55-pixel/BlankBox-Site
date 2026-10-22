@@ -16,7 +16,7 @@ export const site = {
   // Work-with-us form: enquiries are emailed via FormSubmit.co.
   formEndpoint: "https://formsubmit.co/ajax/crutman55@gmail.com",
   // Optional, more reliable: a free Web3Forms access key (web3forms.com). Used first when set.
-  web3formsKey: "",
+  web3formsKey: "b3c18b7f-06f2-4f5e-9d9a-4d1258bf2955",
   location: "Canada",
   social: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/cole-rutman-b57327254/" },
