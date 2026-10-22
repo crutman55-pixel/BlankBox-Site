@@ -19,7 +19,7 @@ export const brands = {
   // Headline numbers. `value` counts up from zero; `suffix` follows it ("M", "+").
   stats: [
     { value: 4.5, suffix: "M", label: "Views generated to date" },
-    { value: 15, suffix: "+", label: "Professional creatives" },
+    { value: 15, suffix: "+", label: "Professional creatives enlisted" },
   ],
   // Client logos: transparent PNGs in src/assets/clients/.
   clients: [
