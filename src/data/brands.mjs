@@ -20,6 +20,7 @@ export const brands = {
   stats: [
     { value: 4.5, suffix: "M", label: "Views generated to date" },
     { value: 15, suffix: "+", label: "Professional creatives enlisted" },
+    { value: 10, suffix: "+", label: "Global brands trust us" },
   ],
   // Client logos: transparent PNGs in src/assets/clients/.
   clients: [

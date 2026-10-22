@@ -483,7 +483,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 </section>
 
 <section class="clients" aria-labelledby="clients-title">
-  <div class="wrap"><h2 class="mono section-label reveal" id="clients-title">Trusted by 10+ global brands</h2></div>
+  <div class="wrap"><h2 class="mono section-label reveal" id="clients-title">Trusted by</h2></div>
   <div class="marquee" data-marquee><ul class="marquee-track">${[0, 1, 2, 3].map(logos).join("")}</ul></div>
 </section>
 
