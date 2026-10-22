@@ -1164,3 +1164,29 @@ a.sc2-name:hover { color: var(--gold); }
 @media (max-width: 860px) { .svc { grid-template-columns: minmax(0, 1fr); gap: 22px; } .svc--alt .svc-media { order: 0; } }
 .svc--alt { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
 @media (max-width: 860px) { .svc--alt { grid-template-columns: minmax(0, 1fr); } }
+
+/* Services: text only, one row at a time */
+.svc-list { gap: 0; border-top: 1px solid var(--line); }
+.svc, .svc--alt { grid-template-columns: minmax(0, 1fr); padding: clamp(32px, 4vw, 56px) 0; border-bottom: 1px solid var(--line); transition: background 0.5s; }
+.svc-copy { display: grid; grid-template-columns: 110px minmax(0, 6fr) minmax(0, 5fr); gap: 8px clamp(24px, 4vw, 64px); align-items: baseline; }
+.svc-no { grid-row: 1 / span 2; }
+.svc-title { margin: 0; font-size: clamp(34px, 4vw, 64px); transition: color 0.4s, transform 0.6s var(--ease); }
+.svc-desc { grid-column: 3; grid-row: 1; }
+.svc .service-tags { grid-column: 3; grid-row: 2; margin-top: 14px; }
+.svc:hover .svc-title { color: var(--gold); font-style: italic; transform: translateX(8px); }
+@media (max-width: 860px) { .svc-copy { grid-template-columns: minmax(0, 1fr); } .svc-no, .svc-desc, .svc .service-tags { grid-column: 1; grid-row: auto; } }
+
+/* Services: sliding menu */
+.services { padding: clamp(40px, 6vw, 90px) 0 clamp(80px, 10vw, 140px); }
+.svc-slider { grid-auto-columns: clamp(280px, 34vw, 480px); gap: 16px; }
+.svc-card { position: relative; display: flex; flex-direction: column; min-height: clamp(360px, 30vw, 440px); padding: clamp(26px, 2.6vw, 40px); border: 1px solid var(--line); background: radial-gradient(420px circle at 0% 100%, rgba(255, 122, 61, 0.12), transparent 60%), linear-gradient(180deg, #131313, #0b0b0b); transition: border-color 0.5s, transform 0.6s var(--ease), background 0.6s; }
+.svc-card:hover { border-color: rgba(255, 122, 61, 0.55); transform: translateY(-6px); background: radial-gradient(520px circle at 0% 100%, rgba(255, 122, 61, 0.24), transparent 60%), linear-gradient(180deg, #161616, #0b0b0b); }
+.svc-card .svc-no { color: var(--ember); }
+.svc-card .svc-title { margin: auto 0 18px; padding-top: 48px; font-size: clamp(32px, 3vw, 50px); line-height: 1; }
+.svc-card:hover .svc-title { color: var(--paper); font-style: italic; transform: none; }
+.svc-card .svc-desc { color: var(--paper-2); font-size: 16px; max-width: 36ch; }
+.svc-card .service-tags { margin-top: 22px; padding: 0; }
+.svc-link { margin-top: 26px; display: inline-flex; gap: 10px; color: var(--gold); }
+.svc-progress { height: 2px; margin-top: 28px; background: var(--line); overflow: hidden; }
+.svc-progress i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), var(--ember)); transform-origin: left; transform: scaleX(0.3); transition: transform 0.3s; }
+@media (max-width: 560px) { .svc-slider { grid-auto-columns: 82vw; } }

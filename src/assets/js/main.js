@@ -194,7 +194,11 @@
     const behavior = () => (reduced.matches ? "auto" : "smooth");
     prev.addEventListener("click", () => el.scrollBy({ left: -step(), behavior: behavior() }));
     next.addEventListener("click", () => el.scrollBy({ left: step(), behavior: behavior() }));
-    el.addEventListener("scroll", sync, { passive: true });
+    const bar = $("[data-svc-progress]");
+    el.addEventListener("scroll", () => {
+      sync();
+      if (bar) bar.style.transform = `scaleX(${Math.max(0.12, (el.scrollLeft + el.clientWidth) / el.scrollWidth)})`;
+    }, { passive: true });
     el.addEventListener("keydown", (e) => {
       if (e.target !== el) return;
       if (e.key === "ArrowRight") { e.preventDefault(); next.click(); }

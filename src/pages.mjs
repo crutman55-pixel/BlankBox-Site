@@ -530,60 +530,31 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     .join("")}
 </section>
 
-<section class="services wrap" id="services" aria-labelledby="services-title">
-  <div class="section-head">
+<section class="services" id="services" aria-labelledby="services-title">
+  <div class="wrap section-head">
     <div>
       <p class="mono section-label reveal">Services</p>
       <h2 class="section-title display reveal" id="services-title">What we <em>make.</em></h2>
     </div>
-  </div>
-  <ol class="svc-list">
-    ${services
-      .map(
-        ([t, d, tags, img], i) => `<li class="svc${i % 2 ? " svc--alt" : ""}">
-        <div class="svc-media reveal-frame"><img src="${asset(img)}" alt="" loading="lazy" decoding="async"></div>
-        <div class="svc-copy">
-          <span class="svc-no mono reveal">${pad(i + 1)} / ${pad(services.length)}</span>
-          <h3 class="svc-title display reveal">${esc(t)}</h3>
-          <p class="svc-desc reveal">${esc(d)}</p>
-          <ul class="service-tags reveal">${tags.map((x) => `<li class="mono">${esc(x)}</li>`).join("")}</ul>
-        </div>
-      </li>`,
-      )
-      .join("")}
-  </ol>
-</section>
-
-<section class="method wrap" aria-labelledby="method-title">
-  <div class="section-head">
-    <div>
-      <p class="mono section-label reveal">How we make it work</p>
-      <h2 class="section-title display reveal" id="method-title">Four beats. <em>Every time.</em></h2>
+    <div class="reel-controls reveal">
+      <button class="icon-btn" type="button" data-reel-prev aria-label="Previous service">←</button>
+      <button class="icon-btn" type="button" data-reel-next aria-label="Next service">→</button>
     </div>
   </div>
-  <ol class="method-list" data-method>
-    ${method
+  <ol class="reel svc-slider" data-reel tabindex="0" aria-label="Services, scroll horizontally">
+    ${services
       .map(
-        ([t, d], i) => `<li class="method-item${i === 0 ? " is-active" : ""}">
-        <span class="method-ghost display" aria-hidden="true">${pad(i + 1)}</span>
-        <span class="method-art method-art--${t.toLowerCase()}" aria-hidden="true">${
-          {
-            Hook: `<svg viewBox="0 0 200 200"><circle class="ring r1" cx="100" cy="100" r="20"/><circle class="ring r2" cx="100" cy="100" r="20"/><circle class="ring r3" cx="100" cy="100" r="20"/><circle class="core" cx="100" cy="100" r="9"/></svg>`,
-            Narrative: `<svg viewBox="0 0 200 200"><path class="arc" d="M10 150 C 60 150, 70 60, 110 60 S 160 120, 190 40" pathLength="1"/><circle class="beat b1" cx="10" cy="150" r="5"/><circle class="beat b2" cx="110" cy="60" r="5"/><circle class="beat b3" cx="190" cy="40" r="5"/></svg>`,
-            Impact: `<svg viewBox="0 0 200 200">${Array.from({ length: 12 }, (_, k) => `<line class="ray" x1="100" y1="100" x2="${100 + 80 * Math.cos((k * Math.PI) / 6)}" y2="${100 + 80 * Math.sin((k * Math.PI) / 6)}" pathLength="1" style="--k:${k}"/>`).join("")}<circle class="core" cx="100" cy="100" r="14"/></svg>`,
-            Recall: `<svg viewBox="0 0 200 200"><path class="loop" d="M100 100 C 140 40, 190 70, 160 110 S 60 160, 40 110 S 60 40, 100 100 Z" pathLength="1"/><circle class="orbit" r="6"><animateMotion dur="4s" repeatCount="indefinite" path="M100 100 C 140 40, 190 70, 160 110 S 60 160, 40 110 S 60 40, 100 100 Z"/></circle></svg>`,
-          }[t]
-        }</span>
-        <button class="method-btn" type="button" aria-expanded="${i === 0}" aria-controls="method-${i}">
-          <span class="mono method-no">${pad(i + 1)} / 04</span>
-          <span class="method-title display">${t}</span>
-          <span class="method-bar" aria-hidden="true"><i></i></span>
-        </button>
-        <p class="method-desc" id="method-${i}">${d}</p>
+        ([t, d, tags], i) => `<li class="reel-item svc-card">
+        <span class="svc-no mono">${pad(i + 1)} / ${pad(services.length)}</span>
+        <h3 class="svc-title display">${esc(t)}</h3>
+        <p class="svc-desc">${esc(d)}</p>
+        <ul class="service-tags">${tags.map((x) => `<li class="mono">${esc(x)}</li>`).join("")}</ul>
+        <a class="svc-link mono" href="${href("/contact/")}">Enquire ${arrow}</a>
       </li>`,
       )
       .join("")}
   </ol>
+  <div class="wrap"><div class="svc-progress" aria-hidden="true"><i data-svc-progress></i></div></div>
 </section>
 
 
