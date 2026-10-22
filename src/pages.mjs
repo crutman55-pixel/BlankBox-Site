@@ -444,7 +444,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       ["Hook", "The first three seconds decide everything. We open on an image, a question or a turn that stops the scroll."],
       ["Narrative", "A story people want to finish. Characters, tension and payoff, built around your brand instead of bolted on."],
       ["Impact", "Craft that lands. Cinema-grade picture, sound and edit, so the feeling arrives exactly where it should."],
-      ["Recall", "The part they carry with them. A moment, a line or an image that keeps your brand in mind long after it ends."],
+      ["Recall", "The part your customers carry with them. A moment, a line or an image that keeps your brand in mind long after it ends."],
     ];
     const rv = brands.reelVideo;
     const logos = (k) =>
