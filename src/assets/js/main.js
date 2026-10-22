@@ -13,28 +13,42 @@
   };
 
   /* ---------------------------------------------------------- Opening sequence */
+  // The home page opens on a gateway: the BLANKBOX logo, then a choice between
+  // Film & Entertainment (stay on this page) and Brands & Commercial (go to /brands/).
+  // It shows once per visit; after that the site navigates normally.
   function intro(done) {
     const el = $("[data-intro]");
-    if (!el || reduced.matches || store.get("bb-intro")) {
+    if (!el || store.get("bb-gate")) {
       el?.classList.add("is-done");
       return done();
     }
-    store.set("bb-intro", "1");
     document.body.style.overflow = "hidden";
-    let finished = false;
-    const finish = () => {
-      if (finished) return;
-      finished = true;
+    el.classList.add("is-open");
+    const film = $('[data-gate="film"]', el);
+    const brands = $('[data-gate="brands"]', el);
+    const opts = [film, brands];
+    el.focus({ preventScroll: true });
+
+    const close = () => {
+      store.set("bb-gate", "1");
       el.classList.add("is-leaving");
       document.body.style.overflow = "";
-      setTimeout(done, 450);
-      setTimeout(() => el.classList.add("is-done"), 1400);
-      window.removeEventListener("keydown", finish);
-      window.removeEventListener("pointerdown", finish);
+      document.removeEventListener("keydown", onKey);
+      setTimeout(done, reduced.matches ? 0 : 450);
+      setTimeout(() => el.classList.add("is-done"), reduced.matches ? 0 : 1400);
+      $("#main")?.focus({ preventScroll: true });
     };
-    window.addEventListener("keydown", finish);
-    window.addEventListener("pointerdown", finish);
-    setTimeout(finish, 2200);
+    const onKey = (e) => {
+      if (e.key === "Escape") return close();
+      if (e.key === "Tab") {
+        e.preventDefault();
+        const i = opts.indexOf(document.activeElement);
+        opts[i < 0 ? (e.shiftKey ? 1 : 0) : (i + (e.shiftKey ? -1 : 1) + opts.length) % opts.length].focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    film.addEventListener("click", (e) => { e.preventDefault(); close(); });
+    brands.addEventListener("click", () => store.set("bb-gate", "1"));
   }
 
   /* ---------------------------------------------------------- Header */

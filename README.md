@@ -8,7 +8,7 @@ just a small Node build script that turns the content in `src/` into plain HTML 
 - `/work/`: the portfolio index plus a chapter for each film
 - `/work/<slug>/`: a detail page for each film (synopsis, credits, cast, details, stills, trailer, links)
 - `/brands/`: commercial production: reel and brand credits (edit `src/data/brands.mjs`)
-- `/about/`: Cole Rutman, and the team (Levi Considine)
+- `/about/`: Cole Rutman
 - `/contact/`
 - `404.html`
 

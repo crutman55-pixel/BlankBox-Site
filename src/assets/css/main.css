@@ -193,7 +193,8 @@ a:hover .arrow, a:focus-visible .arrow, button:hover .arrow { transform: transla
 
 /* ------------------------------------------------------------- Intro */
 .intro { display: none; }
-.js .intro { display: block; position: fixed; inset: 0; z-index: 150; pointer-events: none; }
+.js .intro { display: block; position: fixed; inset: 0; z-index: 150; }
+.js .intro.is-leaving { pointer-events: none; }
 .intro-bar { position: absolute; left: 0; right: 0; height: 50.5vh; background: var(--black); transition: transform 1.3s var(--ease-in-out); }
 .intro-bar--top { top: 0; }
 .intro-bar--bottom { bottom: 0; }
@@ -539,7 +540,6 @@ a.channel:hover .channel-v { font-style: italic; transform: translateX(10px); }
   .grain, .hero-sweep { display: none; }
   .js .reveal, .js .reveal-frame, .js .reveal-frame > *, .js .line > span { opacity: 1; transform: none; clip-path: none; }
   .js [data-words] .w { opacity: 1; }
-  .js .intro { display: none; }
   @view-transition { navigation: none; }
 }
 
@@ -789,3 +789,25 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
 .contact-hero > :not(.contact-box) { position: relative; }
 @media (max-width: 860px) { .contact-box { right: -12vw; top: 26%; width: 70vw; opacity: 0.35; } }
 @media (max-width: 860px) { .contact-box { right: var(--gutter); top: 18%; width: 44vw; opacity: 0.5; transform: none; } }
+
+/* Opening gateway */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.intro-center { gap: clamp(48px, 8vh, 88px); padding: 24px var(--gutter); }
+.intro .intro-logo { width: min(420px, 74vw); }
+.gate { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: min(760px, 100%); }
+.gate-option { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px 20px; padding: 26px 28px; border: 1px solid var(--line-2); overflow: hidden; isolation: isolate;
+  opacity: 0; transform: translateY(18px); animation: gate-in 1s var(--ease) forwards; transition: color 0.5s var(--ease), border-color 0.5s; }
+.gate-option:nth-child(1) { animation-delay: 1.6s; }
+.gate-option:nth-child(2) { animation-delay: 1.8s; }
+@keyframes gate-in { to { opacity: 1; transform: none; } }
+.gate-option::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--paper); transform: scaleY(0); transform-origin: bottom; transition: transform 0.6s var(--ease); }
+.gate-option:hover, .gate-option:focus-visible { color: var(--black); border-color: var(--paper); }
+.gate-option:hover::before, .gate-option:focus-visible::before { transform: scaleY(1); }
+.gate-label { font: 400 clamp(24px, 2.4vw, 34px)/1.05 var(--serif); letter-spacing: -0.01em; }
+.gate-sub { grid-column: 1; color: var(--mute); transition: color 0.5s; }
+.gate-option:hover .gate-sub, .gate-option:focus-visible .gate-sub { color: rgba(7, 7, 7, 0.6); }
+.gate-option .arrow { grid-column: 2; grid-row: 1 / span 2; font-size: 22px; }
+.intro.is-leaving .gate-option { animation: none; opacity: 0; transition: opacity 0.4s; }
+@media (max-width: 640px) { .gate { grid-template-columns: 1fr; } .gate-option { padding: 22px; } }
+@media (prefers-reduced-motion: reduce) { .gate-option, .intro .intro-logo { animation: none; opacity: 1; transform: none; filter: none; } }
+.intro:focus { outline: none; }

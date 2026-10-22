@@ -48,11 +48,24 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       .join("");
 
     return `
-<div class="intro" data-intro aria-hidden="true">
+<div class="intro" data-intro role="dialog" aria-modal="true" aria-labelledby="gate-title" tabindex="-1">
   <div class="intro-bar intro-bar--top"></div>
   <div class="intro-bar intro-bar--bottom"></div>
   <div class="intro-center">
-    <img class="intro-logo" src="${asset("img/logo-lockup.webp")}" alt="" width="503" height="230" fetchpriority="high">
+    <h2 class="sr-only" id="gate-title">BLANKBOX: choose where to go</h2>
+    <img class="intro-logo" src="${asset("img/logo-lockup-blankbox.webp")}" alt="BLANKBOX" width="1006" height="400" fetchpriority="high">
+    <nav class="gate" aria-label="Choose a division">
+      <a class="gate-option" href="${href("/")}" data-gate="film">
+        <span class="gate-label">Film &amp; Entertainment</span>
+        <span class="gate-sub mono">BLANKBOX Entertainment</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="gate-option" href="${href("/brands/")}" data-gate="brands">
+        <span class="gate-label">Brands &amp; Commercial</span>
+        <span class="gate-sub mono">BLANKBOX Media</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </nav>
   </div>
 </div>
 
@@ -338,26 +351,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   </div>
 </section>
 
-<section class="team wrap" aria-label="The team">
-  <p class="mono section-label reveal">The team</p>
-  <article class="member">
-    <div class="member-card reveal-frame" aria-hidden="true">
-      <span class="vf"><i></i><i></i><i></i><i></i></span>
-      <span class="display">L<em>C</em></span>
-    </div>
-    <div class="member-copy">
-      <p class="mono member-role reveal">Creative Specialist</p>
-      <h3 class="member-name display reveal">Levi Considine</h3>
-      <p class="member-bio reveal">Levi Considine is a Toronto-based sound designer and editor whose work has reached audiences on Netflix and Apple TV+. He has worked on Spin Master's animated series <em>Unicorn Academy</em> and <em>Mighty Express</em> for Netflix and on <em>Sago Mini Friends</em> for Apple TV+, and created the Foley and sound design for Michael Greco's festival-selected animated short <em>Green Grass</em>. His sound team on <em>Unicorn Academy</em> was nominated for the Canadian Screen Award for Best Sound, Animation.</p>
-      <p class="member-bio reveal">Earlier in his career he worked on the sound of <em>Violent</em>, the Canadian-Norwegian drama that won Best Canadian Feature at the Vancouver International Film Festival. As Creative Specialist at BLANKBOX ENTERTAINMENT, he brings that experience across animation, television and features to the company's productions, starting with the sound design of <em>Two's a Party</em>.</p>
-      <div class="member-links reveal">
-        <a class="btn btn--ghost" href="https://www.imdb.com/name/nm6346683/" target="_blank" rel="noopener">View IMDb <span aria-hidden="true">↗</span></a>
-        <a class="btn btn--ghost" href="${href("/work/")}">See his credits ${arrow}</a>
-      </div>
-    </div>
-  </article>
-</section>
-
 <section class="enter" aria-label="Portfolio">
   <a class="enter-link" href="${href("/work/")}">
     <span class="mono enter-label">Continue</span>
@@ -456,8 +449,8 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     return `
 <section class="page-hero wrap" aria-labelledby="brands-title">
   <img class="media-lockup reveal" src="${asset("img/logo-lockup-media.webp")}" alt="BLANKBOX MEDIA" width="1006" height="460" fetchpriority="high">
-  <h1 class="page-title display" id="brands-title"><span class="line"><span>Our work</span></span><span class="line"><span><em>with brands.</em></span></span></h1>
-  <p class="page-lede reveal">The same instinct for story we bring to film and television, applied to campaigns, branded content and commercials.</p>
+  <h1 class="page-title display" id="brands-title"><span class="line"><span>Have you thought</span></span><span class="line"><span><em>about filmmakers?</em></span></span></h1>
+  <p class="page-lede reveal">Put our storytellers, filmmakers and content specialists to work for your brand. We bring the same instincts we use in film and television (the hook, the narrative, the impact) to campaigns, branded content and commercials.</p>
 </section>
 
 <section class="brand-reel wrap" aria-label="Commercial reel">
