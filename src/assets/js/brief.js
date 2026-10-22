@@ -7,6 +7,7 @@
   const script = document.currentScript;
   const endpoint = script?.dataset.endpoint;
   const MAILTO = script?.dataset.mailto || "";
+  const WEB3 = script?.dataset.web3 || "";
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const wait = (ms) => new Promise((r) => setTimeout(r, reduced ? 0 : ms));
   const el = (tag, cls, text) => {
@@ -36,7 +37,9 @@
   };
   const TOTAL = 9;
 
-  let root, log, dock, bar, stepLabel, lastFocus, started = false, busy = false;
+  const BACK = Symbol("back");
+  const RESTART = Symbol("restart");
+  let root, log, dock, bar, stepLabel, lastFocus, started = false, busy = false, stepIdx = 0;
   const data = {};
 
   /* ------------------------------------------------------------------ shell */
@@ -124,16 +127,25 @@
     log.append(m); scroll();
   }
   function clearDock() { dock.replaceChildren(); }
+  // "Back" link under every answer box after the first question.
+  function backButton(reject) {
+    if (stepIdx === 0) return;
+    const b = el("button", "dock-back mono", "← Back");
+    b.type = "button";
+    b.addEventListener("click", () => { clearDock(); reject(BACK); });
+    dock.append(b);
+  }
 
   /* ----------------------------------------------------------------- inputs */
-  function ask({ type = "text", placeholder = "", optional = false, validate, autocomplete }) {
-    return new Promise((resolve) => {
+  function ask({ type = "text", placeholder = "", optional = false, validate, autocomplete, value = "" }) {
+    return new Promise((resolve, reject) => {
       clearDock();
       const form = el("form", "dock-form");
       const input = type === "textarea" ? el("textarea", "dock-input") : el("input", "dock-input");
       if (type !== "textarea") input.type = type;
       if (type === "textarea") input.rows = 3;
       input.placeholder = placeholder;
+      input.value = value;
       if (autocomplete) input.autocomplete = autocomplete;
       input.setAttribute("aria-label", placeholder);
       const send = el("button", "dock-send");
@@ -148,6 +160,7 @@
         dock.append(skip);
       }
       dock.append(err);
+      backButton(reject);
       if (type === "textarea") input.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); } });
       form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -162,10 +175,11 @@
   }
 
   function choose(options, { multi = false, other = false, preselect = [], cta = "Continue" } = {}) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       clearDock();
       const wrap = el("div", "dock-choices");
-      const picked = new Set(preselect);
+      const prevOther = preselect.find((o) => o.startsWith("Other: "));
+      const picked = new Set(preselect.filter((o) => options.includes(o)));
       const chips = options.map((o) => {
         const b = el("button", "dock-chip", o);
         b.type = "button";
@@ -185,7 +199,8 @@
         ob.type = "button"; ob.setAttribute("aria-pressed", "false");
         otherInput = el("input", "dock-input dock-other");
         otherInput.placeholder = "Please describe";
-        otherInput.hidden = true;
+        otherInput.hidden = !prevOther;
+        if (prevOther) { otherInput.value = prevOther.slice(7); ob.setAttribute("aria-pressed", "true"); }
         ob.addEventListener("click", () => {
           const on = otherInput.hidden;
           otherInput.hidden = !on; ob.setAttribute("aria-pressed", String(on));
@@ -197,8 +212,9 @@
         dock.append(wrap, otherInput);
       } else dock.append(wrap);
       const go = el("button", "dock-go", cta);
-      go.type = "button"; go.disabled = multi && !picked.size;
+      go.type = "button"; go.disabled = multi && !picked.size && !prevOther;
       if (multi) dock.append(go);
+      backButton(reject);
       go.addEventListener("click", () => {
         const out = [...picked];
         const o = otherInput?.value.trim();
@@ -210,17 +226,19 @@
     });
   }
 
-  function pickDate() {
-    return new Promise((resolve) => {
+  function pickDate(value = "") {
+    return new Promise((resolve, reject) => {
       clearDock();
       const form = el("form", "dock-form");
       const input = el("input", "dock-input");
       input.type = "date";
       input.min = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
       input.setAttribute("aria-label", "Delivery date");
+      input.value = value;
       const send = el("button", "dock-send"); send.type = "submit"; send.setAttribute("aria-label", "Send"); send.innerHTML = "<span aria-hidden='true'>↑</span>";
       const err = el("p", "dock-err mono");
       form.append(input, send); dock.append(form, err);
+      backButton(reject);
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         if (!input.value) { err.textContent = "Pick a date, or close and come back later."; return; }
@@ -252,123 +270,150 @@
   /* ------------------------------------------------------------------- flow */
   const first = () => (data.name || "").split(/\s+/)[0];
 
+  // One entry per question. Going back trims the chat to where that step began and re-asks it,
+  // with the previous answer filled in.
+  const STEPS = [
+    async () => {
+      await say("Let's start with you. What's your first and last name?");
+      data.name = await ask({ placeholder: "First and last name", autocomplete: "name", value: data.name, validate: (v) => (v.split(/\s+/).length < 2 ? "Please include your first and last name." : null) });
+    },
+    async () => {
+      await say(`Nice to meet you, ${first()}. What's the best email to reach you?`);
+      data.email = await ask({ type: "email", placeholder: "you@company.com", autocomplete: "email", value: data.email, validate: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? null : "That email doesn't look quite right.") });
+      await say(`Got it: ${data.email}. That's where we'll follow up.`);
+    },
+    async () => {
+      await say("And a phone number, if you'd like a call? This one's optional.");
+      data.phone = await ask({ type: "tel", placeholder: "Phone number", optional: true, autocomplete: "tel", value: data.phone });
+      await say(data.phone ? `Thanks. I've noted ${data.phone}.` : "No problem, email works.");
+    },
+    async () => {
+      await say("What's the name of your company or brand?");
+      data.company = await ask({ placeholder: "Company name", autocomplete: "organization", value: data.company });
+    },
+    async () => {
+      await say(`Great. Does ${data.company} have a website or social media page you'd like us to look at? (Optional)`);
+      data.website = await ask({ type: "text", placeholder: "Website or @handle", optional: true, autocomplete: "url", value: data.website });
+      if (data.website) {
+        await scan(data.website);
+        await say(`Thanks. That gives the team useful context on ${data.company} before you meet.`);
+      } else await say("All good, we'll learn about you in the meeting.");
+    },
+    async () => {
+      await say("Which of these best describes what you're after? Pick as many as apply.");
+      data.goals = await choose(GOALS, { multi: true, other: true, preselect: data.goals || [] });
+      await say(
+        data.goals.length > 1
+          ? "That's a strong mix. A story-led approach is how we tie those goals together."
+          : `Understood: ${data.goals[0].replace(/^Other: /, "")}.`,
+      );
+    },
+    async () => {
+      const recommended = [...new Set(data.goals.flatMap((g) => GOAL_TO_SERVICE[GOALS.indexOf(g)] || []))];
+      await say(
+        recommended.length
+          ? `Based on that, I'd start with ${recommended.join(" and ")}. I've pre-selected ${recommended.length > 1 ? "them" : "it"}. Adjust as you like.`
+          : "Which of our services are you most interested in? Pick as many as apply.",
+      );
+      data.services = await choose(SERVICES, { multi: true, other: true, preselect: data.services || recommended });
+    },
+    async () => {
+      await say("Do you have a timeline for delivery?");
+      const [hasDate] = await choose(["Yes, I have a date", "Not yet"]);
+      if (hasDate.startsWith("Yes")) {
+        await say("When do you need it delivered?");
+        const d = await pickDate(data.deadlineIso);
+        data.deadline = d.nice; data.deadlineIso = d.iso;
+        await say(
+          d.days < 21
+            ? `${d.nice}. That's a tight turnaround, so I'll flag it as a priority for the team.`
+            : `${d.nice}. That gives us around ${Math.round(d.days / 7)} weeks to do it properly.`,
+        );
+      } else {
+        data.deadline = "Flexible / not set"; data.deadlineIso = "";
+        await say("That's fine, we can map out a schedule together.");
+      }
+    },
+    async () => {
+      await say("Last one. Anything else you'd like us to know?");
+      data.notes = await ask({ type: "textarea", placeholder: "Budget, references, ideas…", optional: true, value: data.notes });
+    },
+    async () => {
+      await say("Here's your brief. Does everything look right?");
+      const card = el("div", "msg msg--bot summary");
+      const dl = el("dl");
+      briefRows().forEach(([k, v]) => { dl.append(el("dt", "mono", k), el("dd", "", v)); });
+      card.append(dl); log.append(card); scroll();
+      const [ans] = await choose(["Looks good, send it", "Start over"]);
+      if (ans === "Start over") throw RESTART;
+    },
+  ];
+
+  const briefRows = () => [
+    ["Name", data.name], ["Email", data.email], ["Phone", data.phone || "—"], ["Company", data.company],
+    ["Website / social", data.website || "—"], ["Goals", data.goals.join(" · ")], ["Services", data.services.join(" · ")],
+    ["Delivery", data.deadline], ["Notes", data.notes || "—"],
+  ];
+
   async function run() {
     progress(0);
     await say("Hi there, tell us a bit about your project so we can find you the right service.", { delay: 700 });
-    await say("Let's start with you. What's your first and last name?");
-    data.name = await ask({ placeholder: "First and last name", autocomplete: "name", validate: (v) => (v.split(/\s+/).length < 2 ? "Please include your first and last name." : null) });
-    progress(1);
-
-    await say(`Nice to meet you, ${first()}. What's the best email to reach you?`);
-    data.email = await ask({ type: "email", placeholder: "you@company.com", autocomplete: "email", validate: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? null : "That email doesn't look quite right.") });
-    await say(`Got it: ${data.email}. That's where we'll follow up.`);
-    progress(2);
-
-    await say("And a phone number, if you'd like a call? This one's optional.");
-    data.phone = await ask({ type: "tel", placeholder: "Phone number", optional: true, autocomplete: "tel" });
-    await say(data.phone ? `Thanks. I've noted ${data.phone}.` : "No problem, email works.");
-    progress(3);
-
-    await say("What's the name of your company or brand?");
-    data.company = await ask({ placeholder: "Company name", autocomplete: "organization" });
-    progress(4);
-
-    await say(`Great. Does ${data.company} have a website or social media page you'd like us to look at? (Optional)`);
-    data.website = await ask({ type: "text", placeholder: "Website or @handle", optional: true, autocomplete: "url" });
-    if (data.website) {
-      await scan(data.website);
-      await say(`Thanks. That gives the team useful context on ${data.company} before you meet.`);
-    } else await say("All good, we'll learn about you in the meeting.");
-    progress(5);
-
-    await say("Which of these best describes what you're after? Pick as many as apply.");
-    data.goals = await choose(GOALS, { multi: true, other: true });
-    const recommended = [...new Set(data.goals.flatMap((g) => GOAL_TO_SERVICE[GOALS.indexOf(g)] || []))];
-    await say(
-      data.goals.length > 1
-        ? "That's a strong mix. A story-led approach is how we tie those goals together."
-        : `Understood: ${data.goals[0].replace(/^Other: /, "")}.`,
-    );
-    progress(6);
-
-    await say(
-      recommended.length
-        ? `Based on that, I'd start with ${recommended.join(" and ")}. I've pre-selected ${recommended.length > 1 ? "them" : "it"}. Adjust as you like.`
-        : "Which of our services are you most interested in? Pick as many as apply.",
-    );
-    data.services = await choose(SERVICES, { multi: true, other: true, preselect: recommended });
-    progress(7);
-
-    await say("Do you have a timeline for delivery?");
-    const [hasDate] = await choose(["Yes, I have a date", "Not yet"]);
-    if (hasDate.startsWith("Yes")) {
-      await say("When do you need it delivered?");
-      const d = await pickDate();
-      data.deadline = d.nice;
-      await say(
-        d.days < 21
-          ? `${d.nice}. That's a tight turnaround, so I'll flag it as a priority for the team.`
-          : `${d.nice}. That gives us around ${Math.round(d.days / 7)} weeks to do it properly.`,
-      );
-    } else {
-      data.deadline = "Flexible / not set";
-      await say("That's fine, we can map out a schedule together.");
-    }
-    progress(8);
-
-    await say("Last one. Anything else you'd like us to know?");
-    data.notes = await ask({ type: "textarea", placeholder: "Budget, references, ideas…", optional: true });
-    progress(9);
-
-    await confirmAndSend();
-  }
-
-  // Posts the brief as form data (no CORS preflight). Every path resolves within ~10s,
-  // so the chat can never hang on "Sending…".
-  async function send(fields) {
-    if (!endpoint) return "error";
-    const form = () => { const f = new FormData(); Object.entries(fields).forEach(([k, v]) => f.append(k, v)); return f; };
-    const ctrl = new AbortController();
-    const attempt = (async () => {
+    const marks = [];
+    stepIdx = 0;
+    while (stepIdx < STEPS.length) {
+      marks[stepIdx] = log.children.length;
+      progress(stepIdx);
       try {
-        const res = await fetch(endpoint, { method: "POST", headers: { Accept: "application/json" }, body: form(), signal: ctrl.signal });
-        const body = await res.json().catch(() => ({}));
-        if (res.ok && String(body.success) !== "false") return "sent";
-        return /activat/i.test(body.message || "") ? "activate" : "error";
-      } catch {
-        // Fall back to the classic endpoint; the response is opaque but the email still goes out.
-        try {
-          await fetch(endpoint.replace("/ajax/", "/"), { method: "POST", mode: "no-cors", body: form(), signal: ctrl.signal });
-          return "sent";
-        } catch { return "error"; }
+        await STEPS[stepIdx]();
+        stepIdx++;
+      } catch (e) {
+        if (e === RESTART) { log.replaceChildren(); Object.keys(data).forEach((k) => delete data[k]); return run(); }
+        if (e !== BACK) throw e;
+        stepIdx--;
+        while (log.children.length > marks[stepIdx]) log.lastElementChild.remove();
       }
-    })();
-    const timeout = new Promise((r) => setTimeout(() => { ctrl.abort(); r("error"); }, 10000));
-    return Promise.race([attempt, timeout]);
+    }
+    await deliver();
   }
 
-  async function confirmAndSend() {
-    await say("Here's your brief. Does everything look right?");
-    const card = el("div", "msg msg--bot summary");
-    const rows = [
-      ["Name", data.name], ["Email", data.email], ["Phone", data.phone || "—"], ["Company", data.company],
-      ["Website / social", data.website || "—"], ["Goals", data.goals.join(" · ")], ["Services", data.services.join(" · ")],
-      ["Delivery", data.deadline], ["Notes", data.notes || "—"],
-    ];
-    const dl = el("dl");
-    rows.forEach(([k, v]) => { dl.append(el("dt", "mono", k), el("dd", "", v)); });
-    card.append(dl); log.append(card); scroll();
+  // Sends to every configured service; the brief counts as sent once any of them accepts it.
+  async function post(url, body, json = true) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 10000);
+    try {
+      const res = await fetch(url, { method: "POST", headers: { Accept: "application/json", ...(json ? { "Content-Type": "application/json" } : {}) }, body: json ? JSON.stringify(body) : form(body), signal: ctrl.signal });
+      const out = await res.json().catch(() => ({}));
+      return { ok: res.ok && String(out.success) !== "false", message: out.message || `HTTP ${res.status}` };
+    } catch (e) {
+      return { ok: false, message: e.name === "AbortError" ? "No response after 10 seconds" : `Network error (${e.message})` };
+    } finally { clearTimeout(timer); }
+  }
+  function form(fields) { const f = new FormData(); Object.entries(fields).forEach(([k, v]) => f.append(k, v)); return f; }
 
-    const [ans] = await choose(["Looks good, send it", "Start over"]);
-    if (ans === "Start over") { log.replaceChildren(); Object.keys(data).forEach((k) => delete data[k]); return run(); }
+  async function send(fields) {
+    const errors = [];
+    if (WEB3) {
+      const r = await post("https://api.web3forms.com/submit", { access_key: WEB3, subject: fields._subject, from_name: "BLANKBOX brief", replyto: fields._replyto, ...fields });
+      if (r.ok) return { outcome: "sent" };
+      errors.push(`Web3Forms: ${r.message}`);
+    }
+    if (endpoint) {
+      const r = await post(endpoint, fields, false);
+      if (r.ok) return { outcome: "sent" };
+      errors.push(`FormSubmit: ${r.message}`);
+      if (/activat/i.test(r.message)) return { outcome: "activate", errors };
+    }
+    return { outcome: "error", errors };
+  }
 
+  async function deliver() {
     const sending = el("div", "msg msg--bot msg--sending");
     sending.innerHTML = '<span class="send-spin" aria-hidden="true"></span>Sending your brief…';
     log.append(sending); scroll();
     clearDock();
-    const brief = Object.fromEntries(rows);
+    const rows = briefRows();
     const subject = `New project brief: ${data.company} (${data.name})`;
-    const outcome = await send({ _subject: subject, _template: "table", _captcha: "false", _replyto: data.email, ...brief });
+    const { outcome, errors = [] } = await send({ _subject: subject, _template: "table", _captcha: "false", _replyto: data.email, ...Object.fromEntries(rows) });
     sending.remove();
 
     if (outcome === "sent") return success();
@@ -377,14 +422,15 @@
     } else {
       await say("That didn't go through, so let's make sure your brief still reaches us.");
     }
+    if (errors.length) { const d = el("p", "send-why mono", errors.join(" · ")); log.append(d); scroll(); }
     clearDock();
     const mail = el("a", "dock-go", "Email my brief");
     const text = rows.map(([k, v]) => `${k}: ${v}`).join("\n");
-    mail.href = `mailto:${MAILTO}?subject=${encodeURIComponent(`New project brief: ${data.company} (${data.name})`)}&body=${encodeURIComponent(text)}`;
+    mail.href = `mailto:${MAILTO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
     mail.addEventListener("click", () => setTimeout(success, 600));
     const retry = el("button", "dock-chip", "Try sending again");
     retry.type = "button";
-    retry.addEventListener("click", () => { clearDock(); confirmAndSend(); });
+    retry.addEventListener("click", () => { clearDock(); deliver(); });
     const row = el("div", "dock-choices"); row.append(retry, mail);
     dock.append(row); mail.focus();
   }

@@ -1441,3 +1441,8 @@ video::-webkit-media-controls, video::-webkit-media-controls-panel, video::-webk
 .sent-sub { color: var(--paper-2); font-size: 10px; }
 .brief.is-sent .brief-dot { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
 a.dock-go { display: inline-flex; align-items: center; text-decoration: none; }
+
+/* Brief: back link + send diagnostics */
+.dock-back { justify-self: start; color: var(--mute); padding: 6px 2px; min-height: 36px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; transition: color .25s; }
+.dock-back:hover, .dock-back:focus-visible { color: var(--gold); }
+.send-why { align-self: flex-start; max-width: 100%; color: var(--mute); font-size: 10px; letter-spacing: .06em; line-height: 1.5; opacity: .75; word-break: break-word; }
