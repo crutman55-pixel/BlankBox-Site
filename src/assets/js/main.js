@@ -226,6 +226,64 @@
     });
   }
 
+  /* ---------------------------------------------------------- Hook / Narrative / Impact / Recall */
+  function method() {
+    const list = $("[data-method]");
+    if (!list) return;
+    const items = $$(".method-item", list);
+    const ms = 4200;
+    let i = 0, timer = 0, auto = !reduced.matches, visible = false;
+    const set = (n) => {
+      i = (n + items.length) % items.length;
+      items.forEach((it, k) => {
+        it.classList.toggle("is-active", k === i);
+        $(".method-btn", it).setAttribute("aria-expanded", String(k === i));
+      });
+      list.style.setProperty("--method-ms", `${ms}ms`);
+      items[i].classList.remove("is-timing"); void items[i].offsetWidth;
+      if (auto && visible) items[i].classList.add("is-timing");
+      clearTimeout(timer);
+      if (auto && visible) timer = setTimeout(() => set(i + 1), ms);
+    };
+    const stop = () => { auto = false; clearTimeout(timer); items.forEach((it) => it.classList.remove("is-timing")); };
+    items.forEach((it, k) => {
+      const btn = $(".method-btn", it);
+      btn.addEventListener("click", () => { stop(); set(k); });
+      if (fine.matches) it.addEventListener("pointerenter", () => { stop(); set(k); });
+      btn.addEventListener("focus", () => { stop(); set(k); });
+    });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; set(i); }, { threshold: 0.4 }).observe(list);
+    }
+    set(0);
+  }
+
+  /* ---------------------------------------------------------- Count-up numbers (Brands) */
+  function counters() {
+    const els = $$("[data-count]");
+    if (!els.length) return;
+    const run = (el) => {
+      const target = Number(el.dataset.count);
+      if (reduced.matches) return (el.textContent = target);
+      const dur = 2200, t0 = performance.now();
+      const decimals = target < 10 ? 1 : 0;
+      const step = (now) => {
+        const t = Math.min(1, (now - t0) / dur);
+        const eased = 1 - Math.pow(1 - t, 4);
+        el.textContent = t < 1 ? (target * eased).toFixed(decimals) : String(target);
+        if (t < 1) requestAnimationFrame(step);
+      };
+      el.textContent = (0).toFixed(decimals);
+      requestAnimationFrame(step);
+    };
+    if (!("IntersectionObserver" in window)) return;
+    els.forEach((el) => (el.textContent = reduced.matches ? el.dataset.count : "0"));
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (e.isIntersecting) { run(e.target); io.unobserve(e.target); }
+    }), { threshold: 0.6 });
+    els.forEach((el) => io.observe(el));
+  }
+
   /* ---------------------------------------------------------- Home slideshow */
   function showcase() {
     const el = $("[data-showcase]");
@@ -387,6 +445,8 @@
   timecode();
   reel();
   showcase();
+  counters();
+  method();
   preview();
   videos();
   contact();

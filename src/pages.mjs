@@ -57,12 +57,10 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     <nav class="gate" aria-label="Choose a division">
       <a class="gate-option" href="${href("/")}" data-gate="film">
         <span class="gate-label">Film &amp; Entertainment</span>
-        <span class="gate-sub mono">BLANKBOX Entertainment</span>
         <span class="arrow" aria-hidden="true">→</span>
       </a>
       <a class="gate-option" href="${href("/brands/")}" data-gate="brands">
         <span class="gate-label">Brands &amp; Commercial</span>
-        <span class="gate-sub mono">BLANKBOX Media</span>
         <span class="arrow" aria-hidden="true">→</span>
       </a>
     </nav>
@@ -90,7 +88,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       <span class="line"><span>as a <em>blank box.</em></span></span>
     </h1>
     <div class="hero-foot">
-      <p class="hero-lede reveal">BLANKBOX ENTERTAINMENT is a film and television company built for the evolving entertainment landscape. We focus on bold concepts and IP with compelling storytelling.</p>
+      <p class="hero-lede reveal">BLANKBOX ENTERTAINMENT is a film and television company built for the evolving entertainment landscape. We focus on bold concepts and IP with compelling stories.</p>
       <div class="hero-actions reveal">
         <a class="btn btn--solid" href="${href("/work/")}">Explore our work ${arrow}</a>
         <a class="btn btn--ghost" href="${href("/about/")}">About Us</a>
@@ -266,7 +264,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
           ? `<section class="film-section reveal"><h2 class="mono section-label">Synopsis</h2><p class="film-synopsis chapter-logline--tba">Synopsis coming soon.</p></section>`
           : `<section class="film-section reveal"><h2 class="mono section-label">Synopsis</h2>${f.synopsis.map((p) => `<p class="film-synopsis">${esc(p)}</p>`).join("")}</section>`
       }
-      <section class="film-section reveal"><h2 class="mono section-label">Credits</h2><dl class="kv-list">${credits}</dl></section>
+      ${credits ? `<section class="film-section reveal"><h2 class="mono section-label">Credits</h2><dl class="kv-list">${credits}</dl></section>` : ""}
       ${cast ? `<section class="film-section reveal"><h2 class="mono section-label">Cast</h2><ul class="cast-list">${cast}</ul></section>` : ""}
       <section class="film-section reveal"><h2 class="mono section-label">Details</h2><dl class="kv-list">${facts}</dl></section>
       ${
@@ -351,6 +349,25 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   </div>
 </section>
 
+<section class="team wrap" aria-label="The team">
+  <p class="mono section-label reveal">The team</p>
+  <article class="member">
+    <div class="member-card reveal-frame" aria-hidden="true">
+      <span class="vf"><i></i><i></i><i></i><i></i></span>
+      <span class="display">L<em>C</em></span>
+    </div>
+    <div class="member-copy">
+      <p class="mono member-role reveal">Creative Specialist</p>
+      <h3 class="member-name display reveal">Levi Considine</h3>
+      <p class="member-bio reveal">Levi Considine is a Toronto-based sound designer and editor whose work has reached audiences on Netflix and Apple TV+. He has worked on Spin Master's animated series <em>Unicorn Academy</em> and <em>Mighty Express</em> for Netflix and on <em>Sago Mini Friends</em> for Apple TV+, and created the Foley and sound design for Michael Greco's festival-selected animated short <em>Green Grass</em>. His sound team on <em>Unicorn Academy</em> was nominated for the Canadian Screen Award for Best Sound, Animation.</p>
+      <p class="member-bio reveal">Earlier in his career he worked on the sound of <em>Violent</em>, the Canadian-Norwegian drama that won Best Canadian Feature at the Vancouver International Film Festival. As Creative Specialist at BLANKBOX ENTERTAINMENT, he brings that experience across animation, television and features to the company's productions, starting with the sound design of <em>Two's a Party</em>.</p>
+      <div class="member-links reveal">
+        <a class="btn btn--ghost" href="https://www.imdb.com/name/nm6346683/" target="_blank" rel="noopener">View IMDb <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </article>
+</section>
+
 <section class="enter" aria-label="Portfolio">
   <a class="enter-link" href="${href("/work/")}">
     <span class="mono enter-label">Continue</span>
@@ -415,7 +432,19 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 
   /* -------------------------------------------------------------- BRANDS */
   function brandsPage() {
-    const reel = brands.reel
+    const rv = brands.reelVideo;
+    const reel = rv
+      ? `<div class="reel-feature">
+          <div class="reel-player">
+            <video src="${asset(rv.src)}" poster="${asset(rv.poster)}" controls playsinline preload="metadata" width="720" height="1018" aria-label="${esc(rv.client)}: ${esc(rv.title)}"></video>
+          </div>
+          <div class="reel-meta">
+            <p class="mono section-label reveal">Featured work</p>
+            <h2 class="reel-client display reveal">${esc(rv.client)}</h2>
+            <p class="mono reel-kind reveal">${esc(rv.title)}</p>
+          </div>
+        </div>`
+      : brands.reel
       ? `<div class="video" data-video="${esc(brands.reel)}">
           <img class="video-cover" src="https://i.ytimg.com/vi/${encodeURIComponent(brands.reel)}/maxresdefault.jpg" alt="" loading="lazy" decoding="async">
           <button class="video-play" type="button" aria-label="Play the BlankBox commercial reel"><span class="video-play-icon" aria-hidden="true"></span><span class="mono">Play reel</span></button>
@@ -449,27 +478,66 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     return `
 <section class="page-hero wrap" aria-labelledby="brands-title">
   <img class="media-lockup reveal" src="${asset("img/logo-lockup-media.webp")}" alt="BLANKBOX MEDIA" width="1006" height="460" fetchpriority="high">
-  <h1 class="page-title display" id="brands-title"><span class="line"><span>Have you thought</span></span><span class="line"><span><em>about filmmakers?</em></span></span></h1>
-  <p class="page-lede reveal">Put our storytellers, filmmakers and content specialists to work for your brand. We bring the same instincts we use in film and television (the hook, the narrative, the impact) to campaigns, branded content and commercials.</p>
+  <h1 class="page-title display" id="brands-title"><span class="line"><span>Have you thought</span></span><span class="line"><span><em>about filmmakers</em></span></span><span class="line"><span><em>for your brand?</em></span></span></h1>
+  <div class="pitch">
+    <p class="pitch-line display reveal"><span>People skip ads.</span> <em>They finish stories.</em></p>
+    <p class="pitch-sub reveal">That's why brands hire filmmakers. Our storytellers and creative production team make campaigns, branded content and commercials that people choose to watch, and remember.</p>
+  </div>
 </section>
 
-<section class="brand-reel wrap" aria-label="Commercial reel">
-  <div class="section-head">
-    <p class="mono section-label reveal">The reel</p>
-  </div>
-  <div class="reveal">${reel}</div>
+<section class="method wrap" aria-labelledby="method-title">
+  <h2 class="mono section-label reveal" id="method-title">How we make it work</h2>
+  <ol class="method-list" data-method>
+    ${[
+      ["Hook", "The first three seconds decide everything. We open on an image, a question or a turn that stops the scroll."],
+      ["Narrative", "A story people want to finish. Characters, tension and payoff, built around your brand instead of bolted on."],
+      ["Impact", "Craft that lands. Cinema-grade picture, sound and edit, so the feeling arrives exactly where it should."],
+      ["Recall", "The part they carry with them. A moment, a line or an image that keeps your brand in mind long after it ends."],
+    ]
+      .map(
+        ([t, d], i) => `<li class="method-item${i === 0 ? " is-active" : ""}">
+        <button class="method-btn" type="button" aria-expanded="${i === 0}" aria-controls="method-${i}">
+          <span class="mono method-no">${pad(i + 1)}</span>
+          <span class="method-title display">${t}</span>
+          <span class="method-bar" aria-hidden="true"><i></i></span>
+        </button>
+        <p class="method-desc" id="method-${i}">${d}</p>
+      </li>`,
+      )
+      .join("")}
+  </ol>
 </section>
 
-<section class="brand-credits wrap" aria-labelledby="credits-title">
-  <div class="section-head">
-    <div>
-      <p class="mono section-label reveal">Production credits</p>
-      <h2 class="section-title display reveal" id="credits-title">Selected <em>commercial work.</em></h2>
-    </div>
-    ${brands.credits.length ? "" : `<p class="mono credits-note reveal">Credits are being added.</p>`}
-  </div>
-  <ul class="credit-grid">${credits}</ul>
+<section class="stats wrap" aria-label="By the numbers">
+  ${brands.stats
+    .map(
+      (s) => `<div class="stat-item reveal">
+      <p class="stat-value display" aria-label="${s.value}${esc(s.suffix)}"><span data-count="${s.value}" aria-hidden="true">${s.value}</span><span class="stat-suffix" aria-hidden="true">${esc(s.suffix)}</span></p>
+      <p class="stat-label mono">${esc(s.label)}</p>
+    </div>`,
+    )
+    .join("")}
 </section>
+
+<section class="clients" aria-labelledby="clients-title">
+  <div class="wrap"><h2 class="mono section-label reveal" id="clients-title">Our clients</h2></div>
+  <div class="marquee" data-marquee>
+    <ul class="marquee-track">${[0, 1, 2, 3]
+      .map((k) =>
+        brands.clients
+          .map(
+            (c) => `<li${k ? ' aria-hidden="true"' : ""}><img src="${asset(c.logo)}" alt="${k ? "" : esc(c.name)}" loading="lazy" decoding="async" height="80"></li>`,
+          )
+          .join(""),
+      )
+      .join("")}</ul>
+  </div>
+</section>
+
+<section class="brand-reel wrap" aria-label="Featured work">
+  ${reel}
+</section>
+
 
 <section class="enter" aria-label="Contact">
   <a class="enter-link" href="${href("/contact/")}">

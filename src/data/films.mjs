@@ -7,7 +7,7 @@
 // Trailers: set `trailer` to a YouTube video ID once a verified link is available.
 
 export const films = [
-  // ---- Credits of Levi Considine, Creative Specialist (IMDb nm6346683). Shown first on the slate.
+  // ---- Network and festival titles. Shown first on the slate.
   {
     slug: "unicorn-academy",
     posterHasLogo: true,
@@ -22,7 +22,6 @@ export const films = [
     byline: "Spin Master Entertainment · Netflix",
     cardTop: "NETFLIX · SPIN MASTER",
     platform: "Netflix",
-    team: [{ name: "Levi Considine", role: "Sound" }],
     tagline: null,
     logline:
       "Spin Master's fantasy-adventure series, based on Julie Sykes's books, launched on Netflix worldwide in November 2023 with a 72-minute movie premiere.",
@@ -30,7 +29,6 @@ export const films = [
       "Unicorn Academy is a fantasy-adventure animated series from Spin Master Entertainment, adapted from Julie Sykes's book series. It premiered globally on Netflix on 2 November 2023 with a 72-minute movie followed by eight 22-minute episodes, and has been renewed for multiple seasons.",
     ],
     credits: [
-      { role: "Sound", name: "Levi Considine" },
       { role: "Studio", name: "Spin Master Entertainment" },
     ],
     cast: [],
@@ -66,7 +64,6 @@ export const films = [
     byline: "Spin Master Entertainment · Netflix",
     cardTop: "NETFLIX · SPIN MASTER",
     platform: "Netflix",
-    team: [{ name: "Levi Considine", role: "Sound designer" }],
     tagline: null,
     logline:
       "A CG-animated preschool series and Spin Master Entertainment's first show to launch straight to a streaming platform, released on Netflix worldwide.",
@@ -74,14 +71,13 @@ export const films = [
       "Mighty Express is a CG-animated preschool series from Spin Master Entertainment. It rolled onto Netflix globally as the studio's first series to launch directly on a streaming service.",
     ],
     credits: [
-      { role: "Sound designer", name: "Levi Considine" },
       { role: "Studio", name: "Spin Master Entertainment" },
     ],
     cast: [],
     facts: [
       { label: "Where it appeared", value: "Netflix (worldwide)" },
     ],
-    links: [{ label: "IMDb: Levi Considine", href: "https://www.imdb.com/name/nm6346683/" }],
+    links: [],
     trailer: null,
     theme: { accent: "#e0705a", ink: "#120b0a", motif: "bars" },
     sources: [
@@ -103,16 +99,15 @@ export const films = [
     byline: "Apple TV+",
     cardTop: "APPLE TV+",
     platform: "Apple TV+",
-    team: [{ name: "Levi Considine", role: "Sound designer" }],
     tagline: null,
     logline: "An animated preschool series based on the Sago Mini brand, made for Apple TV+.",
     synopsis: [
       "Sago Mini Friends is an animated preschool series based on the Sago Mini brand, made for Apple TV+.",
     ],
-    credits: [{ role: "Sound designer", name: "Levi Considine" }],
+    credits: [],
     cast: [],
     facts: [{ label: "Where it appeared", value: "Apple TV+" }],
-    links: [{ label: "IMDb: Levi Considine", href: "https://www.imdb.com/name/nm6346683/" }],
+    links: [],
     trailer: null,
     theme: { accent: "#7fc8c2", ink: "#081010", motif: "rings" },
     sources: ["https://www.imdb.com/name/nm6346683/"],
@@ -128,7 +123,6 @@ export const films = [
     byline: "A film by Michael Greco · Shared Secret Films",
     cardTop: "SHARED SECRET FILMS",
     platform: "BIAF · St. Louis IFF · Spark Animation",
-    team: [{ name: "Levi Considine", role: "Foley artistry & sound design" }],
     tagline: "How far would you go for the promise of a better life?",
     logline: "How far would you go for the promise of a better life? An animated short written and directed by Michael Greco.",
     synopsis: [
@@ -145,7 +139,6 @@ export const films = [
       { role: "Colour grading", name: "April Entmanski" },
       { role: "Original music score", name: "Andrew Harris" },
       { role: "Executive sound design, music & mix supervision", name: "Ted Rosnick" },
-      { role: "Foley artistry & sound design", name: "Levi Considine" },
       { role: "Mix engineering", name: "Ryan Chalmers" },
       { role: "Audio post production", name: "Vapor Music" },
       { role: "Executive production", name: "Michael Greco; Lindsey Serlin (for Vapor Music)" },
@@ -170,7 +163,6 @@ export const films = [
     genres: ["Drama"],
     filmmaker: "Andrew Huculiak",
     platform: "VIFF · TIFF Canada's Top Ten",
-    team: [{ name: "Levi Considine", role: "Assistant sound effects editor" }],
     tagline: null,
     logline: "Dagne, a young woman in small-town Norway, longs to leave for the city of Bergen.",
     synopsis: [
@@ -186,7 +178,6 @@ export const films = [
       { role: "Cinematography & editing", name: "Joseph Schweers" },
       { role: "Music", name: "We Are the City" },
       { role: "Supervising sound designer", name: "Mark Vogelsang" },
-      { role: "Assistant sound effects editor", name: "Levi Considine" },
       { role: "Production companies", name: "Amazing Factory Productions, We Are the City, Media Darling" },
     ],
     cast: [
@@ -389,7 +380,6 @@ export const films = [
     ],
     credits: [
       { role: "Written & directed by", name: "Coen Leung" },
-      { role: "Sound designer", name: "Levi Considine" },
     ],
     cast: [
       { name: "Rachel Davis", character: "Predator" },

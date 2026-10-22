@@ -16,6 +16,25 @@
 // Only list work BlankBox (or its team) actually produced, with permission to show it.
 
 export const brands = {
+  // Headline numbers. `value` counts up from zero; `suffix` follows it ("M", "+").
+  stats: [
+    { value: 2, suffix: "M", label: "Views generated to date" },
+    { value: 15, suffix: "+", label: "Professional creatives" },
+  ],
+  // Client logos: transparent PNGs in src/assets/clients/.
+  clients: [
+    { name: "Toronto Regional Real Estate Board", logo: "clients/trreb.png" },
+    { name: "Pickleplex Social Club", logo: "clients/pickleplex.png" },
+    { name: "TEDx", logo: "clients/tedx.png" },
+    { name: "LUG", logo: "clients/lug.png" },
+  ],
+  // Featured film on the Brands page (a self-hosted vertical video in src/assets/video/).
+  reelVideo: {
+    src: "video/reel.mp4",
+    poster: "video/reel-poster.webp",
+    client: "Pickleplex Social Club",
+    title: "Brand film",
+  },
   reel: null,
   credits: [],
 };
