@@ -607,30 +607,17 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   </div>
 </section>
 
-${brands.youtube.length ? `<section class="watch wrap" aria-labelledby="watch-title">
-  <div class="section-head">
-    <div>
-      <p class="mono section-label reveal">Watch</p>
-      <h2 class="section-title display reveal" id="watch-title">See it <em class="glow">in motion.</em></h2>
-    </div>
-    <a class="btn btn--ghost reveal" href="https://www.youtube.com/watch?v=${esc(brands.youtube[0].id)}" target="_blank" rel="noopener">Open on YouTube <span aria-hidden="true">↗</span></a>
-  </div>
-  <div class="watch-grid">
-    ${brands.youtube
-      .map(
-        (v) => `<article class="watch-item reveal">
-        <div class="video" data-video="${esc(v.id)}" data-start="${v.start || 0}">
-          <img class="video-cover" src="https://i.ytimg.com/vi/${encodeURIComponent(v.id)}/hqdefault.jpg" alt="" loading="lazy" decoding="async">
-          <button class="video-play" type="button" aria-label="Play ${esc(v.title)}"><span class="video-play-icon" aria-hidden="true"></span><span class="mono">Play</span></button>
-        </div>
-        <div class="watch-meta">
-          <p class="mono">${esc(v.label)}</p>
-          <a href="https://www.youtube.com/watch?v=${esc(v.id)}${v.start ? `&t=${v.start}s` : ""}" target="_blank" rel="noopener">${esc(v.title)} <span aria-hidden="true">↗</span></a>
-        </div>
-      </article>`,
-      )
-      .join("")}
-  </div>
+${brands.youtube.length ? `<section class="watch wrap" aria-label="Watch on YouTube">
+  ${brands.youtube
+    .map(
+      (v) => `<a class="watch-card reveal" href="https://www.youtube.com/watch?v=${esc(v.id)}${v.start ? `&t=${v.start}s` : ""}" target="_blank" rel="noopener" aria-label="Watch ${esc(v.label)} on YouTube">
+      <img class="watch-cover" src="${asset(v.cover)}" alt="" loading="lazy" decoding="async">
+      <img class="watch-logo" src="${asset(v.logo)}" alt="${esc(v.label)}" loading="lazy" decoding="async">
+      <span class="watch-play" aria-hidden="true"><span class="video-play-icon"></span></span>
+      <span class="watch-cta"><span class="mono">${esc(v.label)}</span><span class="watch-cta-btn">Watch on YouTube <span aria-hidden="true">↗</span></span></span>
+    </a>`,
+    )
+    .join("")}
 </section>
 
 ` : ""}<section class="enter" aria-label="Contact">
