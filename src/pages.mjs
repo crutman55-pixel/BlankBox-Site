@@ -466,9 +466,9 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     return `
 <section class="bhero" aria-labelledby="brands-title">
   <div class="bhero-media" aria-hidden="true">
-    <video autoplay muted loop playsinline preload="auto" poster="${asset("video/hero-loop-poster.webp")}">
-      <source src="${asset("video/hero-loop.webm")}" type="video/webm">
+    <video autoplay muted loop playsinline webkit-playsinline preload="auto" poster="${asset("video/hero-loop-poster.webp")}">
       <source src="${asset("video/hero-loop.mp4")}" type="video/mp4">
+      <source src="${asset("video/hero-loop.webm")}" type="video/webm">
     </video>
   </div>
   <div class="bhero-shade" aria-hidden="true"></div>
@@ -521,9 +521,9 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       .map(
         (n) => `<div class="phone phone--${n}">
         <div class="phone-screen">
-          <video muted loop playsinline preload="none" poster="${asset(`video/${key}-${n}.webp`)}" data-inview-play>
-            <source src="${asset(`video/${key}-${n}.webm`)}" type="video/webm">
+          <video autoplay muted loop playsinline webkit-playsinline preload="auto" poster="${asset(`video/${key}-${n}.webp`)}" data-inview-play>
             <source src="${asset(`video/${key}-${n}.mp4`)}" type="video/mp4">
+            <source src="${asset(`video/${key}-${n}.webm`)}" type="video/webm">
           </video>
           <div class="phone-ui">
             <span class="phone-progress"><i></i></span>
@@ -601,9 +601,9 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   <div class="sc2-grid">
     <figure class="sc2-item reveal">
       <div class="sc2-media feature-player" data-autoplay-video>
-        <video muted playsinline loop preload="metadata" poster="${asset("video/reel-poster.webp")}">
-          <source src="${asset("video/reel.webm")}" type="video/webm">
+        <video muted playsinline webkit-playsinline loop preload="metadata" poster="${asset("video/reel-poster.webp")}">
           <source src="${asset("video/reel.mp4")}" type="video/mp4">
+          <source src="${asset("video/reel.webm")}" type="video/webm">
         </video>
         <button class="sound-btn" type="button" aria-pressed="false" data-sound>
           <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>

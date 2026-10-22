@@ -1250,3 +1250,4 @@ a.sc2-name:hover { color: var(--gold); }
 .beat.is-lit .beat-name, .beat.is-lit .beat-desc { opacity: 1 !important; transform: none; }
 .beat .beat-desc { opacity: 0.35; transform: none; }
 @media (max-width: 760px) { .beats-line::after, .beats-line.is-on::after { transform: scaleY(var(--p, 0)); } }
+@media (max-width: 860px) { .bhero .media-lockup { display: none; } }

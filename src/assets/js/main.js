@@ -244,14 +244,15 @@
       wrap.addEventListener("click", (e) => { if (!e.target.closest("[data-sound]")) toggle(); });
       btn.addEventListener("click", (e) => { e.stopPropagation(); toggle(); });
       if ("IntersectionObserver" in window && !reduced.matches) {
-        new IntersectionObserver(([e]) => { e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }, { threshold: 0.45 }).observe(wrap);
+        new IntersectionObserver(([e]) => { e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }, { rootMargin: "200px 0px", threshold: 0 }).observe(wrap);
       }
       sync();
     });
     // Phone mockups: play while on screen; the stack tilts toward the pointer.
     $$("[data-inview-play]").forEach((v) => {
       if (reduced.matches || !("IntersectionObserver" in window)) return;
-      new IntersectionObserver(([e]) => { e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }, { threshold: 0.3 }).observe(v);
+      v.muted = true;
+      new IntersectionObserver(([e]) => { e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }, { rootMargin: "300px 0px", threshold: 0 }).observe(v);
     });
     const phones = $("[data-phones]");
     if (phones && fine.matches && !reduced.matches) {
@@ -264,6 +265,14 @@
     }
     // Background loop in the Brands hero respects reduced motion.
     $$(".bhero-media video").forEach((v) => { if (reduced.matches) { v.removeAttribute("autoplay"); v.pause(); } });
+  }
+
+  /* ---------------------------------------------------------- Mobile: nudge muted videos to start */
+  function kickVideos() {
+    const vids = () => $$("video[autoplay]").filter((v) => v.paused && v.getBoundingClientRect().top < innerHeight * 1.5);
+    const go = () => vids().forEach((v) => { v.muted = true; v.play().catch(() => {}); });
+    go();
+    ["touchstart", "scroll"].forEach((ev) => window.addEventListener(ev, go, { passive: true, once: ev === "touchstart" }));
   }
 
   /* ---------------------------------------------------------- Hook / Narrative / Impact / Recall */
@@ -334,11 +343,11 @@
     const run = (el) => {
       const target = Number(el.dataset.count);
       if (reduced.matches) return (el.textContent = target);
-      const dur = 2200, t0 = performance.now();
+      const dur = 3600, t0 = performance.now();
       const decimals = target < 10 ? 1 : 0;
       const step = (now) => {
         const t = Math.min(1, (now - t0) / dur);
-        const eased = 1 - Math.pow(1 - t, 4);
+        const eased = 0.5 - Math.cos(Math.PI * t) / 2; // steady climb, gentle start and finish
         el.textContent = t < 1 ? (target * eased).toFixed(decimals) : String(target);
         if (t < 1) requestAnimationFrame(step);
       };
@@ -559,6 +568,7 @@
   beats();
   method();
   featureVideo();
+  if (!reduced.matches) kickVideos();
   preview();
   videos();
   contact();
