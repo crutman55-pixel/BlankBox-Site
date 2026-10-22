@@ -226,6 +226,28 @@
     });
   }
 
+  /* ---------------------------------------------------------- Featured film: autoplay in view, click for sound */
+  function featureVideo() {
+    $$("[data-autoplay-video]").forEach((wrap) => {
+      const v = $("video", wrap);
+      const btn = $("[data-sound]", wrap);
+      const label = $(".sound-label", wrap);
+      const sync = () => {
+        btn.setAttribute("aria-pressed", String(!v.muted));
+        label.textContent = v.muted ? "Sound off" : "Sound on";
+      };
+      const toggle = () => { v.muted = !v.muted; if (v.paused) v.play().catch(() => {}); sync(); };
+      wrap.addEventListener("click", (e) => { if (!e.target.closest("[data-sound]")) toggle(); });
+      btn.addEventListener("click", (e) => { e.stopPropagation(); toggle(); });
+      if ("IntersectionObserver" in window && !reduced.matches) {
+        new IntersectionObserver(([e]) => { e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }, { threshold: 0.45 }).observe(wrap);
+      }
+      sync();
+    });
+    // Background loop in the Brands hero respects reduced motion.
+    $$(".bhero-media video").forEach((v) => { if (reduced.matches) { v.removeAttribute("autoplay"); v.pause(); } });
+  }
+
   /* ---------------------------------------------------------- Hook / Narrative / Impact / Recall */
   function method() {
     const list = $("[data-method]");
@@ -447,6 +469,7 @@
   showcase();
   counters();
   method();
+  featureVideo();
   preview();
   videos();
   contact();

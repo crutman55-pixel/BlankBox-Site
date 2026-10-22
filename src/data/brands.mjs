@@ -30,8 +30,9 @@ export const brands = {
   ],
   // Featured film on the Brands page (a self-hosted vertical video in src/assets/video/).
   reelVideo: {
-    src: "video/reel.mp4",
-    poster: "video/reel-poster.webp",
+    src: "video/reel-wide.mp4",
+    webm: "video/reel-wide.webm",
+    poster: "video/reel-wide-poster.webp",
     client: "Pickleplex Social Club",
     title: "Brand film",
   },

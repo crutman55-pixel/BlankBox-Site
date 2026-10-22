@@ -432,72 +432,101 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 
   /* -------------------------------------------------------------- BRANDS */
   function brandsPage() {
+    const services = [
+      // [title, description, tags, image]. Replace images in src/assets/img/services/ with your own photos.
+      ["Commercials", "Story-led spots that captivate your audience and move them to act, built to drive results and sales.", ["Concept", "Script", "Production", "Post"], "img/services/commercials.webp"],
+      ["Social-native content", "Vertical-first stories made for the feed, with hooks that stop the scroll and formats each platform rewards.", ["Reels", "TikTok", "Shorts"], "img/services/social.webp"],
+      ["Events & coverage", "Launches, openings and live moments captured as stories, not just footage, and turned around fast.", ["Recaps", "Highlights", "Interviews"], "img/services/events.webp"],
+      ["Retainer video production", "An embedded creative team on call every month, keeping your channels full of content that performs.", ["Monthly", "Always-on", "Scalable"], "img/services/retainer.webp"],
+    ];
+    const method = [
+      ["Hook", "The first three seconds decide everything. We open on an image, a question or a turn that stops the scroll.", "img/method/hook.webp"],
+      ["Narrative", "A story people want to finish. Characters, tension and payoff, built around your brand instead of bolted on.", "img/method/narrative.webp"],
+      ["Impact", "Craft that lands. Cinema-grade picture, sound and edit, so the feeling arrives exactly where it should.", "img/method/impact.webp"],
+      ["Recall", "The part they carry with them. A moment, a line or an image that keeps your brand in mind long after it ends.", "img/method/recall.webp"],
+    ];
     const rv = brands.reelVideo;
-    const reel = rv
-      ? `<div class="reel-feature">
-          <div class="reel-player">
-            <video src="${asset(rv.src)}" poster="${asset(rv.poster)}" controls playsinline preload="metadata" width="720" height="1018" aria-label="${esc(rv.client)}: ${esc(rv.title)}"></video>
-          </div>
-          <div class="reel-meta">
-            <p class="mono section-label reveal">Featured work</p>
-            <h2 class="reel-client display reveal">${esc(rv.client)}</h2>
-            <p class="mono reel-kind reveal">${esc(rv.title)}</p>
-          </div>
-        </div>`
-      : brands.reel
-      ? `<div class="video" data-video="${esc(brands.reel)}">
-          <img class="video-cover" src="https://i.ytimg.com/vi/${encodeURIComponent(brands.reel)}/maxresdefault.jpg" alt="" loading="lazy" decoding="async">
-          <button class="video-play" type="button" aria-label="Play the BlankBox commercial reel"><span class="video-play-icon" aria-hidden="true"></span><span class="mono">Play reel</span></button>
-        </div>`
-      : `<div class="reel-slate">
-          <span class="vf" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-          <img class="reel-slate-box" src="${asset("img/box.webp")}" alt="" width="1600" height="1600" loading="lazy" decoding="async">
-          <div class="reel-slate-copy">
-            <p class="mono"><span class="rec"></span> Commercial reel</p>
-            <p class="display">Coming <em>soon.</em></p>
-          </div>
-          <span class="reel-slate-tc mono" aria-hidden="true">00:00:00:00</span>
-        </div>`;
-
-    const credits = brands.credits.length
-      ? brands.credits
-          .map(
-            (c, i) => `<li class="credit reveal">
-          <${c.link ? `a href="${esc(c.link)}" target="_blank" rel="noopener"` : "div"} class="credit-inner">
-            <span class="credit-media">${c.image ? `<img src="${asset(c.image)}" alt="${esc(c.brand)}: ${esc(c.title)}" loading="lazy" decoding="async">` : `<span class="credit-brand-mark display">${esc(c.brand)}</span>`}</span>
-            <span class="mono credit-no">${pad(i + 1)}</span>
-            <span class="credit-brand mono">${esc(c.brand)}</span>
-            <span class="credit-title">${esc(c.title)}</span>
-            <span class="credit-meta mono">${esc([c.role, c.agency, c.year].filter(Boolean).join(" · "))}</span>
-          </${c.link ? "a" : "div"}>
-        </li>`,
-          )
-          .join("")
-      : Array.from({ length: 6 }, () => `<li class="credit credit--skeleton" aria-hidden="true"><div class="credit-inner"><span class="credit-media"></span><span class="sk sk-s"></span><span class="sk sk-l"></span><span class="sk sk-m"></span></div></li>`).join("");
+    const logos = (k) =>
+      brands.clients
+        .map((c) => `<li${k ? ' aria-hidden="true"' : ""}><img src="${asset(c.logo)}" alt="${k ? "" : esc(c.name)}" loading="lazy" decoding="async" height="80"></li>`)
+        .join("");
 
     return `
-<section class="page-hero wrap" aria-labelledby="brands-title">
-  <img class="media-lockup reveal" src="${asset("img/logo-lockup-media.webp")}" alt="BLANKBOX MEDIA" width="1006" height="460" fetchpriority="high">
-  <h1 class="page-title display" id="brands-title"><span class="line"><span>Have you thought</span></span><span class="line"><span><em>about filmmakers</em></span></span><span class="line"><span><em>for your brand?</em></span></span></h1>
-  <div class="pitch">
-    <p class="pitch-line display reveal"><span>People skip ads.</span> <em>They finish stories.</em></p>
-    <p class="pitch-sub reveal">That's why brands hire filmmakers. Our storytellers and creative production team make campaigns, branded content and commercials that people choose to watch, and remember.</p>
+<section class="bhero" aria-labelledby="brands-title">
+  <div class="bhero-media" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="auto" poster="${asset("video/hero-loop-poster.webp")}">
+      <source src="${asset("video/hero-loop.webm")}" type="video/webm">
+      <source src="${asset("video/hero-loop.mp4")}" type="video/mp4">
+    </video>
+  </div>
+  <div class="bhero-shade" aria-hidden="true"></div>
+  <div class="bhero-inner wrap">
+    <img class="media-lockup reveal" src="${asset("img/logo-lockup-media.webp")}" alt="BLANKBOX MEDIA" width="1006" height="460" fetchpriority="high">
+    <h1 class="bhero-title display" id="brands-title">
+      <span class="line"><span>Have you thought</span></span>
+      <span class="line"><span>about <em class="glow">filmmakers</em></span></span>
+      <span class="line"><span>for your brand?</span></span>
+    </h1>
+    <div class="bhero-foot">
+      <div class="pitch">
+        <p class="pitch-line display reveal"><span>People skip ads.</span> <em>They finish stories.</em></p>
+        <p class="pitch-sub reveal">Our storytellers and creative production team make campaigns, branded content and commercials that people choose to watch, and remember.</p>
+        <div class="hero-actions reveal">
+          <a class="btn btn--accent" href="${href("/contact/")}">Start a project ${arrow}</a>
+          <a class="btn btn--ghost" href="#services">Our services</a>
+        </div>
+      </div>
+      <dl class="bstats reveal" aria-label="By the numbers">
+        ${brands.stats
+          .map((x) => `<div><dt class="mono">${esc(x.label)}</dt><dd class="display" aria-label="${x.value}${esc(x.suffix)}"><span data-count="${x.value}" aria-hidden="true">${x.value}</span><span class="stat-suffix" aria-hidden="true">${esc(x.suffix)}</span></dd></div>`)
+          .join("")}
+      </dl>
+    </div>
   </div>
 </section>
 
-<section class="method wrap" aria-labelledby="method-title">
-  <h2 class="mono section-label reveal" id="method-title">How we make it work</h2>
-  <ol class="method-list" data-method>
-    ${[
-      ["Hook", "The first three seconds decide everything. We open on an image, a question or a turn that stops the scroll."],
-      ["Narrative", "A story people want to finish. Characters, tension and payoff, built around your brand instead of bolted on."],
-      ["Impact", "Craft that lands. Cinema-grade picture, sound and edit, so the feeling arrives exactly where it should."],
-      ["Recall", "The part they carry with them. A moment, a line or an image that keeps your brand in mind long after it ends."],
-    ]
+<section class="clients" aria-labelledby="clients-title">
+  <div class="wrap"><h2 class="mono section-label reveal" id="clients-title">Trusted by</h2></div>
+  <div class="marquee" data-marquee><ul class="marquee-track">${[0, 1, 2, 3].map(logos).join("")}</ul></div>
+</section>
+
+<section class="services wrap" id="services" aria-labelledby="services-title">
+  <div class="section-head">
+    <div>
+      <p class="mono section-label reveal">Services</p>
+      <h2 class="section-title display reveal" id="services-title">What we <em>make.</em></h2>
+    </div>
+  </div>
+  <ol class="service-grid">
+    ${services
       .map(
-        ([t, d], i) => `<li class="method-item${i === 0 ? " is-active" : ""}">
+        ([t, d, tags, img], i) => `<li class="service reveal" style="--d:${i * 0.07}s">
+        <span class="service-media"><img src="${asset(img)}" alt="" loading="lazy" decoding="async"></span>
+        <span class="service-no mono">${pad(i + 1)}</span>
+        <h3 class="service-title display">${esc(t)}</h3>
+        <p class="service-desc">${esc(d)}</p>
+        <ul class="service-tags">${tags.map((x) => `<li class="mono">${esc(x)}</li>`).join("")}</ul>
+        <span class="service-arrow" aria-hidden="true">→</span>
+      </li>`,
+      )
+      .join("")}
+  </ol>
+</section>
+
+<section class="method wrap" aria-labelledby="method-title">
+  <div class="section-head">
+    <div>
+      <p class="mono section-label reveal">How we make it work</p>
+      <h2 class="section-title display reveal" id="method-title">Four beats. <em>Every time.</em></h2>
+    </div>
+  </div>
+  <ol class="method-list" data-method>
+    ${method
+      .map(
+        ([t, d, img], i) => `<li class="method-item${i === 0 ? " is-active" : ""}">
+        <img class="method-img" src="${asset(img)}" alt="" loading="lazy" decoding="async">
         <button class="method-btn" type="button" aria-expanded="${i === 0}" aria-controls="method-${i}">
-          <span class="mono method-no">${pad(i + 1)}</span>
+          <span class="mono method-no">${pad(i + 1)} / 04</span>
           <span class="method-title display">${t}</span>
           <span class="method-bar" aria-hidden="true"><i></i></span>
         </button>
@@ -508,36 +537,26 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   </ol>
 </section>
 
-<section class="stats wrap" aria-label="By the numbers">
-  ${brands.stats
-    .map(
-      (s) => `<div class="stat-item reveal">
-      <p class="stat-value display" aria-label="${s.value}${esc(s.suffix)}"><span data-count="${s.value}" aria-hidden="true">${s.value}</span><span class="stat-suffix" aria-hidden="true">${esc(s.suffix)}</span></p>
-      <p class="stat-label mono">${esc(s.label)}</p>
-    </div>`,
-    )
-    .join("")}
-</section>
-
-<section class="clients" aria-labelledby="clients-title">
-  <div class="wrap"><h2 class="mono section-label reveal" id="clients-title">Our clients</h2></div>
-  <div class="marquee" data-marquee>
-    <ul class="marquee-track">${[0, 1, 2, 3]
-      .map((k) =>
-        brands.clients
-          .map(
-            (c) => `<li${k ? ' aria-hidden="true"' : ""}><img src="${asset(c.logo)}" alt="${k ? "" : esc(c.name)}" loading="lazy" decoding="async" height="80"></li>`,
-          )
-          .join(""),
-      )
-      .join("")}</ul>
+${
+  rv
+    ? `<section class="feature wrap" aria-labelledby="feature-title">
+  <div class="feature-head">
+    <p class="mono section-label reveal">Featured work</p>
+    <h2 class="feature-title display reveal" id="feature-title">${esc(rv.client)}</h2>
+    <p class="mono feature-kind reveal">${esc(rv.title)}</p>
   </div>
-</section>
-
-<section class="brand-reel wrap" aria-label="Featured work">
-  ${reel}
-</section>
-
+  <div class="feature-player reveal" data-autoplay-video>
+    <video muted playsinline loop preload="metadata" poster="${asset(rv.poster)}">
+      <source src="${asset(rv.webm)}" type="video/webm">
+      <source src="${asset(rv.src)}" type="video/mp4">
+    </video>
+    <button class="sound-btn" type="button" aria-pressed="false" data-sound>
+      <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
+    </button>
+  </div>
+</section>`
+    : ""
+}
 
 <section class="enter" aria-label="Contact">
   <a class="enter-link" href="${href("/contact/")}">
