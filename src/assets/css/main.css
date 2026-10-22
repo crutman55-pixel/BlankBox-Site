@@ -1411,3 +1411,33 @@ video::-webkit-media-controls, video::-webkit-media-controls-panel, video::-webk
 .brief-fab.is-hidden { animation: none; }
 .brief-fab:not(.is-hidden) { animation: fab-in .6s var(--ease) both; }
 .bhero-title { max-width: none; }
+/* Service slider: room for the hover lift so card edges never clip */
+.svc-slider { padding-block: 12px 18px; margin-block: -12px -18px; }
+.svc-card:hover { transform: translateY(-4px); }
+@media (hover: none) { .svc-card:hover { transform: none; } }
+@media (max-width: 860px) {
+  .svc-slider { scroll-padding-inline: var(--gutter); }
+  .svc-card { min-height: 0; padding: 26px 24px; }
+  .svc-card .svc-title { padding-top: 28px; font-size: 30px; }
+  .svc-card .service-tags li { font-size: 9.5px; padding: 6px 9px; }
+  .services .reel-controls { display: none; }
+}
+
+/* Brands headline: two balanced lines */
+.bhero-title { font-size: clamp(44px, min(6.4vw, 11.5svh), 118px); line-height: 0.95; letter-spacing: -0.025em; }
+.bhero-title .line:nth-child(2) > span { --d: 0.1s; }
+@media (max-height: 760px) and (min-width: 861px) { .bhero-title { font-size: clamp(42px, min(6vw, 10svh), 96px); } }
+@media (max-width: 860px) { .bhero-title { font-size: clamp(40px, 11.4vw, 64px); } }
+
+/* Brief: sending + success */
+.msg--sending { display: inline-flex; align-items: center; gap: 12px; color: var(--paper-2); }
+.send-spin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line-2); border-top-color: var(--gold); animation: spin .8s linear infinite; }
+.sent-card { display: grid; justify-items: center; text-align: center; gap: 10px; padding: 28px 34px; min-width: min(320px, 86%); align-self: center; border-color: rgba(255, 199, 107, .45); background: radial-gradient(240px circle at 50% 0%, rgba(255, 122, 61, .25), transparent 70%), #1a1a1a; }
+.sent-check svg { width: 64px; height: 64px; }
+.sent-check circle { fill: none; stroke: var(--ember); stroke-width: 2.5; stroke-dasharray: 151; stroke-dashoffset: 151; animation: draw-c .7s var(--ease) forwards; }
+.sent-check path { fill: none; stroke: var(--gold); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 40; stroke-dashoffset: 40; animation: draw-c .45s var(--ease) .55s forwards; }
+@keyframes draw-c { to { stroke-dashoffset: 0; } }
+.sent-title { font-size: 44px; line-height: 1; background: linear-gradient(100deg, var(--gold), var(--ember)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.sent-sub { color: var(--paper-2); font-size: 10px; }
+.brief.is-sent .brief-dot { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+a.dock-go { display: inline-flex; align-items: center; text-decoration: none; }

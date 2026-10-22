@@ -6,6 +6,7 @@
 
   const script = document.currentScript;
   const endpoint = script?.dataset.endpoint;
+  const MAILTO = script?.dataset.mailto || "";
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const wait = (ms) => new Promise((r) => setTimeout(r, reduced ? 0 : ms));
   const el = (tag, cls, text) => {
@@ -337,34 +338,60 @@
     const [ans] = await choose(["Looks good, send it", "Start over"]);
     if (ans === "Start over") { log.replaceChildren(); Object.keys(data).forEach((k) => delete data[k]); return run(); }
 
-    const sending = await say("Sending your brief…", { delay: 400 });
+    const sending = el("div", "msg msg--bot msg--sending");
+    sending.innerHTML = '<span class="send-spin" aria-hidden="true"></span>Sending your brief…';
+    log.append(sending); scroll();
+    clearDock();
+    const brief = Object.fromEntries(rows);
+    let outcome = "error";
     try {
       if (!endpoint) throw new Error("no endpoint");
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 15000);
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          _subject: `New project brief: ${data.company} (${data.name})`,
-          _template: "table",
-          _captcha: "false",
-          _replyto: data.email,
-          ...Object.fromEntries(rows),
-        }),
+        body: JSON.stringify({ _subject: `New project brief: ${data.company} (${data.name})`, _template: "table", _captcha: "false", _replyto: data.email, ...brief }),
+        signal: ctrl.signal,
       });
-      if (!res.ok) throw new Error(String(res.status));
-      sending.remove();
-      stepLabel.textContent = "Brief sent";
-      await say(`Thank you, ${first()}. I have sent your brief to the production manager. They will be in touch soon to book a meeting with you and discuss next steps. We look forward to helping you bring your vision to life!`);
-      clearDock();
-      const done = el("button", "dock-go", "Close");
-      done.type = "button"; done.addEventListener("click", close);
-      dock.append(done); done.focus();
-    } catch {
-      sending.remove();
-      await say("Hmm, that didn't go through. Please check your connection and try again.");
-      const [again] = await choose(["Try again"]);
-      if (again) return confirmAndSend();
+      clearTimeout(timer);
+      const body = await res.json().catch(() => ({}));
+      const ok = res.ok && String(body.success) !== "false";
+      outcome = ok ? "sent" : /activat/i.test(body.message || "") ? "activate" : "error";
+    } catch { outcome = "error"; }
+    sending.remove();
+
+    if (outcome === "sent") return success();
+    if (outcome === "activate") {
+      await say("Your brief is ready, but this inbox is still being activated on our side. Please send it by email for now so nothing gets missed.");
+    } else {
+      await say("That didn't go through, so let's make sure your brief still reaches us.");
     }
+    clearDock();
+    const mail = el("a", "dock-go", "Email my brief");
+    const text = rows.map(([k, v]) => `${k}: ${v}`).join("\n");
+    mail.href = `mailto:${MAILTO}?subject=${encodeURIComponent(`New project brief: ${data.company} (${data.name})`)}&body=${encodeURIComponent(text)}`;
+    mail.addEventListener("click", () => setTimeout(success, 600));
+    const retry = el("button", "dock-chip", "Try sending again");
+    retry.type = "button";
+    retry.addEventListener("click", () => { clearDock(); confirmAndSend(); });
+    const row = el("div", "dock-choices"); row.append(retry, mail);
+    dock.append(row); mail.focus();
+  }
+
+  async function success() {
+    clearDock();
+    bar.style.transform = "scaleX(1)";
+    stepLabel.textContent = "Brief sent";
+    root.classList.add("is-sent");
+    const card = el("div", "msg msg--bot sent-card");
+    card.innerHTML = `<span class="sent-check" aria-hidden="true"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-16"/></svg></span><p class="sent-title display">Sent!</p><p class="sent-sub mono">Your brief is with our production manager</p>`;
+    log.append(card); scroll();
+    await wait(900);
+    await say(`Thank you, ${first()}. I have sent your brief to the production manager. They will be in touch soon to book a meeting with you and discuss next steps. We look forward to helping you bring your vision to life!`);
+    const done = el("button", "dock-go", "Close");
+    done.type = "button"; done.addEventListener("click", close);
+    dock.append(done); done.focus();
   }
 
   /* ---------------------------------------------------------------- launch */

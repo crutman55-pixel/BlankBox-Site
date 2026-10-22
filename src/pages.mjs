@@ -462,8 +462,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     <img class="media-lockup reveal" src="${asset("img/logo-lockup-media.webp")}" alt="BLANKBOX MEDIA" width="1006" height="460" fetchpriority="high">
     <h1 class="bhero-title display" id="brands-title">
       <span class="line"><span>Everyone has a story.</span></span>
-      <span class="line"><span>What about</span></span>
-      <span class="line"><span><em class="glow">your brand?</em></span></span>
+      <span class="line"><span>What about <em class="glow">your brand?</em></span></span>
     </h1>
     <div class="bhero-foot">
       <div class="pitch">

@@ -105,7 +105,7 @@ export function createLayout({ base, version }) {
 <script>document.documentElement.classList.add("js");setTimeout(function(){var d=document.documentElement;if(!d.classList.contains("is-booted"))d.classList.remove("js")},3000)</script>
 ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}
 <script src="${asset("js/main.js")}" defer></script>
-${["page-brands", "page-contact"].includes(bodyClass) && site.formEndpoint ? `<script src="${asset("js/brief.js")}" data-endpoint="${esc(site.formEndpoint)}" defer></script>` : ""}
+${["page-brands", "page-contact"].includes(bodyClass) && site.formEndpoint ? `<script src="${asset("js/brief.js")}" data-endpoint="${esc(site.formEndpoint)}" data-mailto="${esc(site.formEndpoint.split("/").pop())}" defer></script>` : ""}
 </head>
 <body class="${bodyClass}" id="top">
 ${header(current)}
