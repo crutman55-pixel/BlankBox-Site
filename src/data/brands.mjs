@@ -29,6 +29,8 @@ export const brands = {
     { name: "LUG", logo: "clients/lug.png" },
     { name: "Western Mustangs", logo: "clients/western-mustangs.png", knockout: true },
     { name: "EZE Entertainment", logo: "clients/eze.png" },
+    { name: "Post City Magazines", logo: "clients/post-city.png", knockout: true, large: true },
+    { name: "Moonlight Studio", logo: "clients/moonlight-studio.png", large: true },
   ],
   // YouTube videos shown in the "See it in motion" section (id from the watch URL; start in seconds).
   youtube: [{ id: "EnVp_KTusrA", start: 7, label: "TEDxWesternU", cover: "img/tedx-cover.webp", logo: "clients/tedx.png" }],

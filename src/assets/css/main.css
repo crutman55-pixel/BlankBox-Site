@@ -1446,3 +1446,4 @@ a.dock-go { display: inline-flex; align-items: center; text-decoration: none; }
 .dock-back { justify-self: start; color: var(--mute); padding: 6px 2px; min-height: 36px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; transition: color .25s; }
 .dock-back:hover, .dock-back:focus-visible { color: var(--gold); }
 .send-why { align-self: flex-start; max-width: 100%; color: var(--mute); font-size: 10px; letter-spacing: .06em; line-height: 1.5; opacity: .75; word-break: break-word; }
+.marquee-track img.logo-lg { height: clamp(68px, 7.6vw, 108px); }

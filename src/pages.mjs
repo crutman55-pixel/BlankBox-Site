@@ -445,7 +445,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     ];
     const logos = (k) =>
       brands.clients
-        .map((c) => `<li${k ? ' aria-hidden="true"' : ""}><img${c.knockout ? ' class="logo-knockout"' : ""} src="${asset(c.logo)}" alt="${k ? "" : esc(c.name)}" loading="lazy" decoding="async" height="80"></li>`)
+        .map((c) => `<li${k ? ' aria-hidden="true"' : ""}><img${c.knockout || c.large ? ` class="${[c.knockout && "logo-knockout", c.large && "logo-lg"].filter(Boolean).join(" ")}"` : ""} src="${asset(c.logo)}" alt="${k ? "" : esc(c.name)}" loading="lazy" decoding="async" height="80"></li>`)
         .join("");
 
     return `
