@@ -535,6 +535,30 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     .join("")}
 </section>
 
+<section class="beats wrap" aria-labelledby="beats-title">
+  <div class="beats-head">
+    <p class="mono section-label reveal">Our philosophy</p>
+    <h2 class="beats-title display reveal" id="beats-title">Every piece is built on <em class="glow">four beats.</em></h2>
+  </div>
+  <ol class="beats-line" data-beats>
+    ${[
+      ["Hook", "Stop the scroll in the first three seconds."],
+      ["Narrative", "Give people a story they want to finish."],
+      ["Impact", "Cinema-grade craft so the feeling lands."],
+      ["Recall", "Leave a moment your customers carry with them."],
+    ]
+      .map(
+        ([t, d], i) => `<li class="beat" style="--i:${i}">
+        <span class="beat-dot" aria-hidden="true"></span>
+        <span class="beat-no mono">${pad(i + 1)}</span>
+        <h3 class="beat-name display">${t}</h3>
+        <p class="beat-desc">${d}</p>
+      </li>`,
+      )
+      .join("")}
+  </ol>
+</section>
+
 <section class="services" id="services" aria-labelledby="services-title">
   <div class="wrap section-head">
     <div>

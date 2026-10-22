@@ -306,6 +306,15 @@
     set(0);
   }
 
+  /* ---------------------------------------------------------- Four beats: draw the line in view */
+  function beats() {
+    const el = $("[data-beats]");
+    if (!el) return;
+    if (reduced.matches || !("IntersectionObserver" in window)) return el.classList.add("is-on");
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.classList.add("is-on"); io.disconnect(); } }, { threshold: 0.5 });
+    io.observe(el);
+  }
+
   /* ---------------------------------------------------------- Count-up numbers (Brands) */
   function counters() {
     const els = $$("[data-count]");
@@ -494,6 +503,7 @@
   reel();
   showcase();
   counters();
+  beats();
   method();
   featureVideo();
   preview();
