@@ -438,7 +438,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       ["Social-native content", "Vertical-first stories made for the feed, with hooks that stop the scroll and formats each platform rewards.", ["Reels", "TikTok", "Shorts"], "img/services/social.webp"],
       ["Events & coverage", "Launches, openings and live moments captured as stories, not just footage, and turned around fast.", ["Recaps", "Highlights", "Interviews"], "img/services/events.webp"],
       ["Retainer video production", "An embedded creative team on call every month, keeping your channels full of content that performs.", ["Monthly", "Always-on", "Scalable"], "img/services/retainer.webp"],
-      ["Graphics, animation & interactive media", "Motion design, titles and interactive pieces that explain, entertain and make your brand unmistakable.", ["Motion", "2D / 3D", "Interactive"], null],
     ];
     const method = [
       ["Hook", "The first three seconds decide everything. We open on an image, a question or a turn that stops the scroll."],
@@ -537,20 +536,24 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     </ul>
     <ul class="feed-platforms reveal" aria-label="Platforms">${["Instagram", "TikTok", "YouTube Shorts", "LinkedIn"].map((x) => `<li class="mono">${x}</li>`).join("")}</ul>
   </div>
-  ${[["feed", "@pickleplex", ""], ["eze", "@eze.entertainment", " phones--b"]]
+  ${[["feed", "@pickleplex", ""], ["eze", "@eze.entertainment", " phones--b"], ["screens", "", " phones--b phones--c"]]
     .map(
       ([key, handle, cls]) => `<div class="phones${cls}" data-phones aria-hidden="true">
     ${[1, 2, 3]
       .map(
         (n) => `<div class="phone phone--${n}">
         <div class="phone-screen">
-          <video muted loop playsinline preload="none" poster="${asset(`video/${key}-${n}.webp`)}" data-inview-play>
+          ${
+            key === "screens"
+              ? `<img class="phone-still phone-still--${n}" src="${asset("img/services/social-full.webp")}" alt="" loading="lazy" decoding="async">`
+              : `<video muted loop playsinline preload="none" poster="${asset(`video/${key}-${n}.webp`)}" data-inview-play>
             <source src="${asset(`video/${key}-${n}.webm`)}" type="video/webm">
             <source src="${asset(`video/${key}-${n}.mp4`)}" type="video/mp4">
-          </video>
+          </video>`
+          }
           <div class="phone-ui">
             <span class="phone-progress"><i></i></span>
-            <span class="phone-handle mono">${handle}</span>
+            ${handle ? `<span class="phone-handle mono">${handle}</span>` : ""}
             <span class="phone-actions"><i class="pa-heart"></i><i class="pa-chat"></i><i class="pa-share"></i></span>
           </div>
         </div>
@@ -595,32 +598,42 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 </section>
 
 
-<section class="feature wrap" aria-label="Featured brand film">
-  <div class="feature-player reveal" data-autoplay-video>
-    <video muted playsinline loop preload="metadata" poster="${asset("video/reel-wide-poster.webp")}">
-      <source src="${asset("video/reel-wide.webm")}" type="video/webm">
-      <source src="${asset("video/reel-wide.mp4")}" type="video/mp4">
-    </video>
-    <button class="sound-btn" type="button" aria-pressed="false" data-sound>
-      <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
-    </button>
+<section class="showcase2 wrap" aria-labelledby="sc2-title">
+  <div class="section-head">
+    <div>
+      <p class="mono section-label reveal">Featured work</p>
+      <h2 class="section-title display reveal" id="sc2-title">Recent <em>work.</em></h2>
+    </div>
+  </div>
+  <div class="sc2-grid">
+    <figure class="sc2-item reveal">
+      <div class="sc2-media feature-player" data-autoplay-video>
+        <video muted playsinline loop preload="metadata" poster="${asset("video/reel-poster.webp")}">
+          <source src="${asset("video/reel.webm")}" type="video/webm">
+          <source src="${asset("video/reel.mp4")}" type="video/mp4">
+        </video>
+        <button class="sound-btn" type="button" aria-pressed="false" data-sound>
+          <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
+        </button>
+      </div>
+      <figcaption><span class="mono">Brand film</span><span class="sc2-name">Pickleplex Social Club</span></figcaption>
+    </figure>
+    ${brands.youtube
+      .map(
+        (v) => `<figure class="sc2-item reveal" style="--d:.1s">
+      <a class="sc2-media watch-card" href="https://www.youtube.com/watch?v=${esc(v.id)}${v.start ? `&t=${v.start}s` : ""}" target="_blank" rel="noopener" aria-label="Watch ${esc(v.label)} on YouTube">
+        <img class="watch-cover" src="${asset(v.cover)}" alt="" loading="lazy" decoding="async">
+        <img class="watch-logo" src="${asset(v.logo)}" alt="${esc(v.label)}" loading="lazy" decoding="async">
+        <span class="watch-play" aria-hidden="true"><span class="video-play-icon"></span></span>
+      </a>
+      <figcaption><span class="mono">Event coverage</span><a class="sc2-name" href="https://www.youtube.com/watch?v=${esc(v.id)}${v.start ? `&t=${v.start}s` : ""}" target="_blank" rel="noopener">${esc(v.label)} <span aria-hidden="true">↗</span></a></figcaption>
+    </figure>`,
+      )
+      .join("")}
   </div>
 </section>
 
-${brands.youtube.length ? `<section class="watch wrap" aria-label="Watch on YouTube">
-  ${brands.youtube
-    .map(
-      (v) => `<a class="watch-card reveal" href="https://www.youtube.com/watch?v=${esc(v.id)}${v.start ? `&t=${v.start}s` : ""}" target="_blank" rel="noopener" aria-label="Watch ${esc(v.label)} on YouTube">
-      <img class="watch-cover" src="${asset(v.cover)}" alt="" loading="lazy" decoding="async">
-      <img class="watch-logo" src="${asset(v.logo)}" alt="${esc(v.label)}" loading="lazy" decoding="async">
-      <span class="watch-play" aria-hidden="true"><span class="video-play-icon"></span></span>
-      <span class="watch-cta"><span class="mono">${esc(v.label)}</span><span class="watch-cta-btn">Watch on YouTube <span aria-hidden="true">↗</span></span></span>
-    </a>`,
-    )
-    .join("")}
-</section>
-
-` : ""}<section class="enter" aria-label="Contact">
+<section class="enter" aria-label="Contact">
   <a class="enter-link" href="${href("/contact/")}">
     <span class="mono enter-label">Brand partnerships</span>
     <span class="enter-title display"><span>Start a project</span> ${arrow}</span>

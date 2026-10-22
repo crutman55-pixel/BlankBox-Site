@@ -1120,3 +1120,31 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
 .watch-card { aspect-ratio: 4 / 3; max-width: 1080px; margin-inline: auto; } .watch-cover { object-position: center 62%; }
 @media (max-width: 560px) { .watch-card { aspect-ratio: 4 / 5; } .watch-cover { object-position: center 40%; } }
 .watch-play { top: 30%; }
+
+/* Four services: two by two */
+.service, .service:nth-child(4), .service:nth-child(5) { grid-column: span 3; }
+.service .service-media, .service:nth-child(4) .service-media { aspect-ratio: 16 / 9; }
+@media (max-width: 1100px) { .service, .service:nth-child(4) { grid-column: span 1; } }
+
+/* Third phone row: stills from the phones photo, slowly panning */
+.phones--c::before { background: radial-gradient(50% 50% at 50% 55%, rgba(80, 120, 255, 0.26), transparent 70%); }
+.phone-still { width: 100%; height: 100%; object-fit: cover; transform: scale(1.9); animation: still-pan 9s var(--ease-in-out) infinite alternate; }
+.phone-still--1 { transform-origin: 60% 22%; }
+.phone-still--2 { transform-origin: 60% 55%; animation-delay: -3s; }
+.phone-still--3 { transform-origin: 60% 85%; animation-delay: -6s; }
+@keyframes still-pan { from { transform: scale(1.9) translateY(2%); } to { transform: scale(2.05) translateY(-2%); } }
+@media (prefers-reduced-motion: reduce) { .phone-still { animation: none; } }
+
+/* Featured work: film + TEDx, side by side */
+.showcase2 { padding-bottom: clamp(80px, 10vw, 150px); }
+.sc2-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2vw, 28px); }
+.sc2-media { position: relative; display: block; aspect-ratio: 4 / 5; max-width: none; margin: 0; border: 1px solid var(--line-2); border-radius: 0; overflow: hidden; background: #000; box-shadow: 0 50px 120px -50px rgba(0, 0, 0, 0.9); }
+.sc2-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sc2-item figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 18px; border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+.sc2-item figcaption .mono { color: var(--mute); }
+.sc2-name { font: 400 clamp(22px, 2vw, 32px)/1.1 var(--serif); transition: color 0.3s; }
+a.sc2-name:hover { color: var(--gold); }
+.showcase2 .watch-card { aspect-ratio: 4 / 5; max-width: none; }
+.showcase2 .watch-cover { object-position: center 50%; }
+.showcase2 .watch-play { top: 50%; }
+@media (max-width: 760px) { .sc2-grid { grid-template-columns: 1fr; } }
