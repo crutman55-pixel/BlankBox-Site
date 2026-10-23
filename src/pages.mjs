@@ -431,11 +431,11 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   /* -------------------------------------------------------------- BRANDS */
   function brandsPage() {
     const services = [
-      // [title, description, tags, image]. Replace images in src/assets/img/services/ with your own photos.
-      ["Commercials", "Story-led spots that captivate your audience and move them to act, built to drive results and sales.", ["Concept", "Script", "Production", "Post"], "img/services/commercials.webp"],
-      ["Social-native content", "Vertical-first stories made for the feed, with hooks that stop the scroll and formats each platform rewards.", ["Reels", "TikTok", "Shorts"], "img/services/social.webp"],
-      ["Events & coverage", "Launches, openings and live moments captured as stories, not just footage, and turned around fast.", ["Recaps", "Highlights", "Interviews"], "img/services/events.webp"],
-      ["Retainer video production", "An embedded creative team on call every month, keeping your channels full of content that performs.", ["Monthly", "Always-on", "Scalable"], "img/services/retainer.webp"],
+      // [title, description, tags, image, best for, CTA label]. Replace images in src/assets/img/services/ with your own photos.
+      ["Commercials", "Story-led spots that captivate your audience and move them to act, built to drive results and sales.", ["Concept", "Script", "Production", "Post"], "img/services/commercials.webp", "Launches, campaigns and paid ads", "Plan a commercial"],
+      ["Social-native content", "Vertical-first stories made for the feed, with hooks that stop the scroll and formats each platform rewards.", ["Reels", "TikTok", "Shorts"], "img/services/social.webp", "Growing an audience on social", "Start a content plan"],
+      ["Events & coverage", "Launches, openings and live moments captured as stories, not just footage, and turned around fast.", ["Recaps", "Highlights", "Interviews"], "img/services/events.webp", "Conferences, launches and live shows", "Book event coverage"],
+      ["Retainer video production", "An embedded creative team on call every month, keeping your channels full of content that performs.", ["Monthly", "Always-on", "Scalable"], "img/services/retainer.webp", "Brands that post every week", "Build a retainer"],
     ];
     const method = [
       ["Hook", "The first three seconds decide everything. We open on an image, a question or a turn that stops the scroll."],
@@ -646,17 +646,23 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   <ol class="reel svc-slider" data-reel tabindex="0" aria-label="Services, scroll horizontally">
     ${services
       .map(
-        ([t, d, tags], i) => `<li class="reel-item svc-card">
-        <span class="svc-no mono">${pad(i + 1)} / ${pad(services.length)}</span>
-        <h3 class="svc-title display">${esc(t)}</h3>
-        <p class="svc-desc">${esc(d)}</p>
-        <ul class="service-tags">${tags.map((x) => `<li class="mono">${esc(x)}</li>`).join("")}</ul>
-        <a class="svc-link mono" href="${href("/contact/#brief")}" data-brief-open>Enquire ${arrow}</a>
+        ([t, d, tags, img, best, cta], i) => `<li class="reel-item svc-card">
+        <div class="svc-media">
+          <img src="${asset(img)}" alt="" loading="lazy" decoding="async">
+          <span class="svc-no mono">${pad(i + 1)} / ${pad(services.length)}</span>
+        </div>
+        <div class="svc-body">
+          <h3 class="svc-title display">${esc(t)}</h3>
+          <p class="svc-desc">${esc(d)}</p>
+          <p class="svc-best"><span class="mono">Best for</span>${esc(best)}</p>
+          <ul class="service-tags">${tags.map((x) => `<li class="mono">${esc(x)}</li>`).join("")}</ul>
+          <a class="svc-cta" href="${href("/contact/#brief")}" data-brief-open data-brief-service="${esc(t)}"><span>${esc(cta)}</span><span class="svc-cta-arrow" aria-hidden="true">→</span></a>
+        </div>
       </li>`,
       )
       .join("")}
   </ol>
-  <div class="wrap"><div class="svc-progress" aria-hidden="true"><i data-svc-progress></i></div></div>
+  <div class="wrap svc-foot"><div class="svc-progress" aria-hidden="true"><i data-svc-progress></i></div><span class="svc-hint mono" aria-hidden="true">Swipe <span>→</span></span></div>
 </section>
 
 

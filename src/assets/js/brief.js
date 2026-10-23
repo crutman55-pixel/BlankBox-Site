@@ -39,7 +39,7 @@
 
   const BACK = Symbol("back");
   const RESTART = Symbol("restart");
-  let root, log, dock, bar, stepLabel, lastFocus, started = false, busy = false, stepIdx = 0;
+  let root, log, dock, bar, stepLabel, lastFocus, started = false, busy = false, stepIdx = 0, prefer = "";
   const data = {};
 
   /* ------------------------------------------------------------------ shell */
@@ -315,7 +315,7 @@
           ? `Based on that, I'd start with ${recommended.join(" and ")}. I've pre-selected ${recommended.length > 1 ? "them" : "it"}. Adjust as you like.`
           : "Which of our services are you most interested in? Pick as many as apply.",
       );
-      data.services = await choose(SERVICES, { multi: true, other: true, preselect: data.services || recommended });
+      data.services = await choose(SERVICES, { multi: true, other: true, preselect: data.services || [...new Set([...(SERVICES.includes(prefer) ? [prefer] : []), ...recommended])] });
     },
     async () => {
       await say("Do you have a timeline for delivery?");
@@ -455,6 +455,8 @@
     const t = e.target.closest("[data-brief-open]");
     if (!t) return;
     e.preventDefault();
+    // A service card's button pre-selects that service in the brief.
+    if (t.dataset.briefService && !started) prefer = t.dataset.briefService;
     open();
   });
   if (location.hash === "#brief") open();
