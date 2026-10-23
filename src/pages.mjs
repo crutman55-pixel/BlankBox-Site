@@ -603,13 +603,12 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     <div class="crafts-head">
       <p class="mono section-label reveal">The complete production</p>
       <h3 class="crafts-title display reveal">One crew, <em class="glow">start to finish.</em></h3>
-      <p class="crafts-note reveal">One team carries your project through every stage, so nothing gets lost between hand-offs.</p>
     </div>
     <ol class="wide-crafts" data-fill>
       ${[
-        ["Production", "We shape the idea and plan every detail of the shoot.", ["Concept", "Script", "Casting", "Locations"],
+        ["Production", "We learn about your vision, shape the idea, and plan every detail of the shoot.", ["Concept", "Script", "Casting", "Locations"],
           '<path d="M3.5 9.5h17v10h-17z"/><path d="M3.5 9.5 5.6 4.5h14.9l-2.1 5"/><path d="m9.4 4.5-2.1 5M14.6 4.5l-2.1 5"/>'],
-        ["Cinematography", "Cinema-grade images, built to hold a big screen.", ["Cinema cameras", "Lighting", "Grip", "Drone"],
+        ["Cinematography", "Cinema-grade images, built to hold a big and small screen.", ["Cinema cameras", "Lighting", "Grip", "Drone"],
           '<rect x="2.5" y="7" width="13" height="10" rx="1.5"/><path d="m15.5 10.5 6-3v9l-6-3"/><circle cx="7" cy="12" r="2"/>'],
         ["Sound", "Clean recording and a mix that carries the story.", ["Recording", "Sound design", "Mix"],
           '<path d="M4 10v4M8 6.5v11M12 3.5v17M16 7.5v9M20 10.5v3"/>'],
