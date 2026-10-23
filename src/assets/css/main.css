@@ -824,13 +824,14 @@ a.credit-inner:hover .credit-media img { transform: scale(1.04); }
 /* Brands: client logo marquee */
 .clients { padding-bottom: clamp(72px, 9vw, 130px); }
 .clients .section-label { margin-bottom: clamp(32px, 4vw, 56px); }
-.marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
-.marquee-track { display: flex; align-items: center; gap: clamp(64px, 8vw, 140px); width: max-content; animation: marquee 36s linear infinite; }
-.marquee:hover .marquee-track { animation-play-state: paused; }
-.marquee-track li { flex: none; }
+.marquee { --fade: clamp(56px, 10vw, 160px); overflow: hidden; padding-block: 6px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent); mask-image: linear-gradient(90deg, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent); }
+/* Spacing lives on each logo (not flex gap) so every set is the same width and the -50% loop is seamless. */
+.marquee-track { display: flex; align-items: center; width: max-content; animation: marquee 36s linear infinite; will-change: transform; backface-visibility: hidden; }
+@media (hover: hover) and (pointer: fine) { .marquee:hover .marquee-track { animation-play-state: paused; } }
+.marquee-track li { flex: none; padding-inline-end: clamp(56px, 8vw, 140px); }
 .marquee-track img { height: clamp(40px, 4.6vw, 64px); width: auto; filter: brightness(0) invert(1); opacity: 0.72; transition: opacity 0.4s; }
 .marquee-track li:hover img { opacity: 1; }
-@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes marquee { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
 @media (max-width: 560px) { .stats { grid-template-columns: 1fr; } .stat-item + .stat-item { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; } }
 @media (prefers-reduced-motion: reduce) { .marquee-track { animation: marquee 36s linear infinite !important; animation-duration: 120s !important; } }
 
@@ -1539,4 +1540,11 @@ a.dock-go { display: inline-flex; align-items: center; text-decoration: none; }
   .sc2-item--wide .vf { inset: 12px; }
   .sc2-item--wide .sound-btn { right: 22px; bottom: 22px; height: 36px; padding: 0 12px; gap: 8px; }
   .sc2-item--wide .vf i { width: 16px; height: 16px; }
+}
+@media (max-width: 760px) {
+  .marquee { --fade: 64px; }
+  .marquee-track { animation-duration: 30s; }
+  .marquee-track img { height: 36px; }
+  .marquee-track img.logo-knockout { height: 46px; }
+  .marquee-track img.logo-lg { height: 60px; }
 }

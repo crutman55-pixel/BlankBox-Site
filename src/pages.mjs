@@ -445,7 +445,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     ];
     const logos = (k) =>
       brands.clients
-        .map((c) => `<li${k ? ' aria-hidden="true"' : ""}><img${c.knockout || c.large ? ` class="${[c.knockout && "logo-knockout", c.large && "logo-lg"].filter(Boolean).join(" ")}"` : ""} src="${asset(c.logo)}" alt="${k ? "" : esc(c.name)}" loading="lazy" decoding="async" height="80"></li>`)
+        .map((c) => `<li${k ? ' aria-hidden="true"' : ""}><img${c.knockout || c.large ? ` class="${[c.knockout && "logo-knockout", c.large && "logo-lg"].filter(Boolean).join(" ")}"` : ""} src="${asset(c.logo)}" alt="${k ? "" : esc(c.name)}" loading="eager" decoding="async" height="80"></li>`)
         .join("");
 
     return `
@@ -506,7 +506,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       .map(
         (n) => `<div class="phone phone--${n}">
         <div class="phone-screen">
-          <video muted loop playsinline webkit-playsinline preload="none" poster="${asset(`video/${key}-${n}.webp`)}" data-inview-play>
+          <video muted autoplay loop playsinline webkit-playsinline preload="auto" poster="${asset(`video/${key}-${n}.webp`)}" data-inview-play>
             <source src="${asset(`video/${key}-${n}.mp4`)}" type="video/mp4">
             <source src="${asset(`video/${key}-${n}.webm`)}" type="video/webm">
           </video>
@@ -639,7 +639,8 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   <div class="sc2-grid">
     <figure class="sc2-item reveal">
       <div class="sc2-media feature-player" data-autoplay-video>
-        <video muted playsinline webkit-playsinline loop preload="metadata" poster="${asset("video/reel-poster.webp")}">
+        <video muted playsinline webkit-playsinline loop autoplay preload="metadata" poster="${asset("video/reel-poster.webp")}">
+          <source src="${asset("video/reel-sm.mp4")}" type="video/mp4" media="(max-width: 760px)">
           <source src="${asset("video/reel.mp4")}" type="video/mp4">
           <source src="${asset("video/reel.webm")}" type="video/webm">
         </video>
@@ -663,7 +664,8 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       .join("")}
     <figure class="sc2-item sc2-item--wide reveal" style="--d:.15s">
       <div class="sc2-media feature-player" data-autoplay-video>
-        <video muted playsinline webkit-playsinline loop preload="metadata" poster="${asset("video/drive-poster.webp")}" aria-label="Aerial shot following a car along a forest road">
+        <video muted playsinline webkit-playsinline loop autoplay preload="metadata" poster="${asset("video/drive-poster.webp")}" aria-label="Aerial shot following a car along a forest road">
+          <source src="${asset("video/drive-sm.mp4")}" type="video/mp4" media="(max-width: 760px)">
           <source src="${asset("video/drive.mp4")}" type="video/mp4">
           <source src="${asset("video/drive.webm")}" type="video/webm">
         </video>

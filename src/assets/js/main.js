@@ -240,17 +240,21 @@
         btn.setAttribute("aria-pressed", String(!v.muted));
         label.textContent = v.muted ? "Sound off" : "Sound on";
       };
-      const toggle = () => { v.muted = !v.muted; if (v.paused) v.play().catch(() => {}); sync(); };
+      const toggle = () => { v.muted = !v.muted; v.dataset.userSound = v.muted ? "" : "1"; if (v.paused) v.play().catch(() => {}); sync(); };
       wrap.addEventListener("click", (e) => { if (!e.target.closest("[data-sound]")) toggle(); });
       btn.addEventListener("click", (e) => { e.stopPropagation(); toggle(); });
-      if ("IntersectionObserver" in window && !reduced.matches) {
-        new IntersectionObserver(([e]) => { e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }, { rootMargin: "200px 0px", threshold: 0 }).observe(wrap);
+      if ("IntersectionObserver" in window) {
+        // Start buffering well before the clip is reached, so it is already running on arrival.
+        new IntersectionObserver(([e]) => {
+          if (e.isIntersecting) { if (v.preload !== "auto" && v.paused && v.readyState < 3) { v.preload = "auto"; v.load(); } v.play().catch(() => {}); }
+          else v.pause();
+        }, { rootMargin: "800px 0px", threshold: 0 }).observe(wrap);
       }
       sync();
     });
     // Phone mockups: play while on screen; the stack tilts toward the pointer.
     $$("[data-inview-play]").forEach((v) => {
-      if (reduced.matches || !("IntersectionObserver" in window)) return;
+      if (!("IntersectionObserver" in window)) return;
       v.muted = true;
       // Start loading well before the row is reached, so it is already playing on arrival.
       new IntersectionObserver(([e]) => {
@@ -269,7 +273,6 @@
     }
     // Background loop in the Brands hero respects reduced motion.
     $$(".bhero-media video").forEach((v) => {
-      if (reduced.matches) { v.removeAttribute("autoplay"); v.pause(); return; }
       v.muted = true;
       const reveal = () => v.classList.add("is-playing");
       v.addEventListener("playing", reveal, { once: true });
@@ -287,11 +290,22 @@
   }
 
   /* ---------------------------------------------------------- Mobile: nudge muted videos to start */
+  // Muted loops are part of the content, so they play regardless of reduced-motion settings.
+  // Browsers that hold autoplay back (iOS Low Power Mode, data saver) get another try on
+  // every touch, scroll and return to the tab, for each paused loop that is on screen.
   function kickVideos() {
-    const vids = () => $$("video[autoplay]").filter((v) => v.paused && v.getBoundingClientRect().top < innerHeight * 1.5);
-    const go = () => vids().forEach((v) => { v.muted = true; v.play().catch(() => {}); });
+    const onScreen = (v) => { const r = v.getBoundingClientRect(); return r.bottom > -200 && r.top < innerHeight + 200; };
+    const go = () => $$("video[autoplay]").forEach((v) => {
+      if (!v.paused || !onScreen(v)) return;
+      if (!v.closest("[data-autoplay-video]") || !v.dataset.userSound) v.muted = true;
+      v.play().catch(() => {});
+    });
+    let ticking = false;
+    const soon = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; go(); }); } };
     go();
-    ["touchstart", "scroll"].forEach((ev) => window.addEventListener(ev, go, { passive: true, once: ev === "touchstart" }));
+    ["touchstart", "touchend", "scroll"].forEach((ev) => window.addEventListener(ev, soon, { passive: true }));
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) go(); });
+    window.addEventListener("pageshow", go);
   }
 
   /* ---------------------------------------------------------- Hook / Narrative / Impact / Recall */
@@ -621,7 +635,7 @@
   timecode();
   method();
   featureVideo();
-  if (!reduced.matches) kickVideos();
+  kickVideos();
   preview();
   videos();
   contact();
