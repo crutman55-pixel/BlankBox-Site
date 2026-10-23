@@ -687,7 +687,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
           ["Day one", "Started from zero", "New accounts, no audience. We set up the channels and the look from scratch."],
           ["The build", "Broadcast the construction", "Every stage of the renovation became content: the gutted floor, the courts going in, the reveal."],
           ["The buzz", "Built the brand everywhere", "Native content for every platform, so the community grew week by week."],
-          ["The big day", "Grand opening", "We filmed the launch and delivered the brand film, playing right here."],
+          ["The big day", "Grand opening", "We filmed the launch and delivered the brand film in several different versions."],
         ]
           .map(
             ([k, t, d], i) => `<li class="spot-step reveal" style="--d:${(i * 0.08).toFixed(2)}s">
