@@ -1615,3 +1615,47 @@ a.dock-go { display: inline-flex; align-items: center; text-decoration: none; }
   .svc-body { padding: 20px; }
 }
 .wide-shot--aerial { box-shadow: 0 70px 160px -60px rgba(255, 122, 61, 0.3); }
+
+/* ------------------------------------------------ Highlighted Work: Pickleplex case study */
+.spot-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 100px); align-items: start; }
+.spot-film { position: sticky; top: calc(var(--header-h) + 24px); margin: 0; }
+.spot-film .sc2-media { aspect-ratio: 4 / 5; box-shadow: 0 60px 140px -60px rgba(255, 122, 61, 0.4); }
+.spot-film .vf { inset: 16px; z-index: 1; }
+.spot-film .sound-btn { z-index: 2; }
+.spot-film figcaption { margin-top: 14px; color: var(--mute); font-size: 10px; }
+
+.spot-copy { padding-top: clamp(0px, 1vw, 12px); }
+.spot-logo { display: block; width: auto; height: clamp(34px, 3.2vw, 46px); margin-bottom: clamp(26px, 3vw, 40px); }
+.spot-title { font-size: clamp(40px, 4.6vw, 76px); line-height: 0.98; max-width: 13ch; }
+.spot-title em.glow { color: transparent; }
+.spot-lede { margin-top: 22px; color: var(--paper-2); font-size: clamp(16px, 1.3vw, 20px); max-width: 46ch; }
+
+.spot-steps { --rail: 30px; position: relative; display: grid; gap: clamp(22px, 2.4vw, 32px); margin-top: clamp(36px, 4vw, 56px); padding-left: var(--rail); }
+.spot-steps::before, .spot-steps::after { content: ""; position: absolute; top: 6px; bottom: 6px; left: 6px; width: 1px; }
+.spot-steps::before { background: var(--line-2); }
+.spot-steps::after { background: linear-gradient(180deg, var(--gold), var(--ember)); transform: scaleY(var(--p, 0)); transform-origin: top; }
+.spot-step { position: relative; }
+.spot-dot { position: absolute; top: 3px; left: calc(-1 * var(--rail)); width: 13px; height: 13px; border-radius: 50%; background: var(--black); border: 1px solid var(--line-2); transition: background 0.5s, border-color 0.5s, box-shadow 0.5s; }
+.spot-k { color: var(--mute); transition: color 0.5s; }
+.spot-step-title { margin: 8px 0 6px; font: 400 clamp(24px, 2vw, 32px)/1.1 var(--serif); letter-spacing: -0.01em; transition: color 0.5s; }
+.spot-step p { color: var(--paper-2); font-size: 15.5px; line-height: 1.55; max-width: 48ch; }
+.spot-step.is-lit .spot-dot { background: var(--ember); border-color: var(--gold); box-shadow: 0 0 0 5px rgba(255, 122, 61, 0.15), 0 0 18px rgba(255, 122, 61, 0.6); }
+.spot-step.is-lit .spot-k { color: var(--gold); }
+.spot-step:last-child .spot-step-title { font-style: italic; }
+
+.spot-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: clamp(36px, 4vw, 52px); padding-top: clamp(26px, 3vw, 36px); border-top: 1px solid var(--line); }
+.spot-cta .mono { color: var(--mute); font-size: 10px; }
+
+@media (max-width: 860px) {
+  .spot-grid { grid-template-columns: 1fr; }
+  .spot-film { position: relative; top: 0; order: 2; }
+  .spot-copy { display: contents; }
+  .spot-logo, .spot-title, .spot-lede { order: 1; }
+  .spot-steps, .spot-cta { order: 3; }
+  .spot-logo { margin-bottom: 0; }
+  .spot-lede { margin-top: 0; }
+  .spot-grid { gap: 22px; }
+  .spot-steps { margin-top: 18px; }
+  .spot-film .sc2-media { aspect-ratio: 4 / 5; }
+}
+@media (max-width: 560px) { .spot-cta .btn { width: 100%; justify-content: center; } }

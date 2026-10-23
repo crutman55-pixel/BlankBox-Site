@@ -655,39 +655,55 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 </section>
 
 
-<section class="showcase2 wrap" aria-labelledby="sc2-title">
+<section class="showcase2 spot wrap" aria-labelledby="sc2-title">
   <div class="section-head">
     <div>
-      <p class="mono section-label reveal">Featured work</p>
+      <p class="mono section-label reveal">Client spotlight</p>
       <h2 class="section-title display reveal" id="sc2-title">Highlighted <em>Work</em></h2>
     </div>
   </div>
-  <div class="sc2-grid">
-    <figure class="sc2-item reveal">
+  <div class="spot-grid">
+    <figure class="spot-film reveal">
       <div class="sc2-media feature-player" data-autoplay-video>
         <video muted playsinline webkit-playsinline loop preload="none" data-poster="${asset("video/reel-poster.webp")}" data-lazy>
           <source src="${asset("video/reel-sm.mp4")}" type="video/mp4" media="(max-width: 760px)">
           <source src="${asset("video/reel.mp4")}" type="video/mp4">
           <source src="${asset("video/reel.webm")}" type="video/webm">
         </video>
+        ${viewfinder}
         <button class="sound-btn" type="button" aria-pressed="false" data-sound>
           <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
         </button>
       </div>
-      <figcaption><span class="mono">Brand film</span><span class="sc2-name">Pickleplex Social Club</span></figcaption>
+      <figcaption class="mono">Pickleplex Social Club — brand film</figcaption>
     </figure>
-    ${brands.youtube
-      .map(
-        (v) => `<figure class="sc2-item reveal" style="--d:.1s">
-      <a class="sc2-media watch-card" href="https://www.youtube.com/watch?v=${esc(v.id)}${v.start ? `&t=${v.start}s` : ""}" target="_blank" rel="noopener" aria-label="Watch ${esc(v.label)} on YouTube">
-        <img class="watch-cover" src="${asset(v.cover)}" alt="" loading="lazy" decoding="async">
-        <img class="watch-logo" src="${asset(v.logo)}" alt="${esc(v.label)}" loading="lazy" decoding="async">
-        <span class="watch-play" aria-hidden="true"><span class="video-play-icon"></span></span>
-      </a>
-      <figcaption><span class="mono">Event coverage</span><a class="sc2-name" href="https://www.youtube.com/watch?v=${esc(v.id)}${v.start ? `&t=${v.start}s` : ""}" target="_blank" rel="noopener">${esc(v.label)} <span aria-hidden="true">↗</span></a></figcaption>
-    </figure>`,
-      )
-      .join("")}
+
+    <div class="spot-copy">
+      <img class="spot-logo reveal" src="${asset("clients/pickleplex-light.webp")}" alt="Pickleplex Social Club" width="602" height="88" loading="lazy" decoding="async">
+      <h3 class="spot-title display reveal">From an empty warehouse <em class="glow">to opening day.</em></h3>
+      <p class="spot-lede reveal">Pickleplex was opening a brand-new location, with zero followers behind it. We turned the build itself into the story, so by the time the doors opened, people already felt part of it.</p>
+      <ol class="spot-steps" data-fill>
+        ${[
+          ["Day one", "Started from zero", "New accounts, no audience. We set up the channels and the look from scratch."],
+          ["The build", "Broadcast the construction", "Every stage of the renovation became content: the gutted floor, the courts going in, the reveal."],
+          ["The buzz", "Built the brand everywhere", "Native content for every platform, so the community grew week by week."],
+          ["The big day", "Grand opening", "We filmed the launch and delivered the brand film, playing right here."],
+        ]
+          .map(
+            ([k, t, d], i) => `<li class="spot-step reveal" style="--d:${(i * 0.08).toFixed(2)}s">
+          <span class="spot-dot" aria-hidden="true"></span>
+          <span class="mono spot-k">${pad(i + 1)} · ${k}</span>
+          <h4 class="spot-step-title">${t}</h4>
+          <p>${d}</p>
+        </li>`,
+          )
+          .join("")}
+      </ol>
+      <div class="spot-cta reveal">
+        <a class="btn btn--accent" href="${href("/contact/#brief")}" data-brief-open>Launch yours with us ${arrow}</a>
+        <p class="mono">0 followers → grand opening</p>
+      </div>
+    </div>
   </div>
 </section>
 
