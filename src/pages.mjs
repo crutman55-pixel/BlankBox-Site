@@ -675,7 +675,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
           <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
         </button>
       </div>
-      <figcaption class="mono">Pickleplex Social Club — brand film</figcaption>
     </figure>
 
     <div class="spot-copy">
