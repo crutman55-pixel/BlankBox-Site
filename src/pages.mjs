@@ -586,6 +586,18 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
         ${viewfinder}
         <figcaption><span class="mono">On set</span><span class="display">Light, lens, haze</span></figcaption>
       </figure>
+      <figure class="wide-shot wide-shot--aerial reveal" data-autoplay-video>
+        <video muted playsinline webkit-playsinline loop autoplay preload="metadata" poster="${asset("video/drive-poster.webp")}" aria-label="Aerial shot following a car along a forest road">
+          <source src="${asset("video/drive-sm.mp4")}" type="video/mp4" media="(max-width: 760px)">
+          <source src="${asset("video/drive.mp4")}" type="video/mp4">
+          <source src="${asset("video/drive.webm")}" type="video/webm">
+        </video>
+        ${viewfinder}
+        <figcaption><span class="mono">Aerial</span><span class="display">Tracking shots from above</span></figcaption>
+        <button class="sound-btn" type="button" aria-pressed="false" data-sound>
+          <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
+        </button>
+      </figure>
     </div>
 
     <ol class="wide-crafts" data-fill>
@@ -662,19 +674,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     </figure>`,
       )
       .join("")}
-    <figure class="sc2-item sc2-item--wide reveal" style="--d:.15s">
-      <div class="sc2-media feature-player" data-autoplay-video>
-        <video muted playsinline webkit-playsinline loop autoplay preload="metadata" poster="${asset("video/drive-poster.webp")}" aria-label="Aerial shot following a car along a forest road">
-          <source src="${asset("video/drive-sm.mp4")}" type="video/mp4" media="(max-width: 760px)">
-          <source src="${asset("video/drive.mp4")}" type="video/mp4">
-          <source src="${asset("video/drive.webm")}" type="video/webm">
-        </video>
-        ${viewfinder}
-        <button class="sound-btn" type="button" aria-pressed="false" data-sound>
-          <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
-        </button>
-      </div>
-    </figure>
   </div>
 </section>
 
