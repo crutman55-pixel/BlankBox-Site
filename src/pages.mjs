@@ -667,6 +667,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
           <source src="${asset("video/drive.mp4")}" type="video/mp4">
           <source src="${asset("video/drive.webm")}" type="video/webm">
         </video>
+        ${viewfinder}
         <button class="sound-btn" type="button" aria-pressed="false" data-sound>
           <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
         </button>
