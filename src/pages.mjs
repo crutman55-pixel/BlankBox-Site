@@ -432,7 +432,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   function brandsPage() {
     const services = [
       // [title, description, tags, image, best for, CTA label]. Replace images in src/assets/img/services/ with your own photos.
-      ["Commercials", "Story-led spots that captivate your audience and move them to act, built to drive results and sales.", ["Concept", "Script", "Production", "Post"], "img/services/commercials.webp", "Launches, campaigns and paid ads", "Plan a commercial"],
+      ["Commercials", "Story-led spots that captivate your audience and move them to act, built to drive results and sales.", ["Concept", "Script", "Production", "Post"], "img/services/commercials.webp", "Broadcast advertising, websites, and publicity", "Plan a commercial"],
       ["Social-native content", "Vertical-first stories made for the feed, with hooks that stop the scroll and formats each platform rewards.", ["Reels", "TikTok", "Shorts"], "img/services/social.webp", "Growing an audience on social", "Start a content plan"],
       ["Events & coverage", "Launches, openings and live moments captured as stories, not just footage, and turned around fast.", ["Recaps", "Highlights", "Interviews"], "img/services/events.webp", "Conferences, launches and live shows", "Book event coverage"],
       ["Retainer video production", "An embedded creative team on call every month, keeping your channels full of content that performs.", ["Monthly", "Always-on", "Scalable"], "img/services/retainer.webp", "Brands that post every week", "Build a retainer"],
