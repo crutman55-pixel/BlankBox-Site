@@ -1614,3 +1614,4 @@ a.dock-go { display: inline-flex; align-items: center; text-decoration: none; }
   .svc-card .svc-title { padding-top: 0; font-size: 28px; }
   .svc-body { padding: 20px; }
 }
+.wide-shot--aerial { box-shadow: 0 70px 160px -60px rgba(255, 122, 61, 0.3); }

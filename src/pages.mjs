@@ -564,15 +564,17 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       </div>
     </div>
 
-    <figure class="wide-hero reveal-frame">
-      <img src="${asset("img/widescreen/tedx-speaker.webp")}" srcset="${asset("img/widescreen/tedx-speaker-sm.webp")} 1000w, ${asset("img/widescreen/tedx-speaker.webp")} 2000w" sizes="(max-width: 1480px) 100vw, 1480px" alt="A speaker on stage at TEDxWesternU, filmed by BLANKBOX" loading="lazy" decoding="async" width="2000" height="1174">
-      <span class="wide-hud" aria-hidden="true">
-        ${viewfinder}
-        <span class="hud hud-tl mono"><i class="hud-rec"></i>Rec</span>
-        <span class="hud hud-tr mono">A-cam · 4K · 2.39:1</span>
-        <span class="hud hud-bl mono">TEDxWesternU — Live coverage</span>
-        <span class="hud hud-br mono" data-timecode>01:12:04:18</span>
-      </span>
+    <figure class="wide-shot wide-shot--aerial reveal" data-autoplay-video>
+      <video muted playsinline webkit-playsinline loop preload="none" data-poster="${asset("video/drive-poster.webp")}" data-lazy aria-label="Aerial shot following a car along a forest road">
+        <source src="${asset("video/drive-sm.mp4")}" type="video/mp4" media="(max-width: 760px)">
+        <source src="${asset("video/drive.mp4")}" type="video/mp4">
+        <source src="${asset("video/drive.webm")}" type="video/webm">
+      </video>
+      ${viewfinder}
+      <span class="aerial-progress" aria-hidden="true"><i></i></span>
+      <button class="sound-btn" type="button" aria-pressed="false" data-sound>
+        <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
+      </button>
     </figure>
 
     <div class="wide-grid">
@@ -585,18 +587,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
         <img src="${asset("img/widescreen/on-set.webp")}" srcset="${asset("img/widescreen/on-set-sm.webp")} 450w, ${asset("img/widescreen/on-set.webp")} 900w" sizes="(max-width: 760px) 100vw, 28vw" alt="A cinema camera on set, lit through haze" loading="lazy" decoding="async" width="900" height="1600">
         ${viewfinder}
         <figcaption><span class="mono">On set</span><span class="display">Light, lens, haze</span></figcaption>
-      </figure>
-      <figure class="wide-shot wide-shot--aerial reveal" data-autoplay-video>
-        <video muted playsinline webkit-playsinline loop preload="none" data-poster="${asset("video/drive-poster.webp")}" data-lazy aria-label="Aerial shot following a car along a forest road">
-          <source src="${asset("video/drive-sm.mp4")}" type="video/mp4" media="(max-width: 760px)">
-          <source src="${asset("video/drive.mp4")}" type="video/mp4">
-          <source src="${asset("video/drive.webm")}" type="video/webm">
-        </video>
-        ${viewfinder}
-        <span class="aerial-progress" aria-hidden="true"><i></i></span>
-        <button class="sound-btn" type="button" aria-pressed="false" data-sound>
-          <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
-        </button>
       </figure>
     </div>
 
@@ -649,7 +639,6 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
         ([t, d, tags, img, best, cta], i) => `<li class="reel-item svc-card">
         <div class="svc-media">
           <img src="${asset(img)}" alt="" loading="lazy" decoding="async">
-          <span class="svc-no mono">${pad(i + 1)} / ${pad(services.length)}</span>
         </div>
         <div class="svc-body">
           <h3 class="svc-title display">${esc(t)}</h3>
