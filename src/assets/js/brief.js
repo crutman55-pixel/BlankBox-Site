@@ -250,23 +250,6 @@
     });
   }
 
-  async function scan(url) {
-    const card = el("div", "msg msg--bot scan");
-    const host = url.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
-    card.innerHTML = `<p class="scan-host mono"></p><ol class="scan-steps"></ol><span class="scan-bar"><i></i></span>`;
-    card.querySelector(".scan-host").textContent = host;
-    log.append(card); scroll();
-    const steps = card.querySelector(".scan-steps");
-    for (const s of ["Scanning site", "Learning about your offering", "Analyzing customer positioning"]) {
-      const li = el("li", "", s);
-      steps.append(li); scroll();
-      await wait(1100);
-      li.classList.add("is-done");
-    }
-    card.classList.add("is-done");
-    await wait(300);
-  }
-
   /* ------------------------------------------------------------------- flow */
   const first = () => (data.name || "").split(/\s+/)[0];
 
@@ -294,10 +277,8 @@
     async () => {
       await say(`Great. Does ${data.company} have a website or social media page you'd like us to look at? (Optional)`);
       data.website = await ask({ type: "text", placeholder: "Website or @handle", optional: true, autocomplete: "url", value: data.website });
-      if (data.website) {
-        await scan(data.website);
-        await say(`Thanks. That gives the team useful context on ${data.company} before you meet.`);
-      } else await say("All good, we'll learn about you in the meeting.");
+      if (data.website) await say(`Thanks. That gives the team useful context on ${data.company} before you meet.`);
+      else await say("All good, we'll learn about you in the meeting.");
     },
     async () => {
       await say("Which of these best describes what you're after? Pick as many as apply.");
