@@ -1513,3 +1513,15 @@ a.dock-go { display: inline-flex; align-items: center; text-decoration: none; }
   .wide-crafts p { max-width: none; }
 }
 @media (prefers-reduced-motion: reduce) { .wide-ratio-cut, .hud-rec { animation: none; } }
+/* Crafts share the beats' fill line */
+.wide-crafts { position: relative; padding-top: 34px; }
+.wide-crafts li { padding-top: 0; border-top: 0; }
+.wide-crafts::before, .wide-crafts::after { content: ""; position: absolute; top: 6px; left: 0; right: 0; height: 1px; }
+.wide-crafts::before { background: var(--line-2); }
+.wide-crafts::after { background: linear-gradient(90deg, var(--gold), var(--ember)); transform: scaleX(var(--p, 0)); transform-origin: left; }
+.wide-crafts h3 { margin-top: 10px; }
+@media (max-width: 760px) {
+  .wide-crafts { padding: 0 0 0 30px; }
+  .wide-crafts::before, .wide-crafts::after { top: 0; bottom: 0; left: 6px; right: auto; width: 1px; height: auto; }
+  .wide-crafts::after { background: linear-gradient(180deg, var(--gold), var(--ember)); transform: scaleY(var(--p, 0)); transform-origin: top; }
+}

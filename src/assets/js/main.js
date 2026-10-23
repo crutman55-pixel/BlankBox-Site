@@ -351,8 +351,24 @@
     }).observe(el);
   }
 
+  // The same scroll-linked fill as the beats line, for other lines on the page.
+  function fillLine(el) {
+    if (reduced.matches) return el.style.setProperty("--p", 1);
+    let ticking = false;
+    const update = () => {
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      el.style.setProperty("--p", Math.min(1, Math.max(0, (vh * 0.8 - r.top) / (r.height + vh * 0.35))).toFixed(3));
+      ticking = false;
+    };
+    window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  }
+
   /* ---------------------------------------------------------- Four beats: draw the line in view */
   function beats() {
+    $$("[data-fill]").forEach(fillLine);
     const el = $("[data-beats]");
     if (!el) return;
     const items = $$(".beat", el);
