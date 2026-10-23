@@ -243,13 +243,6 @@
       const toggle = () => { v.muted = !v.muted; v.dataset.userSound = v.muted ? "" : "1"; if (v.paused) v.play().catch(() => {}); sync(); };
       wrap.addEventListener("click", (e) => { if (!e.target.closest("[data-sound]")) toggle(); });
       btn.addEventListener("click", (e) => { e.stopPropagation(); toggle(); });
-      if ("IntersectionObserver" in window) {
-        // Start buffering well before the clip is reached, so it is already running on arrival.
-        new IntersectionObserver(([e]) => {
-          if (e.isIntersecting) { if (v.preload !== "auto" && v.paused && v.readyState < 3) { v.preload = "auto"; v.load(); } v.play().catch(() => {}); }
-          else v.pause();
-        }, { rootMargin: "800px 0px", threshold: 0 }).observe(wrap);
-      }
       sync();
       // A thin playback line, where the wrapper provides one.
       const bar = $(".aerial-progress i", wrap);
@@ -261,16 +254,7 @@
         v.addEventListener("play", () => requestAnimationFrame(draw));
       }
     });
-    // Phone mockups: play while on screen; the stack tilts toward the pointer.
-    $$("[data-inview-play]").forEach((v) => {
-      if (!("IntersectionObserver" in window)) return;
-      v.muted = true;
-      // Start loading well before the row is reached, so it is already playing on arrival.
-      new IntersectionObserver(([e]) => {
-        if (e.isIntersecting) { if (v.preload !== "auto") { v.preload = "auto"; v.load(); } v.play().catch(() => {}); }
-        else v.pause();
-      }, { rootMargin: "900px 0px", threshold: 0 }).observe(v);
-    });
+    // Phone mockups: the stack tilts toward the pointer.
     const phones = $("[data-phones]");
     if (phones && fine.matches && !reduced.matches) {
       phones.addEventListener("pointermove", (e) => {
@@ -299,12 +283,46 @@
   }
 
   /* ---------------------------------------------------------- Mobile: nudge muted videos to start */
+  /* Loading order for page video. On a phone connection, starting every clip at once starves the
+     one on screen, so: the hero loop downloads alone first; every other clip (data-lazy, with its
+     poster in data-poster) starts loading about 1.5 screens before it is reached, and plays only
+     while visible. */
+  function ambient() {
+    const vids = $$("video[data-lazy]");
+    if (!vids.length) return;
+    const load = (v) => {
+      if (v.dataset.loaded) return;
+      v.dataset.loaded = "1";
+      if (v.dataset.poster) v.poster = v.dataset.poster;
+      v.preload = "auto";
+      v.load();
+    };
+    if (!("IntersectionObserver" in window)) return vids.forEach((v) => { load(v); v.autoplay = true; });
+    const visible = new IntersectionObserver((es) => es.forEach((e) => {
+      const v = e.target;
+      if (e.isIntersecting) { load(v); if (!v.dataset.userSound) v.muted = true; v.play().catch(() => {}); }
+      else v.pause();
+    }), { threshold: 0.01 });
+    const near = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { load(e.target); near.unobserve(e.target); } }), { rootMargin: "150% 0px" });
+    let armed = false;
+    const arm = () => {
+      if (armed) return;
+      armed = true;
+      vids.forEach((v) => { near.observe(v); visible.observe(v); });
+    };
+    const hero = $(".bhero-media video");
+    if (!hero || hero.readyState >= 3) return arm();
+    hero.addEventListener("playing", arm, { once: true });
+    window.addEventListener("scroll", arm, { once: true, passive: true });
+    setTimeout(arm, 3000);
+  }
+
   // Muted loops are part of the content, so they play regardless of reduced-motion settings.
   // Browsers that hold autoplay back (iOS Low Power Mode, data saver) get another try on
   // every touch, scroll and return to the tab, for each paused loop that is on screen.
   function kickVideos() {
     const onScreen = (v) => { const r = v.getBoundingClientRect(); return r.bottom > -200 && r.top < innerHeight + 200; };
-    const go = () => $$("video[autoplay]").forEach((v) => {
+    const go = () => $$("video[autoplay], video[data-loaded]").forEach((v) => {
       if (!v.paused || !onScreen(v)) return;
       if (!v.closest("[data-autoplay-video]") || !v.dataset.userSound) v.muted = true;
       v.play().catch(() => {});
@@ -644,6 +662,7 @@
   timecode();
   method();
   featureVideo();
+  ambient();
   kickVideos();
   preview();
   videos();

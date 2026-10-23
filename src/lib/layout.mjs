@@ -1,9 +1,21 @@
 import { site, nav } from "../config.mjs";
 import { esc } from "./util.mjs";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 
 export function createLayout({ base, version }) {
   const href = (p) => `${base}${p}`;
-  const asset = (p) => `${base}/assets/${p}?v=${version}`;
+  // Version each asset by its contents, so a deploy only invalidates files that actually changed.
+  const hashes = new Map();
+  const hash = (p) => {
+    if (!hashes.has(p)) {
+      let h = version;
+      try { h = createHash("md5").update(readFileSync(new URL(`../assets/${p}`, import.meta.url))).digest("hex").slice(0, 10); } catch {}
+      hashes.set(p, h);
+    }
+    return hashes.get(p);
+  };
+  const asset = (p) => `${base}/assets/${p}?v=${hash(p)}`;
 
   const mark = (cls = "mark") => `<img class="${cls}" src="${asset("img/logo-mark.webp")}" alt="" width="240" height="207" decoding="async">`;
 

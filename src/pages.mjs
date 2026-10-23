@@ -506,7 +506,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       .map(
         (n) => `<div class="phone phone--${n}">
         <div class="phone-screen">
-          <video muted autoplay loop playsinline webkit-playsinline preload="auto" poster="${asset(`video/${key}-${n}.webp`)}" data-inview-play>
+          <video muted loop playsinline webkit-playsinline preload="none" data-poster="${asset(`video/${key}-${n}.webp`)}" data-lazy data-inview-play>
             <source src="${asset(`video/${key}-${n}.mp4`)}" type="video/mp4">
             <source src="${asset(`video/${key}-${n}.webm`)}" type="video/webm">
           </video>
@@ -587,7 +587,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
         <figcaption><span class="mono">On set</span><span class="display">Light, lens, haze</span></figcaption>
       </figure>
       <figure class="wide-shot wide-shot--aerial reveal" data-autoplay-video>
-        <video muted playsinline webkit-playsinline loop autoplay preload="metadata" poster="${asset("video/drive-poster.webp")}" aria-label="Aerial shot following a car along a forest road">
+        <video muted playsinline webkit-playsinline loop preload="none" data-poster="${asset("video/drive-poster.webp")}" data-lazy aria-label="Aerial shot following a car along a forest road">
           <source src="${asset("video/drive-sm.mp4")}" type="video/mp4" media="(max-width: 760px)">
           <source src="${asset("video/drive.mp4")}" type="video/mp4">
           <source src="${asset("video/drive.webm")}" type="video/webm">
@@ -651,7 +651,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
   <div class="sc2-grid">
     <figure class="sc2-item reveal">
       <div class="sc2-media feature-player" data-autoplay-video>
-        <video muted playsinline webkit-playsinline loop autoplay preload="metadata" poster="${asset("video/reel-poster.webp")}">
+        <video muted playsinline webkit-playsinline loop preload="none" data-poster="${asset("video/reel-poster.webp")}" data-lazy>
           <source src="${asset("video/reel-sm.mp4")}" type="video/mp4" media="(max-width: 760px)">
           <source src="${asset("video/reel.mp4")}" type="video/mp4">
           <source src="${asset("video/reel.webm")}" type="video/webm">
