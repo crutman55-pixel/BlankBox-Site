@@ -661,6 +661,17 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
     </figure>`,
       )
       .join("")}
+    <figure class="sc2-item sc2-item--wide reveal" style="--d:.15s">
+      <div class="sc2-media feature-player" data-autoplay-video>
+        <video muted playsinline webkit-playsinline loop preload="metadata" poster="${asset("video/drive-poster.webp")}" aria-label="Aerial shot following a car along a forest road">
+          <source src="${asset("video/drive.mp4")}" type="video/mp4">
+          <source src="${asset("video/drive.webm")}" type="video/webm">
+        </video>
+        <button class="sound-btn" type="button" aria-pressed="false" data-sound>
+          <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
+        </button>
+      </div>
+    </figure>
   </div>
 </section>
 

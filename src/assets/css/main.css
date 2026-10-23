@@ -1525,3 +1525,5 @@ a.dock-go { display: inline-flex; align-items: center; text-decoration: none; }
   .wide-crafts::before, .wide-crafts::after { top: 0; bottom: 0; left: 6px; right: auto; width: 1px; height: auto; }
   .wide-crafts::after { background: linear-gradient(180deg, var(--gold), var(--ember)); transform: scaleY(var(--p, 0)); transform-origin: top; }
 }
+.sc2-item--wide { grid-column: 1 / -1; }
+.sc2-item--wide .sc2-media { aspect-ratio: 16 / 9; }
