@@ -593,7 +593,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
           <source src="${asset("video/drive.webm")}" type="video/webm">
         </video>
         ${viewfinder}
-        <figcaption><span class="mono">Aerial</span><span class="display">Tracking shots from above</span></figcaption>
+        <span class="aerial-progress" aria-hidden="true"><i></i></span>
         <button class="sound-btn" type="button" aria-pressed="false" data-sound>
           <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sound-label mono">Sound off</span>
         </button>

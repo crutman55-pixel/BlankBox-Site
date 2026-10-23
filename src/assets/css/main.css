@@ -1534,14 +1534,20 @@ a.dock-go { display: inline-flex; align-items: center; text-decoration: none; }
   .marquee-track img.logo-knockout { height: 46px; }
   .marquee-track img.logo-lg { height: 60px; }
 }
-/* Widescreen: aerial clip spans the stills row */
+/* Widescreen: aerial clip spans the stills row. Image only: corners, a playback line, a quiet sound toggle. */
 .wide-shot--aerial { grid-column: 1 / -1; aspect-ratio: 2.39 / 1; cursor: pointer; }
-.wide-shot--aerial video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 68%; transition: transform 1.6s var(--ease); }
-.wide-shot--aerial:hover video { transform: scale(1.02); }
-.wide-shot--aerial .vf, .wide-shot--aerial figcaption { z-index: 1; }
-.wide-shot--aerial .sound-btn { z-index: 2; right: clamp(22px, 2.4vw, 36px); bottom: clamp(20px, 2.4vw, 34px); }
+.wide-shot--aerial::after { display: none; }
+.wide-shot--aerial video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 68%; transition: transform 2s var(--ease); }
+.wide-shot--aerial:hover video { transform: scale(1.015); }
+.wide-shot--aerial .vf { inset: clamp(14px, 1.8vw, 26px); z-index: 1; }
+.wide-shot--aerial .vf i { width: clamp(18px, 2vw, 28px); height: clamp(18px, 2vw, 28px); opacity: 0.75; }
+.aerial-progress { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; height: 2px; background: rgba(236, 232, 224, 0.14); }
+.aerial-progress i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), var(--ember)); transform: scaleX(0); transform-origin: left; box-shadow: 0 0 10px rgba(255, 122, 61, 0.6); }
+.wide-shot--aerial .sound-btn { z-index: 2; top: auto; right: calc(clamp(14px, 1.8vw, 26px) + 16px); bottom: calc(clamp(14px, 1.8vw, 26px) + 14px); height: 34px; padding: 0 12px; gap: 8px; background: rgba(7, 7, 7, 0.35); border-color: rgba(236, 232, 224, 0.22); opacity: 0.8; transition: opacity 0.3s, background 0.3s, border-color 0.3s; }
+.wide-shot--aerial:hover .sound-btn, .wide-shot--aerial .sound-btn:focus-visible, .wide-shot--aerial .sound-btn[aria-pressed="true"] { opacity: 1; background: rgba(7, 7, 7, 0.6); border-color: rgba(236, 232, 224, 0.4); }
+.wide-shot--aerial .sound-label { font-size: 9.5px; }
 @media (max-width: 760px) {
   .wide-shot--aerial { aspect-ratio: 16 / 10; }
   .wide-shot--aerial video { object-position: 50% 60%; }
-  .wide-shot--aerial .sound-btn { top: 24px; right: 24px; bottom: auto; height: 34px; padding: 0 12px; gap: 8px; }
+  .wide-shot--aerial .sound-btn { right: 24px; bottom: 22px; height: 32px; padding: 0 10px; }
 }

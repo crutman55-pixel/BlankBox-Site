@@ -251,6 +251,15 @@
         }, { rootMargin: "800px 0px", threshold: 0 }).observe(wrap);
       }
       sync();
+      // A thin playback line, where the wrapper provides one.
+      const bar = $(".aerial-progress i", wrap);
+      if (bar) {
+        const draw = () => {
+          if (v.duration) bar.style.transform = `scaleX(${(v.currentTime / v.duration).toFixed(4)})`;
+          if (!v.paused) requestAnimationFrame(draw);
+        };
+        v.addEventListener("play", () => requestAnimationFrame(draw));
+      }
     });
     // Phone mockups: play while on screen; the stack tilts toward the pointer.
     $$("[data-inview-play]").forEach((v) => {
