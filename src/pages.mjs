@@ -489,7 +489,7 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
 
 <section class="feed wrap" aria-labelledby="feed-title">
   <div class="feed-copy">
-    <p class="mono section-label reveal">Content creation</p>
+    <p class="mono section-label reveal">Part one — Vertical content</p>
     <h2 class="section-title display reveal" id="feed-title">Made for <em class="glow">the feed.</em></h2>
     <p class="feed-lede reveal">Short-form built like cinema: shot, cut and sound-designed for the platforms where your audience actually spends its time.</p>
     <ul class="feed-points">
@@ -546,6 +546,59 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       )
       .join("")}
   </ol>
+</section>
+
+<section class="wide" aria-labelledby="wide-title">
+  <div class="wrap">
+    <div class="wide-head">
+      <div>
+        <p class="mono section-label reveal">Part two — Widescreen production</p>
+        <h2 class="section-title display reveal" id="wide-title">Cinematic <em class="glow">widescreen</em> production.</h2>
+      </div>
+      <div class="wide-intro reveal">
+        <div class="wide-ratio" aria-hidden="true">
+          <span class="wide-ratio-frame"><span class="wide-ratio-cut"></span></span>
+          <span class="wide-ratio-key mono"><span><i class="k-wide"></i>16:9 master</span><span><i class="k-cut"></i>9:16 cut</span></span>
+        </div>
+        <p class="wide-lede">The feed is only half the picture. For commercials, brand films and live events we run the complete production: crew, cinematography, sound and post, under one roof. Every shoot can also be cut down for vertical, so one production covers every screen.</p>
+      </div>
+    </div>
+
+    <figure class="wide-hero reveal-frame">
+      <img src="${asset("img/widescreen/tedx-speaker.webp")}" srcset="${asset("img/widescreen/tedx-speaker-sm.webp")} 1000w, ${asset("img/widescreen/tedx-speaker.webp")} 2000w" sizes="(max-width: 1480px) 100vw, 1480px" alt="A speaker on stage at TEDxWesternU, filmed by BLANKBOX" loading="lazy" decoding="async" width="2000" height="1174">
+      <span class="wide-hud" aria-hidden="true">
+        ${viewfinder}
+        <span class="hud hud-tl mono"><i class="hud-rec"></i>Rec</span>
+        <span class="hud hud-tr mono">A-cam · 4K · 2.39:1</span>
+        <span class="hud hud-bl mono">TEDxWesternU — Live coverage</span>
+        <span class="hud hud-br mono" data-timecode>01:12:04:18</span>
+      </span>
+    </figure>
+
+    <div class="wide-grid">
+      <figure class="wide-shot wide-shot--stage reveal">
+        <img src="${asset("img/widescreen/tedx-stage.webp")}" srcset="${asset("img/widescreen/tedx-stage-sm.webp")} 800w, ${asset("img/widescreen/tedx-stage.webp")} 1600w" sizes="(max-width: 760px) 100vw, 62vw" alt="The TEDxWesternU auditorium set up for a multi-camera shoot" loading="lazy" decoding="async" width="1600" height="1200">
+        ${viewfinder}
+        <figcaption><span class="mono">Live events</span><span class="display">Multi-camera coverage</span></figcaption>
+      </figure>
+      <figure class="wide-shot wide-shot--set reveal" style="--d:.12s">
+        <img src="${asset("img/widescreen/on-set.webp")}" srcset="${asset("img/widescreen/on-set-sm.webp")} 450w, ${asset("img/widescreen/on-set.webp")} 900w" sizes="(max-width: 760px) 100vw, 28vw" alt="A cinema camera on set, lit through haze" loading="lazy" decoding="async" width="900" height="1600">
+        ${viewfinder}
+        <figcaption><span class="mono">On set</span><span class="display">Light, lens, haze</span></figcaption>
+      </figure>
+    </div>
+
+    <ol class="wide-crafts">
+      ${[
+        ["Production", "Concept, script, casting, locations and scheduling, handled end to end."],
+        ["Cinematography", "Cinema cameras, lenses, lighting and grip for images that hold a big screen."],
+        ["Sound", "On-set recording, sound design and a final mix that carries the story."],
+        ["Post", "Edit, colour grade, motion graphics and delivery in every format you need."],
+      ]
+        .map(([t, d], i) => `<li class="reveal" style="--d:${(i * 0.08).toFixed(2)}s"><span class="mono">${pad(i + 1)}</span><h3 class="display">${t}</h3><p>${d}</p></li>`)
+        .join("")}
+    </ol>
+  </div>
 </section>
 
 <section class="services" id="services" aria-labelledby="services-title">

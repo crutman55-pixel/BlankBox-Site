@@ -334,6 +334,23 @@
     set(0);
   }
 
+  /* ------------------------------------------------ Widescreen HUD: a running 24fps timecode while in view */
+  function timecode() {
+    const el = $("[data-timecode]");
+    if (!el || reduced.matches) return;
+    const p2 = (n) => String(n).padStart(2, "0");
+    let frames = ((1 * 60 + 12) * 60 + 4) * 24 + 18, timer = 0;
+    const tick = () => {
+      frames++;
+      const f = frames % 24, s = Math.floor(frames / 24);
+      el.textContent = `${p2(Math.floor(s / 3600))}:${p2(Math.floor(s / 60) % 60)}:${p2(s % 60)}:${p2(f)}`;
+    };
+    new IntersectionObserver(([e]) => {
+      clearInterval(timer);
+      if (e.isIntersecting) timer = setInterval(tick, 1000 / 24);
+    }).observe(el);
+  }
+
   /* ---------------------------------------------------------- Four beats: draw the line in view */
   function beats() {
     const el = $("[data-beats]");
@@ -585,6 +602,7 @@
   showcase();
   counters();
   beats();
+  timecode();
   method();
   featureVideo();
   if (!reduced.matches) kickVideos();

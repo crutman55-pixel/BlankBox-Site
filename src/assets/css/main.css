@@ -1447,3 +1447,69 @@ a.dock-go { display: inline-flex; align-items: center; text-decoration: none; }
 .dock-back:hover, .dock-back:focus-visible { color: var(--gold); }
 .send-why { align-self: flex-start; max-width: 100%; color: var(--mute); font-size: 10px; letter-spacing: .06em; line-height: 1.5; opacity: .75; word-break: break-word; }
 .marquee-track img.logo-lg { height: clamp(68px, 7.6vw, 108px); }
+
+/* ------------------------------------------------ Brands: widescreen production (part two) */
+.wide { padding-block: clamp(70px, 9vw, 140px) clamp(80px, 10vw, 150px); border-top: 1px solid var(--line); background: radial-gradient(70% 50% at 85% 0%, rgba(255, 122, 61, 0.07), transparent 70%); }
+.wide-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 6vw, 100px); align-items: end; margin-bottom: clamp(40px, 5vw, 72px); }
+.wide-head .section-title { max-width: 12ch; }
+.wide-intro { display: grid; gap: 26px; }
+.wide-lede { color: var(--paper-2); font-size: clamp(16px, 1.25vw, 19px); max-width: 46ch; }
+
+/* 16:9 master with the 9:16 cut inside: the link back to part one. */
+.wide-ratio { display: flex; align-items: center; gap: 20px; }
+.wide-ratio-frame { position: relative; flex: none; width: 112px; aspect-ratio: 16 / 9; border: 1px solid var(--gold); box-shadow: 0 0 24px -6px rgba(255, 199, 107, 0.45); }
+.wide-ratio-cut { position: absolute; top: -1px; bottom: -1px; left: 50%; width: calc(63px * 9 / 16); transform: translateX(-50%); border: 1px dashed var(--line-2); background: rgba(236, 232, 224, 0.06); animation: ratio-pan 6s var(--ease-in-out) infinite alternate; }
+@keyframes ratio-pan { from { left: 30%; } to { left: 70%; } }
+.wide-ratio-key { display: grid; gap: 8px; color: var(--mute); font-size: 10px; }
+.wide-ratio-key span { display: flex; align-items: center; gap: 10px; }
+.wide-ratio-key i { width: 14px; height: 9px; border: 1px solid var(--gold); }
+.wide-ratio-key i.k-cut { width: 6px; height: 11px; border: 1px dashed var(--line-2); background: rgba(236, 232, 224, 0.06); }
+
+/* Hero frame: letterboxed 2.39:1 with a camera HUD. */
+.wide-hero { position: relative; aspect-ratio: 2.39 / 1; overflow: hidden; background: #000; border: 1px solid var(--line-2); box-shadow: 0 70px 160px -60px rgba(255, 122, 61, 0.35); }
+.wide-hero img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
+.wide-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(7, 7, 7, 0.55), transparent 30%), linear-gradient(180deg, rgba(7, 7, 7, 0.45), transparent 22%); pointer-events: none; }
+.wide-hud { position: absolute; inset: clamp(14px, 2vw, 28px); z-index: 1; pointer-events: none; }
+.wide-hud .vf i { width: 26px; height: 26px; opacity: 0.7; }
+.hud { position: absolute; display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; color: var(--paper); font-size: 10px; opacity: 0.85; }
+.hud-tl { top: 0; left: 0; } .hud-tr { top: 0; right: 0; } .hud-bl { bottom: 0; left: 0; } .hud-br { bottom: 0; right: 0; font-variant-numeric: tabular-nums; color: var(--gold); }
+.hud-rec { width: 7px; height: 7px; border-radius: 50%; background: #ff3b30; box-shadow: 0 0 10px #ff3b30; animation: rec-blink 1.6s steps(1) infinite; }
+@keyframes rec-blink { 50% { opacity: 0.15; } }
+
+/* Supporting stills */
+.wide-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 3.05fr); gap: clamp(14px, 1.6vw, 24px); margin-top: clamp(14px, 1.6vw, 24px); }
+.wide-shot { position: relative; overflow: hidden; border: 1px solid var(--line-2); background: #000; }
+.wide-shot--stage { aspect-ratio: 4 / 3; }
+.wide-shot--set { aspect-ratio: auto; }
+.wide-shot--set img { position: absolute; inset: 0; }
+.wide-shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.6s var(--ease); }
+.wide-shot:hover img { transform: scale(1.035); }
+.wide-shot .vf { inset: 14px; }
+.wide-shot::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(7, 7, 7, 0.8), transparent 45%); pointer-events: none; }
+.wide-shot figcaption { position: absolute; left: clamp(18px, 2vw, 28px); bottom: clamp(16px, 2vw, 26px); z-index: 1; display: grid; gap: 8px; }
+.wide-shot figcaption .mono { color: var(--gold); }
+.wide-shot figcaption .display { font-size: clamp(24px, 2.4vw, 38px); }
+
+/* The complete production: four crafts */
+.wide-crafts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(20px, 2.4vw, 40px); margin-top: clamp(48px, 6vw, 84px); }
+.wide-crafts li { padding-top: 22px; border-top: 1px solid var(--line-2); }
+.wide-crafts .mono { color: var(--gold); }
+.wide-crafts h3 { margin: 14px 0 10px; font-size: clamp(26px, 2.3vw, 36px); }
+.wide-crafts p { color: var(--paper-2); font-size: 15px; line-height: 1.55; max-width: 30ch; }
+
+@media (max-width: 1000px) {
+  .wide-head { grid-template-columns: 1fr; align-items: start; }
+  .wide-crafts { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 36px; }
+}
+@media (max-width: 760px) {
+  .wide-hero { aspect-ratio: 16 / 10; }
+  .wide-hero img { object-position: 45% 15%; }
+  .hud-tr { display: none; }
+  .hud { padding: 4px 6px; font-size: 9px; }
+  .wide-grid { grid-template-columns: 1fr; }
+  .wide-shot--set { aspect-ratio: 4 / 5; }
+  .wide-shot--set img { object-position: center 55%; }
+  .wide-crafts { grid-template-columns: 1fr; row-gap: 28px; }
+  .wide-crafts p { max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) { .wide-ratio-cut, .hud-rec { animation: none; } }
