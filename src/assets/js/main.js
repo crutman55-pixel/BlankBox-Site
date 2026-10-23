@@ -640,6 +640,53 @@
   }
 
   /* ---------------------------------------------------------- Images: graceful fallback */
+  /* Image loading. Native loading="lazy" waits until an image is almost on screen (later still on
+     iPhones), and never fetches cards sitting off to the side in a slider, so photos pop in as you
+     arrive. Instead: each image is fetched 2.5 screens ahead, a slider fetches all its cards at once,
+     and after the page settles everything left is fetched in the background, in page order. */
+  function warmImages() {
+    const lazy = $$('img[loading="lazy"]');
+    if (!lazy.length) return;
+    const go = (img) => { if (img.loading !== "eager") img.loading = "eager"; };
+    // Group each image under its slider (if any), since clipped slides never intersect the viewport.
+    const groups = new Map();
+    lazy.forEach((img) => {
+      const key = img.closest("[data-reel], .marquee, [data-showcase]") || img;
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(img);
+    });
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((es) => es.forEach((e) => {
+        if (!e.isIntersecting) return;
+        groups.get(e.target).forEach(go);
+        io.unobserve(e.target);
+      }), { rootMargin: "250% 0px" });
+      groups.forEach((_, el) => io.observe(el));
+    }
+    // Background pass once the first screen is done, a few at a time so nothing on screen waits.
+    const rest = () => {
+      const queue = lazy.filter((img) => img.loading !== "eager");
+      const next = () => {
+        const batch = queue.splice(0, 3);
+        if (!batch.length) return;
+        let left = batch.length;
+        const done = () => { if (--left === 0) setTimeout(next, 60); };
+        batch.forEach((img) => {
+          if (img.loading === "eager" && img.complete) return done();
+          img.addEventListener("load", done, { once: true });
+          img.addEventListener("error", done, { once: true });
+          go(img);
+          if (img.complete) done();
+        });
+      };
+      next();
+    };
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 200));
+    const start = () => idle(rest, { timeout: 2500 });
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+  }
+
   function images() {
     $$("img").forEach((img) => {
       const fail = () => img.closest(".poster-frame, .reel-poster, .spotlight-poster, .portrait, .preview-card, .film-hero-bg")?.classList.add("img-failed");
@@ -670,6 +717,7 @@
   preview();
   videos();
   contact();
+  warmImages();
   images();
   $("[data-to-top]")?.addEventListener("click", (e) => {
     e.preventDefault();
