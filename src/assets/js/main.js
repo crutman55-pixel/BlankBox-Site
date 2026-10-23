@@ -394,12 +394,15 @@
 
   // The same scroll-linked fill as the beats line, for other lines on the page.
   function fillLine(el) {
-    if (reduced.matches) return el.style.setProperty("--p", 1);
+    if (reduced.matches) { el.style.setProperty("--p", 1); [...el.children].forEach((it) => it.classList.add("is-lit")); return; }
     let ticking = false;
     const update = () => {
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      el.style.setProperty("--p", Math.min(1, Math.max(0, (vh * 0.8 - r.top) / (r.height + vh * 0.35))).toFixed(3));
+      const p = Math.min(1, Math.max(0, (vh * 0.8 - r.top) / (r.height + vh * 0.35)));
+      el.style.setProperty("--p", p.toFixed(3));
+      // Each step lights as the fill reaches it.
+      [...el.children].forEach((it, i, all) => it.classList.toggle("is-lit", p >= i / all.length + 0.02));
       ticking = false;
     };
     window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });

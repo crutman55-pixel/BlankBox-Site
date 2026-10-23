@@ -600,14 +600,34 @@ export function createPages({ films, brands, href, asset, poster, portrait, stil
       </figure>
     </div>
 
+    <div class="crafts-head">
+      <p class="mono section-label reveal">The complete production</p>
+      <h3 class="crafts-title display reveal">One crew, <em class="glow">start to finish.</em></h3>
+      <p class="crafts-note reveal">One team carries your project through every stage, so nothing gets lost between hand-offs.</p>
+    </div>
     <ol class="wide-crafts" data-fill>
       ${[
-        ["Production", "Concept, script, casting, locations and scheduling, handled end to end."],
-        ["Cinematography", "Cinema cameras, lenses, lighting and grip for images that hold a big screen."],
-        ["Sound", "On-set recording, sound design and a final mix that carries the story."],
-        ["Post", "Edit, colour grade, motion graphics and delivery in every format you need."],
+        ["Production", "We shape the idea and plan every detail of the shoot.", ["Concept", "Script", "Casting", "Locations"],
+          '<path d="M3.5 9.5h17v10h-17z"/><path d="M3.5 9.5 5.6 4.5h14.9l-2.1 5"/><path d="m9.4 4.5-2.1 5M14.6 4.5l-2.1 5"/>'],
+        ["Cinematography", "Cinema-grade images, built to hold a big screen.", ["Cinema cameras", "Lighting", "Grip", "Drone"],
+          '<rect x="2.5" y="7" width="13" height="10" rx="1.5"/><path d="m15.5 10.5 6-3v9l-6-3"/><circle cx="7" cy="12" r="2"/>'],
+        ["Sound", "Clean recording and a mix that carries the story.", ["Recording", "Sound design", "Mix"],
+          '<path d="M4 10v4M8 6.5v11M12 3.5v17M16 7.5v9M20 10.5v3"/>'],
+        ["Post", "Edit, grade and deliver in every format you need.", ["Edit", "Colour", "Motion", "Delivery"],
+          '<path d="M5 3.5v17M12 3.5v17M19 3.5v17"/><circle cx="5" cy="14.5" r="2.2"/><circle cx="12" cy="8.5" r="2.2"/><circle cx="19" cy="16" r="2.2"/>'],
       ]
-        .map(([t, d], i) => `<li class="reveal" style="--d:${(i * 0.08).toFixed(2)}s"><span class="mono">${pad(i + 1)}</span><h3 class="display">${t}</h3><p>${d}</p></li>`)
+        .map(
+          ([t, d, tags, icon], i) => `<li class="craft reveal" style="--d:${(i * 0.08).toFixed(2)}s">
+        <span class="craft-dot" aria-hidden="true"></span>
+        <div class="craft-top">
+          <svg class="craft-icon" viewBox="0 0 24 24" aria-hidden="true">${icon}</svg>
+          <span class="mono craft-no">Stage ${pad(i + 1)}</span>
+        </div>
+        <h4 class="display">${t}</h4>
+        <p>${d}</p>
+        <ul class="craft-tags" aria-label="${t} includes">${tags.map((x) => `<li class="mono">${x}</li>`).join("")}</ul>
+      </li>`,
+        )
         .join("")}
     </ol>
   </div>
